@@ -40,6 +40,7 @@ bot.load_extension('cogs.AutoMod')
 bot.load_extension('cogs.Commands')
 bot.load_extension('cogs.Games')
 bot.load_extension('cogs.Economy')
+bot.load_extension('cogs.ErrorHandlers')
 
 keep_alive()
 

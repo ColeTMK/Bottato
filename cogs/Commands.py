@@ -42,17 +42,6 @@ class Commands(commands.Cog):
       await ctx.send(embed=embed)
       await ctx.author.send(f"You changed {ctx.guild.name}'s prefix to `{prefix}`")
 
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-      if isinstance(error, commands.MissingPermissions):
-        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: {error.missing_perms}`")
-      if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send(f"{ctx.author.mention}, Sorry, you forgot to type an important argument! `Missing Argument: {error.param.name}`")
-      if isinstance(error, commands.CommandNotFound):
-        await ctx.send(f"{ctx.author.mention}, Sorry, that is not a valid command! Click on this to see all of my commands, https://bit.ly/33N0TTY")
-      if isinstance(error, CommandOnCooldown):
-        await ctx.send(f"{ctx.author.mention}, You need to wait until you can use this command again! `Work: 1 HR Cooldown` / `Beg: 1 HR Cooldown`")
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def setlogchannel(self, ctx, channel: discord.TextChannel):
