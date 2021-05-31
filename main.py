@@ -26,7 +26,7 @@ async def on_guild_join(guild): #when the bot joins the guild
 @bot.event
 async def on_ready():
   channel = bot.get_channel(848722304069926993)
-  print('The bot is online')
+  print('The bot is online!')
   await bot.change_presence(
     activity=discord.Activity(type=discord.ActivityType.watching, name="Youtube Videos"))
   print('Bot is connected to:')
