@@ -2,11 +2,18 @@ import discord
 from discord import User
 from discord.ext import commands
 import random
+import requests
 import json
 import asyncio
 import datetime
 from discord.ext.commands import Bot, Greedy
 from discord.ext.commands import CommandOnCooldown
+
+def get_quote():
+  response = requests.get("https://zenquotes.io/api/random")
+  json_data = json.loads(response.text)
+  quote = json_data[0]['q'] + " - " + json_data[0]['a']
+  return(quote)
 
 class Commands(commands.Cog):
     def __init__(self, bot):
@@ -70,6 +77,16 @@ class Commands(commands.Cog):
 
       fact = random.choice(fun_facts)
       embed=discord.Embed(title="Random Fact", description=(fact), color=0x00FFFF)
+      author = ctx.message.author
+      pfp = author.avatar_url
+      embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+      embed.timestamp = datetime.datetime.utcnow()
+      await ctx.send(embed=embed)
+
+    @commands.command()
+    async def quote(self, ctx):
+      quote = get_quote()
+      embed=discord.Embed(title="Random Quote", description=f"{quote}", color=0x00FFFF)
       author = ctx.message.author
       pfp = author.avatar_url
       embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)

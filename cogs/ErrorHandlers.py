@@ -13,7 +13,10 @@ class ErrorHandlers(commands.Cog):
       if isinstance(error, commands.CommandNotFound):
         await ctx.send(f"{ctx.author.mention}, Sorry, that is not a valid command! Click on this to see all of my commands, https://bit.ly/33N0TTY")
       if isinstance(error, commands.CommandOnCooldown):
-        await ctx.send(f"{ctx.author.mention}, You can work/beg again every hour!")
+        m, s = divmod(error.retry_after, 60)
+        fmt = "Try again in {} minutes and {} seconds" \
+        .format(round(m), round(s))
+        await ctx.send(f"{ctx.author.mention}, You can work/beg again in {fmt}!")
 
 def setup(bot):
     bot.add_cog(ErrorHandlers(bot))
