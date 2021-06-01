@@ -539,7 +539,7 @@ class Commands(commands.Cog):
           try:
             return log_channel[str(message.guild.id)]
           except KeyError:
-            return "No log channel is set! To set one, type >setlogchannel #{channel}"
+            return "No log channel is set! To set one, type `>setlogchannel #{channel}`"
 
       embed=discord.Embed(title="Ultimate Bot Help", description="Hello! Here, you can get help from lots of useful links and info!", color=0x00FFFF)
       embed.add_field(name="**Website**", value='https://bit.ly/3okQzMh', inline=False)
@@ -550,14 +550,13 @@ class Commands(commands.Cog):
       embed.add_field(name="**Fun Commands**", value='Fact, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
       embed.add_field(name="**Economy**", value='Balance, Work, Give, Deposit, Withdraw', inline=False)
       embed.add_field(name="**AutoMod**", value='Click this link to see what words will get deleted -> https://bit.ly/33N0TTY', inline=False)
-      embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` To change, type >changeprefix {prefix}.', inline=False)
+      embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` To change, type `>changeprefix {prefix}`', inline=False)
       embed.add_field(name="**Current Prefix**", value=f'The **CURRENT** prefix for this server is `{get_prefix(self.bot, ctx.message)}`', inline=False)
       embed.timestamp = datetime.datetime.utcnow()
       if get_logchannel != None:
         embed.add_field(name="**Current Log Channel:**", value=f"`{get_logchannel(self.bot, ctx.message)}`", inline=False)
       else:
         embed.add_field(name="**Current Log Channel:**", value="No Log Channel Set! To set a log channel, type >setlogchannel #{channel}")
-      embed.set_thumbnail(url="https://ci5.googleusercontent.com/proxy/Il32SNDVgL1iAaWYzwVgxp4ozbS3DdEu4KUmD2LPPvCLRe5pBTRAY5eyL925eRX2ZwKkqVxbS7cSCm7Kso0K1l6qluqN4oZ6pbVElzfcjDWAN4JKS7qGeCpgZO2SmmtF3eZy4he9CzK2avMGCyBXO1uH5KHopstdhkoIZ0prCI5r3gsBTYtvt4d2c04Lg-n3NCh4nDLl0EhXhvle1UI3BmR6Zqpy7J9RTkeud9aKyEyhkJ0HFcmWgoTREQcZlLq-SgV_BxIzaPR3l03M_CnMebB7TepbrAqM4YN9PukD53cMuk20cp3RJxF8fwzxU3HDkIQiNQ-UfWLaefoSr3-T-cLViOefgb7pc5d83cTvkQt6eGOigKJGhvci00Eeh-ATjCoOcilw0xMN610PG2qVTuEd583LeWdtuYiwfaEVkD_RemKJ21_9PSH1Ui6hSs5G_X-DGgBzV5q4TRypa7JqjECq8TulwYBlwKAC4im88y_FuQttiM7kRoU5qaLELhAyJp_z4iUd4QoUThoXWYzV0XADG1gvny5BLaBUa5JGxnUGFbhHrVjSaGdnXbBohmdqlgbtx-h04amDtcoAR7E=s0-d-e1-ft#https://s3.amazonaws.com/share-email.canva.com/-3K-0/DAEe4I-3K-0/5/preview/0001-1536744993.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJAP34B3QY6ZFEY6A%2F20210520%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210520T143149Z&X-Amz-Expires=557401&X-Amz-Signature=614cec54963c80dee10d2a915fff47486ed289f833d7ca740c06e8c48b79468a&X-Amz-SignedHeaders=host&response-expires=Thu%2C%2027%20May%202021%2001%3A21%3A50%20GMT")
       embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers!")
       await ctx.send(embed=embed)
 
