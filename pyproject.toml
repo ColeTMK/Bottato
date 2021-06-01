@@ -2,11 +2,12 @@
 name = "repl_python3_Ultimate-Bot-NEW"
 version = "0.1.0"
 description = ""
-authors = ["ColeTMK <<>>"]
+authors = ["ColeTMK"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 flask = "^2.0.1"
+discord = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 
