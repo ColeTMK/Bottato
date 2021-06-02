@@ -10,6 +10,8 @@ class MsgEditDelete(commands.Cog):
     @commands.Cog.listener()
     async def on_message_edit(self, before, after):
       if before.guild.id == 588726587885748286:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -30,6 +32,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if before.guild.id == 730922649144000602:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -50,6 +54,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if before.guild.id == 742027175628242954:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -70,6 +76,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if before.guild.id == 757014581984886856:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -90,6 +98,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if before.guild.id == 774425673841901578:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -110,6 +120,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if before.guild.id == 811362696456437770:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -130,6 +142,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if before.guild.id == 821556171735040020:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -150,6 +164,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if before.guild.id == 836412234673815590:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -170,6 +186,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if before.guild.id == 847085861761187850:
+        if before.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
 
@@ -192,6 +210,8 @@ class MsgEditDelete(commands.Cog):
     @commands.Cog.listener()
     async def on_message_delete(self, message):
       if message.guild.id == 588726587885748286:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         
@@ -211,6 +231,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if message.guild.id == 730922649144000602:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         
@@ -230,6 +252,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if message.guild.id == 742027175628242954:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         
@@ -249,6 +273,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if message.guild.id == 757014581984886856:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         
@@ -268,6 +294,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if message.guild.id == 774425673841901578:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         
@@ -287,6 +315,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if message.guild.id == 811362696456437770:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         
@@ -306,6 +336,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if message.guild.id == 821556171735040020:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         
@@ -325,6 +357,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if message.guild.id == 836412234673815590:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         
@@ -344,6 +378,8 @@ class MsgEditDelete(commands.Cog):
           pass
 
       if message.guild.id == 847085861761187850:
+        if message.author.id == 830599839623675925:
+          return
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
         

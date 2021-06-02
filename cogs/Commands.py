@@ -6,6 +6,7 @@ import requests
 import json
 import asyncio
 import datetime
+from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
 from discord.ext.commands import Bot, Greedy
 from discord.ext.commands import CommandOnCooldown
 
@@ -18,6 +19,24 @@ def get_quote():
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command()
+    async def button(self, ctx):
+      await ctx.send(
+        "This is a message with buttons!",
+        components=[
+            Button(style=ButtonStyle.blue, label="Hi"),
+            Button(style=ButtonStyle.red, label="Hello"),
+            Button(style=ButtonStyle.URL, label="url", url="https://example.org"),
+        ],
+    )
+
+      res = await self.bot.wait_for("button_click")
+      if res.channel == ctx.channel:
+        await res.respond(
+            type=InteractionType.ChannelMessageWithSource,
+            content=f'The button {res.component.label} was clicked!'
+        )
 
     @commands.command()
     async def leaveserver(self, ctx, guild:discord.Guild):
@@ -578,7 +597,20 @@ class Commands(commands.Cog):
       else:
         embed.add_field(name="**Current Log Channel:**", value="No Log Channel Set! To set a log channel, type >setlogchannel #{channel}")
       embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers!")
-      await ctx.send(embed=embed)
+      await ctx.send(embed=embed,
+      components=[
+            Button(style=ButtonStyle.URL, label="Website", url="https://bit.ly/3okQzMh"),
+            Button(style=ButtonStyle.URL, label="All Commands Page", url="https://bit.ly/33N0TTY"),
+            Button(style=ButtonStyle.URL, label="Terms & Conditions", url="https://bit.ly/3yEYs48"),
+        ],
+    )
+
+      res = await self.bot.wait_for("button_click")
+      if res.channel == ctx.channel:
+        await res.respond(
+            type=InteractionType.ChannelMessageWithSource,
+            content=f'The button {res.component.label} was clicked!'
+        )
 
     @commands.command()
     async def invite(self, ctx):
