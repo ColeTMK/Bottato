@@ -189,5 +189,178 @@ class MsgEditDelete(commands.Cog):
         except (AttributeError, KeyError):
           pass
 
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+      if message.guild.id == 588726587885748286:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
+      if message.guild.id == 730922649144000602:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
+      if message.guild.id == 742027175628242954:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
+      if message.guild.id == 757014581984886856:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
+      if message.guild.id == 774425673841901578:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
+      if message.guild.id == 811362696456437770:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
+      if message.guild.id == 821556171735040020:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
+      if message.guild.id == 836412234673815590:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
+      if message.guild.id == 847085861761187850:
+        with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+        
+        try:
+          if log_channel:
+            log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
+            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
+            logembed.timestamp = datetime.datetime.utcnow()
+            logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)
+            logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
+            logembed.set_thumbnail(url=message.author.avatar_url)
+            await log_channel.send(embed=logembed)
+          else:
+            pass
+        except (AttributeError, KeyError):
+          pass
+
 def setup(bot):
   bot.add_cog(MsgEditDelete(bot))

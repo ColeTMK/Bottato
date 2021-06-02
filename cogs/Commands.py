@@ -569,6 +569,7 @@ class Commands(commands.Cog):
       embed.add_field(name="**Fun Commands**", value='Fact, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
       embed.add_field(name="**Economy**", value='Balance, Work, Give, Deposit, Withdraw', inline=False)
       embed.add_field(name="**AutoMod**", value='Click this link to see what words will get deleted -> https://bit.ly/33N0TTY', inline=False)
+      embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
       embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` To change, type `>changeprefix {prefix}`', inline=False)
       embed.add_field(name="**Current Prefix**", value=f'The **CURRENT** prefix for this server is `{get_prefix(self.bot, ctx.message)}`', inline=False)
       embed.timestamp = datetime.datetime.utcnow()
