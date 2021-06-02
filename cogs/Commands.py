@@ -46,6 +46,7 @@ class Commands(commands.Cog):
       author = ctx.author
       pfp = author.avatar_url
       embed.set_author(name=f"Admin: {ctx.author}", icon_url=pfp)
+      embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
       await ctx.author.send(f"You changed {ctx.guild.name}'s prefix to `{prefix}`")
 
@@ -64,6 +65,7 @@ class Commands(commands.Cog):
       embed=discord.Embed(title="Log Channel Set", color=0x00FFFF)
       embed.add_field(name="**Channel Name:**", value=f"{channel}")
       embed.add_field(name="**Moderator:**", value=f"{ctx.author.name}")
+      embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
       await ctx.author.send(f"You just set the log channel for {ctx.guild.name} to {channel} !")
 
