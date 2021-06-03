@@ -597,6 +597,7 @@ class Commands(commands.Cog):
       else:
         embed.add_field(name="**Current Log Channel:**", value="No Log Channel Set! To set a log channel, type >setlogchannel #{channel}")
       embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers!")
+      embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
       await ctx.send(embed=embed,
       components=[
             Button(style=ButtonStyle.URL, label="Website", url="https://bit.ly/3okQzMh"),
