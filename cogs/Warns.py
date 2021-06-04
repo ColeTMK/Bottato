@@ -84,26 +84,31 @@ class Warns(commands.Cog):
         with open('warns.json', 'r') as f:
             users = json.load(f)
 
-        amount = amount
+        amount = amount or 1
 
         await update_data(users, user)
         await add_warns(users, user, -amount)
 
-        if users[f'{user.id}']['warns'] == 0:
-            with open('warns.json', 'w') as f:
-                del users[f'{user.id}']['warns']
-                del users[f'{user.id}']
-                f.write(json.dumps(users, indent=4))
-            await ctx.send(f'{ctx.author.mention}, this member does not have any warns!')
-            return
-
-        else:
-            with open('warns.json', 'w') as f:
-                json.dump(users, f, sort_keys=True, ensure_ascii=False, indent=4)
+        if users[f'{user.id}']['warns'] <= 0:
+          with open('warns.json', 'w') as f:
+            del users[f'{user.id}']['warns']
+            del users[f'{user.id}']
+            f.write(json.dumps(users, indent=4))
             embed=discord.Embed(description=f'{ctx.author.mention} has removed `{amount}` warns from {user.mention}!', color=0x00FFFF)
             embed.set_thumbnail(url=user.avatar_url)
             embed.timestamp = datetime.datetime.utcnow()
             await ctx.send(embed=embed)
+            return
+
+        else:
+          with open('warns.json', 'w') as f:
+            json.dump(users, f, sort_keys=True, ensure_ascii=False, indent=4)
+
+          embed=discord.Embed(description=f'{ctx.author.mention} has removed `{amount}` warns from {user.mention}!', color=0x00FFFF)
+          embed.set_thumbnail(url=user.avatar_url)
+          embed.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=embed)
+          return
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
