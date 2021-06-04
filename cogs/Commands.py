@@ -6,7 +6,6 @@ import requests
 import json
 import asyncio
 import datetime
-from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
 from discord.ext.commands import Bot, Greedy
 from discord.ext.commands import CommandOnCooldown
 
@@ -19,24 +18,6 @@ def get_quote():
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @commands.command()
-    async def button(self, ctx):
-      await ctx.send(
-        "This is a message with buttons!",
-        components=[
-            Button(style=ButtonStyle.blue, label="Hi"),
-            Button(style=ButtonStyle.red, label="Hello"),
-            Button(style=ButtonStyle.URL, label="url", url="https://example.org"),
-        ],
-    )
-
-      res = await self.bot.wait_for("button_click")
-      if res.channel == ctx.channel:
-        await res.respond(
-            type=InteractionType.ChannelMessageWithSource,
-            content=f'The button {res.component.label} was clicked!'
-        )
 
     @commands.command()
     async def leaveserver(self, ctx, guild:discord.Guild):
@@ -155,58 +136,6 @@ class Commands(commands.Cog):
         await ctx.send(embed=embed)
         await asyncio.sleep(3)
         await ctx.channel.purge(limit=1)
-
-    @commands.command()
-    @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, member:discord.Member, *, reason):
-
-      if member.id == ctx.author.id:
-        await ctx.send(f"{ctx.author.mention}, You can't warn yourself!")
-        return
-
-      if member.id == 830599839623675925:
-        await ctx.send(f"{ctx.author.mention}, You can't warn me!")
-        return
-
-      if member:
-        await ctx.channel.purge(limit=1)
-        embed=discord.Embed(title="Warn", description=f"{member.mention} has been warned!", color=0x00FFFF)
-        embed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
-        embed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
-        pfp = member.avatar_url
-        embed.set_thumbnail(url=pfp)
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_footer(text=f"{ctx.guild.name}")
-        dmembed=discord.Embed(title="Warn", description="You have been warned!", color=0x00FFFF)
-        dmembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
-        pfp = member.avatar_url
-        dmembed.add_field(name="**Server:**", value=f"{ctx.guild.name}", inline=False)
-        dmembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
-        dmembed.timestamp = datetime.datetime.utcnow()
-        dmembed.set_author(name=f"{member.name}", icon_url=pfp)
-        with open('logchannel.json', 'r', encoding='utf-8') as fp:
-          log_channel = json.load(fp)
-
-        try:
-          if log_channel:
-            await ctx.send(embed=embed)
-            await member.send(embed=dmembed)
-            log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
-            logembed=discord.Embed(title="Bot Log", description="Warn Command Used", color=0x00FFFF)
-            logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
-            logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
-            logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
-            author = ctx.message.author
-            pfp = author.avatar_url
-            logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
-            logembed.timestamp = datetime.datetime.utcnow()
-            await log_channel.send(embed=logembed)
-          else:
-            await ctx.send(embed=embed)
-            await member.send(embed=dmembed)
-        except (AttributeError, KeyError):
-          await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -598,20 +527,7 @@ class Commands(commands.Cog):
         embed.add_field(name="**Current Log Channel:**", value="No Log Channel Set! To set a log channel, type >setlogchannel #{channel}")
       embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers!")
       embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
-      await ctx.send(embed=embed,
-      components=[
-            Button(style=ButtonStyle.URL, label="Website", url="https://bit.ly/3okQzMh"),
-            Button(style=ButtonStyle.URL, label="All Commands Page", url="https://bit.ly/33N0TTY"),
-            Button(style=ButtonStyle.URL, label="Terms & Conditions", url="https://bit.ly/3yEYs48"),
-        ],
-    )
-
-      res = await self.bot.wait_for("button_click")
-      if res.channel == ctx.channel:
-        await res.respond(
-            type=InteractionType.ChannelMessageWithSource,
-            content=f'The button {res.component.label} was clicked!'
-        )
+      await ctx.send(embed=embed)
 
     @commands.command()
     async def invite(self, ctx):

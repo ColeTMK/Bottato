@@ -1,7 +1,6 @@
 import discord
 import os
 from discord.ext import commands
-from discord_components import DiscordComponents
 import json
 import datetime
 from keep_alive import keep_alive
@@ -36,7 +35,6 @@ async def on_ready():
   embed=discord.Embed(title="Bot Restart", color=0x00FFFF)
   embed.timestamp = datetime.datetime.utcnow()
   await channel.send(embed=embed)
-  DiscordComponents(bot)
 
 bot.load_extension('cogs.AutoMod')
 bot.load_extension('cogs.Commands')
@@ -44,6 +42,7 @@ bot.load_extension('cogs.Games')
 bot.load_extension('cogs.Economy')
 bot.load_extension('cogs.ErrorHandlers')
 bot.load_extension('cogs.MsgEditDelete')
+bot.load_extension('cogs.Warns')
 
 keep_alive()
 
