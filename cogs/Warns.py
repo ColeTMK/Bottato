@@ -17,7 +17,7 @@ class Warns(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, user:discord.Member, *, reason):
+    async def warn(self, ctx, user:discord.Member, *, reason): 
 
       if user.id == ctx.author.id:
         await ctx.send(f"{ctx.author.mention}, You can't warn yourself!")
