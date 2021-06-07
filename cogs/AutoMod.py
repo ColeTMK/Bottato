@@ -25,8 +25,6 @@ class AutoMod(commands.Cog):
           return
         if message.author.id == 261578097978114050: #devvy
           return
-        if message.author.id == 835307493558321172: #examplebot
-          return
         if message.author.id == 467715040087244800: #me
           return
 
@@ -37,7 +35,7 @@ class AutoMod(commands.Cog):
         pfp = author.avatar_url
         embed.set_author(name=f"{author.name}", icon_url=pfp)
         await message.channel.send(embed=embed)
-        dmembed=discord.Embed(title="AutoMod", description="You were caught saying a bad word!", color=0x00FFFF)
+        dmembed=discord.Embed(title="AutoMod", description="You were caught saying a bad word! Please refrain from saying this again!", color=0x00FFFF)
         dmembed.add_field(name="**Message:**", value=f"{msg_content}", inline=False)
         pfp = author.avatar_url
         dmembed.add_field(name="**Server:**", value=f"{message.guild.name}", inline=False)
