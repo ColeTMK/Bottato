@@ -122,6 +122,7 @@ class Commands(commands.Cog):
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Clear Command Used", color=0x00FFFF)
           logembed.add_field(name="**Amount:**", value=f"{amount} Messages", inline=False)
+          logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
           author = ctx.message.author
           pfp = author.avatar_url
