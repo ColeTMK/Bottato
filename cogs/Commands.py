@@ -24,12 +24,17 @@ class Commands(commands.Cog):
       if ctx.author.id == 467715040087244800:
         await guild.leave()
         await ctx.send(f"Leaving {guild.name}... GUILD ID: {guild.id}")
+      if ctx.author.id != 467715040087244800:
+        await ctx.send(f'{ctx.author.mention}, Cole can only do this command!')
+
 
     @commands.command()
     async def servernames(self, ctx):
       if ctx.author.id == 467715040087244800:
         for server in self.bot.guilds:
           await ctx.send(f"{server.name, server.id}")
+      if ctx.author.id != 467715040087244800:
+        await ctx.send(f'{ctx.author.mention}, Cole can only do this command!')
       
     @commands.command()
     @commands.has_permissions(administrator=True)
@@ -494,6 +499,100 @@ class Commands(commands.Cog):
         await asyncio.sleep(time)
         await member.remove_roles(role)
 
+    @commands.command()
+    @commands.has_permissions(manage_roles=True)
+    async def giverole(self, ctx, member:discord.Member, role:discord.Role):
+      if role in member.roles:
+        await ctx.send(f'{ctx.author.mention}, this member already has this role!')
+        return
+      await member.add_roles(role)
+      embed=discord.Embed(title="Role Gived", color=0x0FFFF)
+      embed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
+      embed.add_field(name='**Member:**', value=f'{member}', inline=False)
+      embed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
+      memberpfp = member.avatar_url
+      embed.set_thumbnail(url=memberpfp)
+      dmembed=discord.Embed(title="Role Gived", description="You were given a role!", color=0x00FFFF)
+      dmembed.add_field(name="**Server:**", value=f"{ctx.guild.name}", inline=False)
+      dmembed.add_field(name="**Role:**", value=f"{role}", inline=False)
+      dmembed.timestamp = datetime.datetime.utcnow()
+      memberpfp = member.avatar_url
+      dmembed.set_author(name=f"{member.name}", icon_url=memberpfp)
+      dmembed.timestamp = datetime.datetime.utcnow()
+      with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+          
+      try:
+        await member.send(embed=dmembed)
+      except:
+        pass #ignore error if DM are closed  
+      try:
+        if log_channel:
+          await ctx.send(embed=embed)
+          log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          logembed=discord.Embed(title="Bot Log", description="Give Role Command Used", color=0x00FFFF)
+          logembed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
+          logembed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
+          logembed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
+          author = ctx.author
+          pfp = author.avatar_url
+          logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+          logembed.timestamp = datetime.datetime.utcnow()
+          await log_channel.send(embed=logembed)
+        else:
+          await ctx.send(embed=embed)
+          await member.send(embed=dmembed)
+      except (AttributeError, KeyError):
+        await ctx.send(embed=embed)
+        await member.send(embed=dmembed)
+
+    @commands.command()
+    @commands.has_permissions(manage_roles=True)
+    async def removerole(self, ctx, member:discord.Member, role:discord.Role):
+      if role not in member.roles:
+        await ctx.send(f'{ctx.author.mention}, this member does not have this role!')
+        return
+      await member.remove_roles(role)
+      embed=discord.Embed(title="Role Removed", color=0x0FFFF)
+      embed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
+      embed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
+      embed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
+      memberpfp = member.avatar_url
+      embed.set_thumbnail(url=memberpfp)
+      dmembed=discord.Embed(title="Role Removed", description="A role was removed from you!", color=0x00FFFF)
+      dmembed.add_field(name="**Server:**", value=f"{ctx.guild.name}", inline=False)
+      dmembed.add_field(name="**Role:**", value=f"{role}", inline=False)
+      dmembed.timestamp = datetime.datetime.utcnow()
+      memberpfp = member.avatar_url
+      dmembed.set_author(name=f"{member.name}", icon_url=memberpfp)
+      dmembed.timestamp = datetime.datetime.utcnow()
+      with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+          
+      try:
+        await member.send(embed=dmembed)
+      except:
+        pass #ignore error if DM are closed  
+      try:
+        if log_channel:
+          await ctx.send(embed=embed)
+          log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          logembed=discord.Embed(title="Bot Log", description="Remove Role Command Used", color=0x00FFFF)
+          logembed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
+          logembed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
+          logembed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
+          author = ctx.author
+          pfp = author.avatar_url
+          logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+          logembed.timestamp = datetime.datetime.utcnow()
+          await log_channel.send(embed=logembed)
+        else:
+          await ctx.send(embed=embed)
+          await member.send(embed=dmembed)
+      except (AttributeError, KeyError):
+        await ctx.send(embed=embed)
+        await member.send(embed=dmembed)
+    
     @commands.command()
     async def help(self, ctx):
 
