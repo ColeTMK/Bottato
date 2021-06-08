@@ -27,6 +27,10 @@ class AutoMod(commands.Cog):
           return
         if message.author.id == 467715040087244800: #me
           return
+        if message.author.guild_permissions.administrator:
+          return
+        if message.author.guild_permissions.manage_messages:
+          return
 
         await message.delete()
         embed=discord.Embed(title="Swear Word", description=f"{message.author.mention}, Hey! Those words arent allowed here! Please refrain from saying this again!", color=0x00FFFF)
