@@ -7,7 +7,7 @@ class ErrorHandlers(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
       if isinstance(error, commands.MissingPermissions):
-        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: {error.missing_perms}`")
+        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: {error.missing_perms[0]}`")
       if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"{ctx.author.mention}, Sorry, you forgot to type an important argument! `Missing Argument: {error.param.name}`")
       if isinstance(error, commands.CommandNotFound):
