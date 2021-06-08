@@ -29,7 +29,7 @@ class AutoMod(commands.Cog):
           return
 
         await message.delete()
-        embed=discord.Embed(title="No No Word", description=f"{message.author.mention}, Hey! Those words arent allowed here!", color=0x00FFFF)
+        embed=discord.Embed(title="Swear Word", description=f"{message.author.mention}, Hey! Those words arent allowed here! Please refrain from saying this again!", color=0x00FFFF)
         embed.timestamp = datetime.datetime.utcnow()
         author = message.author
         pfp = author.avatar_url

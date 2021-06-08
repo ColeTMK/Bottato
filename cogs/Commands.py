@@ -22,8 +22,8 @@ class Commands(commands.Cog):
     @commands.command()
     async def leaveserver(self, ctx, guild:discord.Guild):
       if ctx.author.id == 467715040087244800:
-        await guild.leave()
         await ctx.send(f"Leaving {guild.name}... GUILD ID: {guild.id}")
+        await guild.leave()
       if ctx.author.id != 467715040087244800:
         await ctx.send(f'{ctx.author.mention}, Cole can only do this command!')
 
@@ -501,14 +501,14 @@ class Commands(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def giverole(self, ctx, member:discord.Member, role:discord.Role):
+    async def giverole(self, ctx, member:discord.Member, *, role:discord.Role):
       if role in member.roles:
         await ctx.send(f'{ctx.author.mention}, this member already has this role!')
         return
       await member.add_roles(role)
       embed=discord.Embed(title="Role Gived", color=0x0FFFF)
       embed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
-      embed.add_field(name='**Member:**', value=f'{member}', inline=False)
+      embed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
       embed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
       memberpfp = member.avatar_url
       embed.set_thumbnail(url=memberpfp)
@@ -548,7 +548,7 @@ class Commands(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def removerole(self, ctx, member:discord.Member, role:discord.Role):
+    async def removerole(self, ctx, member:discord.Member, *, role:discord.Role):
       if role not in member.roles:
         await ctx.send(f'{ctx.author.mention}, this member does not have this role!')
         return
