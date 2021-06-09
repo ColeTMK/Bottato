@@ -505,6 +505,8 @@ class Commands(commands.Cog):
       if role in member.roles:
         await ctx.send(f'{ctx.author.mention}, this member already has this role!')
         return
+      if role not in ctx.guild.roles:
+        await ctx.send(f'{ctx.author.mention}, I could not find that role, please try again!')
       await member.add_roles(role)
       embed=discord.Embed(title="Role Gived", color=0x0FFFF)
       embed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
@@ -552,6 +554,8 @@ class Commands(commands.Cog):
       if role not in member.roles:
         await ctx.send(f'{ctx.author.mention}, this member does not have this role!')
         return
+      if role not in ctx.guild.roles:
+        await ctx.send(f'{ctx.author.mention}, I could not find that role, please try again!')
       await member.remove_roles(role)
       embed=discord.Embed(title="Role Removed", color=0x0FFFF)
       embed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
