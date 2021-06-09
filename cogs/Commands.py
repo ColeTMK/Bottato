@@ -614,7 +614,7 @@ class Commands(commands.Cog):
       embed.add_field(name="**Website**", value='https://bit.ly/3okQzMh', inline=False)
       embed.add_field(name="**All Commands Page**", value='https://bit.ly/33N0TTY', inline=False)
       embed.add_field(name="**Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
-      embed.add_field(name="**Moderator Commands**", value='Clear, Warn, Kick, Ban, Mute, Temp. Mute, Unmute, Unlock/Lock Channel, Setlogchannel', inline=False)
+      embed.add_field(name="**Moderator Commands**", value='Clear, Warn, Kick, Ban, Mute, Temp. Mute, Unmute, Unlock/Lock Channel, Give/Remove Role, Setlogchannel', inline=False)
       embed.add_field(name="**Admin Commands**", value='Dm, Changeprefix, Addcoins', inline=False)
       embed.add_field(name="**Fun Commands**", value='Fact, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
       embed.add_field(name="**Economy**", value='Balance, Work, Beg, Give, Deposit, Withdraw', inline=False)
