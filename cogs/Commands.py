@@ -616,7 +616,7 @@ class Commands(commands.Cog):
       embed.add_field(name="**Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
       embed.add_field(name="**Moderator Commands**", value='Clear, Warn, Kick, Ban, Mute, Temp. Mute, Unmute, Unlock/Lock Channel, Give/Remove Role, Setlogchannel', inline=False)
       embed.add_field(name="**Admin Commands**", value='Dm, Changeprefix, Addcoins', inline=False)
-      embed.add_field(name="**Fun Commands**", value='Fact, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
+      embed.add_field(name="**Fun Commands**", value='Fact, Quote, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
       embed.add_field(name="**Economy**", value='Balance, Work, Beg, Give, Deposit, Withdraw', inline=False)
       embed.add_field(name="**AutoMod**", value='*Members that have admin and/or manage messages perms are bypassed by AutoMod!* Click this link to see what words will get deleted -> https://bit.ly/33N0TTY', inline=False)
       embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
