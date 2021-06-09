@@ -36,6 +36,22 @@ async def on_ready():
   embed.timestamp = datetime.datetime.utcnow()
   await channel.send(embed=embed)
 
+@bot.command()
+async def toggle(ctx, *, command):
+  if ctx.author.id == 467715040087244800:
+    command = bot.get_command(command)
+
+    if command is None:
+        await ctx.send('I cannot find that command! Please try again.')
+        return
+
+    else:
+        command.enabled = not command.enabled
+        ternary = "enabled" if command.enabled else "disabled"
+        await ctx.send(f"I have {ternary} the command {command.qualified_name}!")
+  else:
+    return
+
 bot.load_extension('cogs.AutoMod')
 bot.load_extension('cogs.Commands')
 bot.load_extension('cogs.Games')

@@ -1,4 +1,6 @@
 from discord.ext import commands
+import traceback
+import sys
 
 class ErrorHandlers(commands.Cog):
     def __init__(self, bot):
@@ -18,7 +20,10 @@ class ErrorHandlers(commands.Cog):
         .format(round(m), round(s))
         await ctx.send(f"{ctx.author.mention}, You can work/beg again in {fmt}!")
       if isinstance(error, commands.BotMissingPermissions):
-        await ctx.channel.send(f'ERROR: I don\'t have permission to do this! Make sure my Ultimate Bot role is higher than the role your trying to give in the role list! Then try again.')
+        await ctx.channel.send(f'ERROR: I dont have permission to do this! Make sure my Ultimate Bot is high as it can be in the role list, then try again.')
+      else:
+        print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
 def setup(bot):
     bot.add_cog(ErrorHandlers(bot))

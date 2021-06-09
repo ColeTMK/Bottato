@@ -505,8 +505,6 @@ class Commands(commands.Cog):
       if role in member.roles:
         await ctx.send(f'{ctx.author.mention}, this member already has this role!')
         return
-      if role not in ctx.guild.roles:
-        await ctx.send(f'{ctx.author.mention}, I could not find that role, please try again!')
       await member.add_roles(role)
       embed=discord.Embed(title="Role Gived", color=0x0FFFF)
       embed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
@@ -522,7 +520,7 @@ class Commands(commands.Cog):
       dmembed.set_author(name=f"{member.name}", icon_url=memberpfp)
       dmembed.timestamp = datetime.datetime.utcnow()
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
-          log_channel = json.load(fp)
+        log_channel = json.load(fp)
           
       try:
         await member.send(embed=dmembed)
