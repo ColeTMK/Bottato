@@ -48,7 +48,7 @@ async def toggle(ctx, *, command):
     else:
         command.enabled = not command.enabled
         ternary = "enabled" if command.enabled else "disabled"
-        await ctx.send(f"I have {ternary} the command {command.qualified_name}!")
+        await ctx.send(f"I have {ternary} the {command.qualified_name} command!")
   else:
     return
 
