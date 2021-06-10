@@ -151,7 +151,7 @@ class Commands(commands.Cog):
         reason = 'No reason given'
 
       if member.id == ctx.message.author.id:
-       await ctx.send(f"{ctx.author.mention}, You can't mute yourself!")
+       await ctx.send(f"{ctx.author.mention}, You can't ban yourself!")
        return
 
       await member.ban(reason=reason)
@@ -180,6 +180,7 @@ class Commands(commands.Cog):
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Ban Command Used", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
+          logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
           author = ctx.message.author
           pfp = author.avatar_url
@@ -201,7 +202,7 @@ class Commands(commands.Cog):
         reason = 'No reason given'
 
       if member.id == ctx.message.author.id:
-       await ctx.send(f"{ctx.author.mention}, You can't mute yourself!")
+       await ctx.send(f"{ctx.author.mention}, You can't kick yourself!")
        return
 
       await member.kick(reason=reason)
@@ -230,6 +231,7 @@ class Commands(commands.Cog):
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Kick Command Used", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
+          logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
           author = ctx.message.author
           pfp = author.avatar_url
