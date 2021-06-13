@@ -20,6 +20,12 @@ class Commands(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    async def say(self, ctx, text):
+      if ctx.author.id == 467715040087244800:
+        await ctx.channel.purge(limit=1)
+        await ctx.send(text)
+
+    @commands.command()
     async def leaveserver(self, ctx, guild:discord.Guild):
       if ctx.author.id == 467715040087244800:
         await ctx.send(f"Leaving {guild.name}... GUILD ID: {guild.id}")
