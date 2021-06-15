@@ -59,6 +59,7 @@ bot.load_extension('cogs.Economy')
 bot.load_extension('cogs.ErrorHandlers')
 bot.load_extension('cogs.MsgEditDelete')
 bot.load_extension('cogs.Warns')
+bot.load_extension('cogs.Welcome')
 
 keep_alive()
 
