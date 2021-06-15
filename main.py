@@ -3,7 +3,6 @@ import os
 from discord.ext import commands
 import json
 import datetime
-from keep_alive import keep_alive
 
 def get_prefix(bot, message):
 	with open('prefixes.json', 'r') as f:
@@ -60,7 +59,5 @@ bot.load_extension('cogs.ErrorHandlers')
 bot.load_extension('cogs.MsgEditDelete')
 bot.load_extension('cogs.Warns')
 bot.load_extension('cogs.Welcome')
-
-keep_alive()
 
 bot.run(os.getenv('TOKEN'))
