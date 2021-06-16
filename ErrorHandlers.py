@@ -19,6 +19,8 @@ class ErrorHandlers(commands.Cog):
         fmt = "{} minutes and {} seconds" \
         .format(round(m), round(s))
         await ctx.send(f"{ctx.author.mention}, You can work/beg again in {fmt}!")
+      if isinstance(error, commands.MemberNotFound):
+        await ctx.send(f'{ctx.author.mention}, I could not find that member. Please try again by giving the right member name, or mention the member.')
       if isinstance(error, commands.BotMissingPermissions):
         await ctx.channel.send(f'ERROR: I dont have permission to do this! Make sure my Ultimate Bot is high as it can be in the role list, then try again.')
       else:
