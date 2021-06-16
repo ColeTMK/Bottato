@@ -40,7 +40,7 @@ async def toggle(ctx, *, command):
     command = bot.get_command(command)
 
     if command is None:
-        await ctx.send('I cannot find that command! Please try again.')
+        await ctx.send(f'{ctx.author.mention}, I cannot find that command! Please try again.')
         return
 
     else:
