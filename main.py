@@ -1,5 +1,4 @@
 import discord
-import os
 from discord.ext import commands
 import json
 import datetime
@@ -51,13 +50,13 @@ async def toggle(ctx, *, command):
   else:
     return
 
-bot.load_extension('cogs.AutoMod')
-bot.load_extension('cogs.Commands')
-bot.load_extension('cogs.Games')
-bot.load_extension('cogs.Economy')
-bot.load_extension('cogs.ErrorHandlers')
-bot.load_extension('cogs.MsgEditDelete')
-bot.load_extension('cogs.Warns')
-bot.load_extension('cogs.Welcome')
+bot.load_extension('AutoMod')
+bot.load_extension('Commands')
+bot.load_extension('Games')
+bot.load_extension('Economy')
+bot.load_extension('ErrorHandlers')
+bot.load_extension('MsgEditDelete')
+bot.load_extension('Warns')
+bot.load_extension('Welcome')
 
-bot.run(os.getenv('TOKEN'))
+bot.run('ODMwNTk5ODM5NjIzNjc1OTI1.YHJCYQ.kzMTlKbjNzSmw2cXtc96JVmEiTc')
