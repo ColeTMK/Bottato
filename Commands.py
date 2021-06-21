@@ -656,6 +656,39 @@ class Commands(commands.Cog):
       await ctx.send(f"{ctx.author.mention}, I sent you a DM with that information!")
 
     @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def changenickname(self, ctx, member:discord.Member, nick):
+      await member.edit(nick=nick)
+      embed=discord.Embed(title="Nickname Change", color=0x00FFFF)
+      embed.add_field(name='**Member Name:**', value=f'{ctx.member.name}', inline=False)
+      embed.add_field(name='**New Nickname:**', value=f'{nick}', inline=False)
+      author = ctx.message.author
+      pfp = author.avatar_url
+      embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+      embed.set_thumbnail(url=ctx.member.avatar_url)
+      embed.timestamp = datetime.datetime.utcnow()
+      with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+
+      try:
+        if log_channel:
+          await ctx.send(embed=embed)
+          log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          logembed=discord.Embed(title="Bot Log", description="Change Nickname Command Used", color=0x00FFFF)
+          logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
+          logembed.add_field(name="**New Nickname:**", value=f"{nick}", inline=False)
+          logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
+          author = ctx.message.author
+          pfp = author.avatar_url
+          logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+          logembed.timestamp = datetime.datetime.utcnow()
+          await log_channel.send(embed=logembed)
+        else:
+          await ctx.send(embed=embed)
+      except (AttributeError, KeyError):
+        await ctx.send(embed=embed)
+
+    @commands.command()
     async def loved(self, ctx):
       await ctx.channel.purge(limit=1)
       embed=discord.Embed(title="Remember that you are loved! :heart: :heart: :heart:", description="Don't forget that!", color=0x00FFFF)
