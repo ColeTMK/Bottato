@@ -26,7 +26,7 @@ async def on_ready():
   channel = bot.get_channel(848722304069926993)
   print('The bot is online!')
   await bot.change_presence(
-    activity=discord.Activity(type=discord.ActivityType.watching, name="For >help :D"))
+    activity=discord.Activity(type=discord.ActivityType.playing, name="Music! >help to learn more"))
   print('Bot is connected to:')
   for server in bot.guilds:
     print(server.name, server.id)
