@@ -660,12 +660,12 @@ class Commands(commands.Cog):
     async def changenickname(self, ctx, member:discord.Member, nick):
       await member.edit(nick=nick)
       embed=discord.Embed(title="Nickname Change", color=0x00FFFF)
-      embed.add_field(name='**Member Name:**', value=f'{ctx.member.name}', inline=False)
+      embed.add_field(name='**Member Name:**', value=f'{member.name}', inline=False)
       embed.add_field(name='**New Nickname:**', value=f'{nick}', inline=False)
       author = ctx.message.author
       pfp = author.avatar_url
       embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
-      embed.set_thumbnail(url=ctx.member.avatar_url)
+      embed.set_thumbnail(url=member.avatar_url)
       embed.timestamp = datetime.datetime.utcnow()
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
