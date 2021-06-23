@@ -15,7 +15,7 @@ class AutoMod(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
-      curseWord = ['shit', 'asshole', 'fuck', 'bitch', 'cunt', 'nigger', 'faggot', 'fag', 'nigga', 'damn', 'dick', 'cock']
+      curseWord = ['shit', 'asshole', 'fuck', 'bitch', 'cunt', 'nigger', 'faggot', 'fag', 'nigga', 'damn', 'dick', 'cock', 'pussy', 'hoe']
       msg_content = message.content.lower()  
 
       if any(word in msg_content for word in curseWord):
