@@ -49,6 +49,24 @@ class Welcome(commands.Cog):
                 await member.send(f'Thanks for joining **{member.guild.name}**! Make sure to read our rules and verify if needed.')
         except (AttributeError, KeyError):
             await member.send(f'Thanks for joining **{member.guild.name}**! Make sure to read our rules and verify if needed.')
+      with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+      try:
+        if log_channel:
+          joined = member.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
+          created = member.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
+          log_channel = member.guild.get_channel(log_channel[str(member.guild.id)])
+          logembed=discord.Embed(title="Bot Log", description="New Member", color=0x00FFFF)
+          logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
+          logembed.add_field(name="**Join Date:**", value=f"{joined}", inline=False)
+          logembed.add_field(name="**Creation Date:**", value=f"{created}", inline=False)
+          pfp = member.avatar_url
+          logembed.set_author(name=f"{member}", icon_url=pfp)
+          logembed.set_thumbnail(url=pfp)
+          logembed.timestamp = datetime.datetime.utcnow()
+          await log_channel.send(embed=logembed)
+      except (AttributeError, KeyError):
+        pass
 
 def setup(bot):
     bot.add_cog(Welcome(bot))

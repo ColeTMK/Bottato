@@ -616,12 +616,19 @@ class Commands(commands.Cog):
             return log_channel[str(message.guild.id)]
           except KeyError:
             return "No log channel is set! To set one, type `>setlogchannel #{channel}`"
+      def get_welcomechannel(bot, message):
+        with open('welcomechannel.json', 'r') as fp:
+          welcomechannel = json.load(fp)
+          try:
+            return welcomechannel[str(message.guild.id)]
+          except KeyError:
+            return "No welcome channel is set! To set one, type >setwelcomechannel #{channel}"
 
       embed=discord.Embed(title="Ultimate Bot Help", description="Hello! Here, you can get help from lots of useful links and info!", color=0x00FFFF)
       embed.add_field(name="**Website**", value='https://bit.ly/3okQzMh', inline=False)
       embed.add_field(name="**All Commands Page**", value='https://bit.ly/33N0TTY', inline=False)
       embed.add_field(name="**Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
-      embed.add_field(name="**Moderator Commands**", value='Clear, Warn, Kick, Ban, Mute, Temp. Mute, Unmute, Unlock/Lock Channel, Give/Remove Role, Setlogchannel', inline=False)
+      embed.add_field(name="**Moderator Commands**", value='Clear, Warn, Kick, Ban, Mute, Temp. Mute, Unmute, Unlock/Lock Channel, Give/Remove Role, Setlogchannel, Setwelcomechannel', inline=False)
       embed.add_field(name="**Admin Commands**", value='Dm, Changeprefix, Addcoins', inline=False)
       embed.add_field(name="**Fun Commands**", value='Fact, Quote, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
       embed.add_field(name="**Economy**", value='Balance, Work, Beg, Give, Deposit, Withdraw', inline=False)
@@ -635,6 +642,10 @@ class Commands(commands.Cog):
         embed.add_field(name="**Current Log Channel:**", value=f"`{get_logchannel(self.bot, ctx.message)}`", inline=False)
       else:
         embed.add_field(name="**Current Log Channel:**", value="No Log Channel Set! To set a log channel, type >setlogchannel #{channel}")
+      if get_welcomechannel != None:
+        embed.add_field(name="**Current Welcome Channel:**", value=f"`{get_welcomechannel(self.bot, ctx.message)}`", inline=False)
+      else:
+        embed.add_field(name="**Current Welcome Channel:**", value="No Welcome Channel Set! To set a welcome channel, type >setwelcomechannel #{channel}")
       embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers!")
       embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
       await ctx.send(embed=embed)
@@ -810,10 +821,12 @@ class Commands(commands.Cog):
       roles = user.roles
       roles.reverse()
       top_role = roles[0]
+      created = user.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
       embed=discord.Embed(title='**Member Info**', color=0x00FFFF)
       embed.add_field(name='**Name:**', value=f'{user}', inline=False)
       embed.add_field(name='**ID:**', value=f'{user.id}', inline=False)
       embed.add_field(name='**Join Date:**', value=f'{joined}', inline=False)
+      embed.add_field(name='**Creation Date:**', value=f'{created}', inline=False)
       embed.add_field(name='**Roles [{}]:**'.format(len(user.roles)-1), value=role_string, inline=False)
       embed.add_field(name='**Highest Role:**', value=top_role.mention, inline=False)
       embed.set_author(name=f'{author.name}', icon_url=pfp)

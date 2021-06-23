@@ -31,6 +31,8 @@ class AutoMod(commands.Cog):
           return
         if message.author.guild_permissions.manage_messages:
           return
+        if message.guild.id == 754470904817385562: #potatohead's server
+          return
 
         await message.delete()
         embed=discord.Embed(title="Swear Word", description=f"{message.author.mention}, Hey! Those words arent allowed here! Please refrain from saying this again!", color=0x00FFFF)
