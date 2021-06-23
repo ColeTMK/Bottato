@@ -669,7 +669,7 @@ class Commands(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def changenickname(self, ctx, member:discord.Member, nick):
+    async def changenickname(self, ctx, member:discord.Member, *, nick):
       await member.edit(nick=nick)
       embed=discord.Embed(title="Nickname Change", color=0x00FFFF)
       embed.add_field(name='**Member Name:**', value=f'{member.name}', inline=False)

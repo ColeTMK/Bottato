@@ -1,6 +1,7 @@
 import discord
 import datetime
 import DiscordUtils
+import asyncio
 from discord.ext import commands
 
 music = DiscordUtils.Music()
@@ -11,22 +12,31 @@ class Music(commands.Cog):
 
     @commands.command()
     async def join(self, ctx):
-      invc = ctx.author.voice
-      botinvc = ctx.guild.me.voice
-      if botinvc:
+        invc = ctx.author.voice
+        botinvc = ctx.guild.me.voice
+        if botinvc:
           await ctx.send(f"{ctx.author.mention}, I'm already in a VC!")
           return
-      if invc:
-        await ctx.author.voice.channel.connect()
-        embed=discord.Embed(description='Joined VC!', color=0x00FFFF)
-        author = ctx.author
-        pfp = author.avatar_url
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_author(name=f"{ctx.author}", icon_url=pfp)
-        await ctx.send(embed=embed)
-      if not invc:
-        await ctx.send(f'{ctx.author.mention}, You need to be in a VC so I can join!')
-        return
+        if invc:
+            await ctx.author.voice.channel.connect()
+            embed=discord.Embed(description='Joined VC!', color=0x00FFFF)
+            author = ctx.author
+            pfp = author.avatar_url
+            embed.timestamp = datetime.datetime.utcnow()
+            embed.set_author(name=f"{ctx.author}", icon_url=pfp)
+            await ctx.send(embed=embed)
+        if not invc:
+            await ctx.send(f'{ctx.author.mention}, You need to be in a VC so I can join!')
+            return
+        while ctx.voice_client:
+            await asyncio.sleep(1)
+        else:
+            await asyncio.sleep(15)
+            while ctx.voice_client:
+                break
+            else:
+                await ctx.guild.voice_client.disconnect()
+                await ctx.send('Left VC due to inactivity.')
 
     @commands.command()
     async def leave(self, ctx):
@@ -73,6 +83,15 @@ class Music(commands.Cog):
             embed.timestamp = datetime.datetime.utcnow()
             embed.set_footer(text=f'Added by {ctx.author}')
             await ctx.send(embed=embed)
+        while ctx.voice_client.is_playing():
+            await asyncio.sleep(1)
+        else:
+            await asyncio.sleep(15)
+            while ctx.voice_client.is_playing():
+                break
+            else:
+                await ctx.guild.voice_client.disconnect()
+                await ctx.send('Left VC due to inactivity.')
 
     @commands.command()
     async def pause(self, ctx):
@@ -162,13 +181,14 @@ class Music(commands.Cog):
         invc = ctx.author.voice
         botinvc = ctx.guild.me.voice
         player = music.get_player(guild_id=ctx.guild.id)
+        currentsong = player.current_queue[0]
         if not botinvc:
             await ctx.send(f"{ctx.author.mention}, I'm not in a VC!")
             return
         if not invc:
             await ctx.send(f'{ctx.author.mention}, You are not in a VC!')
             return
-        await ctx.send(f"{','.join([song.name for song in player.current_queue([0])])}")
+        await ctx.send(f'Currently playing: `{currentsong}`')
         
     @commands.command()
     async def queue(self, ctx):
