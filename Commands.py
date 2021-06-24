@@ -759,8 +759,8 @@ class Commands(commands.Cog):
       embed=discord.Embed(title=f"**Suggestion by {ctx.author.name}**", description=f"Suggestion: ***{text}***", color=0x00FFFF)
       embed.set_footer(text=f"{ctx.guild.name}")
       embed.set_thumbnail(url=ctx.author.avatar_url)
-      msg = await ctx.send(embed=embed)
       embed.timestamp = datetime.datetime.utcnow()
+      msg = await ctx.send(embed=embed)
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
         log_channel = json.load(fp)
       
