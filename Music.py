@@ -11,34 +11,6 @@ class Music(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def join(self, ctx):
-        invc = ctx.author.voice
-        botinvc = ctx.guild.me.voice
-        if botinvc:
-          await ctx.send(f"{ctx.author.mention}, I'm already in a VC!")
-          return
-        if invc:
-            await ctx.author.voice.channel.connect()
-            embed=discord.Embed(description='Joined VC!', color=0x00FFFF)
-            author = ctx.author
-            pfp = author.avatar_url
-            embed.timestamp = datetime.datetime.utcnow()
-            embed.set_author(name=f"{ctx.author}", icon_url=pfp)
-            await ctx.send(embed=embed)
-        if not invc:
-            await ctx.send(f'{ctx.author.mention}, You need to be in a VC so I can join!')
-            return
-        while ctx.voice_client:
-            await asyncio.sleep(1)
-        else:
-            await asyncio.sleep(15)
-            while ctx.voice_client:
-                break
-            else:
-                await ctx.guild.voice_client.disconnect()
-                await ctx.send('Left VC due to inactivity.')
-
-    @commands.command()
     async def leave(self, ctx):
         invc = ctx.author.voice
         botinvc = ctx.guild.me.voice
@@ -61,37 +33,37 @@ class Music(commands.Cog):
     async def play(self, ctx, *, url):
         invc = ctx.author.voice
         botinvc = ctx.guild.me.voice
-        if not botinvc:
-            await ctx.send(f"{ctx.author.mention}, I'm not in a VC!")
-            return
         if not invc:
             await ctx.send(f'{ctx.author.mention}, You are not in a VC!')
             return
-        player = music.get_player(guild_id=ctx.guild.id)
-        if not player:
-            player =  music.create_player(ctx, ffmpeg_error_betterfix=True)
-        if not ctx.voice_client.is_playing():
-            await player.queue(url, search=True)
-            song = await player.play()
-            await ctx.send(f'Now Playing: `{song.name}`')
-        else:
-            song = await player.queue(url, search=True)
-            embed=discord.Embed(title='Song Added to Queue!', description=f'**{song.name}** added!', color=0x00FFFF)
-            author = ctx.message.author
-            pfp = author.avatar_url
-            embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
-            embed.timestamp = datetime.datetime.utcnow()
-            embed.set_footer(text=f'Added by {ctx.author}')
-            await ctx.send(embed=embed)
-        while ctx.voice_client.is_playing():
-            await asyncio.sleep(1)
-        else:
-            await asyncio.sleep(15)
-            while ctx.voice_client.is_playing():
-                break
-            else:
-                await ctx.guild.voice_client.disconnect()
-                await ctx.send('Left VC due to inactivity.')
+        if invc:
+            if not botinvc:
+                await ctx.author.voice.channel.connect()
+                player = music.get_player(guild_id=ctx.guild.id)
+                if not player:
+                    player =  music.create_player(ctx, ffmpeg_error_betterfix=True)
+                if not ctx.voice_client.is_playing():
+                    await player.queue(url, search=True)
+                    song = await player.play()
+                    await ctx.send(f'Now Playing: `{song.name}`')
+            
+            if botinvc:
+                player = music.get_player(guild_id=ctx.guild.id)
+                if not player:
+                    player =  music.create_player(ctx, ffmpeg_error_betterfix=True)
+                if not ctx.voice_client.is_playing():
+                    await player.queue(url, search=True)
+                    song = await player.play()
+                    await ctx.send(f'Now Playing: `{song.name}`')
+                else:
+                    song = await player.queue(url, search=True)
+                    embed=discord.Embed(title='Song Added to Queue!', description=f'**{song.name}** added!', color=0x00FFFF)
+                    author = ctx.message.author
+                    pfp = author.avatar_url
+                    embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+                    embed.timestamp = datetime.datetime.utcnow()
+                    embed.set_footer(text=f'Added by {ctx.author}')
+                    await ctx.send(embed=embed)
 
     @commands.command()
     async def pause(self, ctx):
@@ -104,9 +76,6 @@ class Music(commands.Cog):
             await ctx.send(f'{ctx.author.mention}, You are not in a VC!')
             return
         player = music.get_player(guild_id=ctx.guild.id)
-        if player.is_paused:
-            await ctx.send(f'{ctx.author.mention}, The music is already paused!')
-            return
         song = await player.pause()
         embed=discord.Embed(description='Music Paused!', color=0x00FFFF)
         author = ctx.author
