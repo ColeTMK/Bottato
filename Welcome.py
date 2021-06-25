@@ -56,10 +56,45 @@ class Welcome(commands.Cog):
           joined = member.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
           created = member.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
           log_channel = member.guild.get_channel(log_channel[str(member.guild.id)])
-          logembed=discord.Embed(title="Bot Log", description="New Member", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="New Member Joined", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
           logembed.add_field(name="**Join Date:**", value=f"{joined}", inline=False)
           logembed.add_field(name="**Creation Date:**", value=f"{created}", inline=False)
+          pfp = member.avatar_url
+          logembed.set_author(name=f"{member}", icon_url=pfp)
+          logembed.set_thumbnail(url=pfp)
+          logembed.timestamp = datetime.datetime.utcnow()
+          await log_channel.send(embed=logembed)
+      except (AttributeError, KeyError):
+        pass
+
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+      print(member)
+      embed=discord.Embed(description=f'**{member.name} Left!**', color=0x00FFFF)
+      embed.timestamp = datetime.datetime.utcnow()
+      pfp = member.avatar_url
+      embed.set_author(name=f'{member}!', icon_url=pfp)
+      memberpfp = member.avatar_url
+      embed.set_thumbnail(url=memberpfp)
+      with open('welcomechannel.json', 'r', encoding='utf-8') as fp:
+        get_channel = json.load(fp)
+
+        try:
+            if get_channel:
+                channel = member.guild.get_channel(get_channel[str(member.guild.id)])
+                await channel.send(embed=embed)
+        except (AttributeError, KeyError):
+            pass
+      with open('logchannel.json', 'r', encoding='utf-8') as fp:
+          log_channel = json.load(fp)
+      try:
+        if log_channel:
+          joined = member.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
+          log_channel = member.guild.get_channel(log_channel[str(member.guild.id)])
+          logembed=discord.Embed(title="Bot Log", description="Member Left", color=0x00FFFF)
+          logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
+          logembed.add_field(name="**Join Date:**", value=f"{joined}", inline=False)
           pfp = member.avatar_url
           logembed.set_author(name=f"{member}", icon_url=pfp)
           logembed.set_thumbnail(url=pfp)

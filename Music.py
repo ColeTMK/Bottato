@@ -117,13 +117,6 @@ class Music(commands.Cog):
             return
         player = music.get_player(guild_id=ctx.guild.id)
         song = await player.skip()
-        embed=discord.Embed(title='Music Skipped!', description=f'**{song.name}** now playing!', color=0x00FFFF)
-        author = ctx.author
-        pfp = author.avatar_url
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
-        embed.set_footer(text=f'Skipped by {ctx.author}')
-        await ctx.send(embed=embed)
 
     @commands.command()
     async def stop(self, ctx):
