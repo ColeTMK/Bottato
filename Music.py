@@ -6,6 +6,10 @@ from discord.ext import commands
 
 music = DiscordUtils.Music()
 
+async def send_message_function(ctx):
+        queue.pop(0)
+        await ctx.send(embed=discord.Embed(title=f"Now Playing: {queue[0]}"))
+
 class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -44,7 +48,7 @@ class Music(commands.Cog):
                     player =  music.create_player(ctx, ffmpeg_error_betterfix=True)
                 if not ctx.voice_client.is_playing():
                     await player.queue(url, search=True)
-                    song = await player.play()
+                    song = await player.play(after=send_message_function)
                     await ctx.send(f'Now Playing: `{song.name}`')
             
             if botinvc:
@@ -53,7 +57,7 @@ class Music(commands.Cog):
                     player =  music.create_player(ctx, ffmpeg_error_betterfix=True)
                 if not ctx.voice_client.is_playing():
                     await player.queue(url, search=True)
-                    song = await player.play()
+                    song = await player.play(after=send_message_function)
                     await ctx.send(f'Now Playing: `{song.name}`')
                 else:
                     song = await player.queue(url, search=True)
@@ -143,7 +147,7 @@ class Music(commands.Cog):
         invc = ctx.author.voice
         botinvc = ctx.guild.me.voice
         player = music.get_player(guild_id=ctx.guild.id)
-        currentsong = player.current_queue[0]
+        currentsong = player.now_playing()
         if not botinvc:
             await ctx.send(f"{ctx.author.mention}, I'm not in a VC!")
             return
@@ -151,7 +155,7 @@ class Music(commands.Cog):
             await ctx.send(f'{ctx.author.mention}, You are not in a VC!')
             return
         await ctx.send(f'Currently playing: `{currentsong}`')
-        
+
     @commands.command()
     async def queue(self, ctx):
         invc = ctx.author.voice

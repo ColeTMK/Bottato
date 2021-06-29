@@ -74,7 +74,7 @@ class Welcome(commands.Cog):
       embed=discord.Embed(description=f'**{member.name} Left!**', color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       pfp = member.avatar_url
-      embed.set_author(name=f'{member}!', icon_url=pfp)
+      embed.set_author(name=f'{member}', icon_url=pfp)
       memberpfp = member.avatar_url
       embed.set_thumbnail(url=memberpfp)
       with open('welcomechannel.json', 'r', encoding='utf-8') as fp:
