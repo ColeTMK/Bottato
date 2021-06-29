@@ -1,7 +1,9 @@
+from itertools import cycle
 import discord
 from discord.ext import commands
 import json
 import datetime
+import asyncio
 
 def get_prefix(bot, message):
 	with open('prefixes.json', 'r') as f:
@@ -25,14 +27,23 @@ async def on_guild_join(guild): #when the bot joins the guild
 async def on_ready():
   channel = bot.get_channel(848722304069926993)
   print('The bot is online!')
-  await bot.change_presence(
-    activity=discord.Activity(type=discord.ActivityType.playing, name="Music! >help to learn more"))
   print('Bot is connected to:')
   for server in bot.guilds:
     print(server.name, server.id)
   embed=discord.Embed(title="Bot Restart", color=0x00FFFF)
   embed.timestamp = datetime.datetime.utcnow()
   await channel.send(embed=embed)
+  statuses = [f'{len(set(bot.get_all_members()))} members and {len(bot.guilds)} servers!', f'>help for help!']
+
+
+  displaying = cycle(statuses)
+
+  running = True
+
+  while running:
+    current_status = next(displaying)
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(name=current_status ,type=3))
+    await asyncio.sleep(60)
 
 @bot.command()
 async def toggle(ctx, *, command):
