@@ -61,6 +61,17 @@ async def toggle(ctx, *, command):
   else:
     return
 
+@bot.event
+async def on_message(message):
+  def get_prefix(message):
+        with open('prefixes.json', 'r') as f:
+          prefixes = json.load(f)
+          return prefixes[str(message.guild.id)]
+  if "<@830599839623675925>" in message.content.lower():
+    await message.channel.send(f"My prefix for this server is `{get_prefix(message)}`")
+  
+  await bot.process_commands(message)
+
 bot.load_extension('AutoMod')
 bot.load_extension('Commands')
 bot.load_extension('Games')
