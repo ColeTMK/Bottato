@@ -105,9 +105,12 @@ class Commands(commands.Cog):
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(pass_context=True)
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx, amount=None):
+      if amount == None:
+        await ctx.send(f'{ctx.author.mention}, You need to give an amount of messages to delete!')
+        return
       amount = int(amount)
       if amount <= 0:
         await ctx.send(f"{ctx.author.mention}, You need to give a positive number!")
@@ -126,9 +129,9 @@ class Commands(commands.Cog):
 
       try:
         if log_channel:
-          await ctx.send(embed=embed)
+          msg = await ctx.send(embed=embed)
           await asyncio.sleep(3)
-          await ctx.channel.purge(limit=1)
+          await msg.delete()
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Clear Command Used", color=0x00FFFF)
           logembed.add_field(name="**Amount:**", value=f"{amount} Messages", inline=False)
@@ -140,13 +143,13 @@ class Commands(commands.Cog):
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
         else:
-          await ctx.send(embed=embed)
+          msg = await ctx.send(embed=embed)
           await asyncio.sleep(3)
-          await ctx.channel.purge(limit=1)
+          await msg.delete()
       except (AttributeError, KeyError):
-        await ctx.send(embed=embed)
+        msg = await ctx.send(embed=embed)
         await asyncio.sleep(3)
-        await ctx.channel.purge(limit=1)
+        await msg.delete()
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
