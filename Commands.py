@@ -195,12 +195,13 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
+      except:
           await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
-      except (AttributeError, KeyError):
-        await ctx.send(embed=embed)
+
+      try:
         await member.send(embed=dmembed)
+      except:
+        pass
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
@@ -246,12 +247,13 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
-          await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
-      except (AttributeError, KeyError):
+      except:
         await ctx.send(embed=embed)
+
+      try:
         await member.send(embed=dmembed)
+      except:
+        pass
 
     @commands.command()
     @commands.has_permissions(manage_channels = True)
