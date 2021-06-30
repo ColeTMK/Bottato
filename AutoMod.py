@@ -31,7 +31,7 @@ class AutoMod(commands.Cog):
           return
         if message.author.guild_permissions.manage_messages:
           return
-        if message.guild.id == 754470904817385562: #potatohead's server
+        if message.guild.id == 859603774669979648: #ghost's server
           return
 
         await message.delete()

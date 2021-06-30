@@ -60,9 +60,6 @@ class Warns(commands.Cog):
             logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
             logembed.timestamp = datetime.datetime.utcnow()
             await log_channel.send(embed=logembed)
-          else:
-            await ctx.send(embed=embed)
-            await user.send(embed=dmembed)
         except (AttributeError, KeyError):
           await ctx.send(embed=embed)
           await user.send(embed=dmembed)

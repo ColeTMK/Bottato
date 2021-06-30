@@ -69,5 +69,6 @@ bot.load_extension('ErrorHandlers')
 bot.load_extension('MsgEditDelete')
 bot.load_extension('Warns')
 bot.load_extension('Welcome')
+#bot.load_extension('Music')
 
 bot.run('ODMwNTk5ODM5NjIzNjc1OTI1.YHJCYQ.kzMTlKbjNzSmw2cXtc96JVmEiTc')
