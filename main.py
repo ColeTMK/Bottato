@@ -33,7 +33,7 @@ async def on_ready():
   embed=discord.Embed(title="Bot Restart", color=0x00FFFF)
   embed.timestamp = datetime.datetime.utcnow()
   await channel.send(embed=embed)
-  statuses = [f'{len(set(bot.get_all_members()))} members and {len(bot.guilds)} servers!', f'>help for help!']
+  statuses = [f'{len(set(bot.get_all_members()))} members and {len(bot.guilds)} servers!', f'>help for help!', 'ping me for server prefix']
 
 
   displaying = cycle(statuses)
@@ -43,7 +43,7 @@ async def on_ready():
   while running:
     current_status = next(displaying)
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(name=current_status ,type=3))
-    await asyncio.sleep(60)
+    await asyncio.sleep(45)
 
 @bot.command()
 async def toggle(ctx, *, command):
@@ -67,10 +67,20 @@ async def on_message(message):
         with open('prefixes.json', 'r') as f:
           prefixes = json.load(f)
           return prefixes[str(message.guild.id)]
-  if "<@830599839623675925>" in message.content.lower():
+  if message.content == "<@!830599839623675925>":
     await message.channel.send(f"My prefix for this server is `{get_prefix(message)}`")
   
   await bot.process_commands(message)
+
+@bot.command()
+async def cole(ctx):
+  embed=discord.Embed(title='Opening a Ticket for Curse Word List Change', description='If you want to open a ticket to change the Curse Word List for your server, do these steps.', color=0x00FFFF)
+  embed.add_field(name='Step-1', value='Run `{ulitimate bot prefix}serverinfo` in your server.', inline=False)
+  embed.add_field(name='Step-2', value='Click **:envelope_with_arrow: Create ticket** below the Ticket Tool embed.', inline=False)
+  embed.add_field(name='Step-3', value='Say you want to change the curse word list in your server AND send a screenshot of the server info embed. (this is to verify that you are the owner of the server that your trying to change the curse word list in!)', inline=False)
+  embed.add_field(name='Step-4', value='Wait for assistance by an Admin!', inline=False)
+  embed.set_image(url='https://i.stack.imgur.com/9Q7xb.png')
+  await ctx.send(embed=embed)
 
 bot.load_extension('AutoMod')
 bot.load_extension('Commands')

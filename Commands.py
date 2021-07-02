@@ -7,7 +7,6 @@ import json
 import asyncio
 import datetime
 from discord.ext.commands import Bot, Greedy
-from discord.ext.commands import CommandOnCooldown
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
@@ -524,6 +523,7 @@ class Commands(commands.Cog):
       embed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
       memberpfp = member.avatar_url
       embed.set_thumbnail(url=memberpfp)
+      embed.timestamp = datetime.datetime.utcnow()
       dmembed=discord.Embed(title="Role Gived", description="You were given a role!", color=0x00FFFF)
       dmembed.add_field(name="**Server:**", value=f"{ctx.guild.name}", inline=False)
       dmembed.add_field(name="**Role:**", value=f"{role}", inline=False)
@@ -573,6 +573,7 @@ class Commands(commands.Cog):
       embed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
       memberpfp = member.avatar_url
       embed.set_thumbnail(url=memberpfp)
+      embed.timestamp = datetime.datetime.utcnow()
       dmembed=discord.Embed(title="Role Removed", description="A role was removed from you!", color=0x00FFFF)
       dmembed.add_field(name="**Server:**", value=f"{ctx.guild.name}", inline=False)
       dmembed.add_field(name="**Role:**", value=f"{role}", inline=False)
@@ -637,7 +638,7 @@ class Commands(commands.Cog):
       embed.add_field(name="**Admin Commands**", value='Dm, Changeprefix, Addcoins', inline=False)
       embed.add_field(name="**Fun Commands**", value='Fact, Quote, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
       embed.add_field(name="**Economy**", value='Balance, Work, Beg, Give, Deposit, Withdraw', inline=False)
-      embed.add_field(name="**AutoMod**", value='*Members that have admin and/or manage messages perms are bypassed by AutoMod!* Click this link to see what words will get deleted -> https://bit.ly/33N0TTY **IF YOU WANT THE LIST CHANGED FOR YOUR SERVER, DM ColeTMK#1234**', inline=False)
+      embed.add_field(name="**AutoMod**", value='*Members that have admin and/or manage messages perms are bypassed by AutoMod!* Click this link to see what words will get deleted -> https://bit.ly/33N0TTY **IF YOU WANT THE LIST CHANGED FOR YOUR SERVER, JOIN https://discord.gg/arMVCzHfuf**', inline=False)
       embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
       embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` To change, type `>changeprefix {prefix}`', inline=False)
       embed.add_field(name="**Current Prefix**", value=f'The **CURRENT** prefix for this server is `{get_prefix(self.bot, ctx.message)}`', inline=False)
@@ -748,14 +749,22 @@ class Commands(commands.Cog):
         
 
     @commands.command()
-    async def pfp(self, ctx):
+    async def pfp(self, ctx, *, user:discord.Member=None):
       author = ctx.message.author
-      pfp = author.avatar_url
-      embed=discord.Embed(description="This is your avatar.", color=0x00FFFF)
-      embed.set_author(name=f"{ctx.author}")
-      embed.set_image(url=(pfp))
-      embed.timestamp = datetime.datetime.utcnow()
-      await ctx.send(embed=embed)
+      if user is None:
+        pfp = author.avatar_url
+        embed=discord.Embed(description="This is your avatar.", color=0x00FFFF)
+        embed.set_author(name=f"{ctx.author}")
+        embed.set_image(url=(pfp))
+        embed.timestamp = datetime.datetime.utcnow()
+        await ctx.send(embed=embed)
+      else:
+        pfp = user.avatar_url
+        embed=discord.Embed(description=f"This is **{user}** avatar.", color=0x00FFFF)
+        embed.set_author(name=f"{ctx.author}")
+        embed.set_image(url=(pfp))
+        embed.timestamp = datetime.datetime.utcnow()
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def suggest(self, ctx, *, text):
@@ -827,10 +836,10 @@ class Commands(commands.Cog):
       top_role = roles[0]
       created = user.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
       embed=discord.Embed(title='**Member Info**', color=0x00FFFF)
-      embed.add_field(name='**Name:**', value=f'{user}', inline=False)
-      embed.add_field(name='**ID:**', value=f'{user.id}', inline=False)
-      embed.add_field(name='**Join Date:**', value=f'{joined}', inline=False)
-      embed.add_field(name='**Creation Date:**', value=f'{created}', inline=False)
+      embed.add_field(name='**Name:**', value=f'`{user}`', inline=False)
+      embed.add_field(name='**ID:**', value=f'`{user.id}`', inline=False)
+      embed.add_field(name='**Join Date:**', value=f'`{joined}`', inline=False)
+      embed.add_field(name='**Creation Date:**', value=f'`{created}`', inline=False)
       embed.add_field(name='**Roles [{}]:**'.format(len(user.roles)-1), value=role_string, inline=False)
       embed.add_field(name='**Highest Role:**', value=top_role.mention, inline=False)
       embed.set_author(name=f'{author.name}', icon_url=pfp)
@@ -838,6 +847,32 @@ class Commands(commands.Cog):
       embed.set_footer(text=f'{ctx.guild.name}')
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
+
+    @commands.command()
+    async def serverinfo(self, ctx):
+      author = ctx.author
+      pfp = author.avatar_url
+      total = len(ctx.guild.members)
+      humans = len(list(filter(lambda m: not m.bot, ctx.guild.members)))
+      bots = len(list(filter(lambda m: m.bot, ctx.guild.members)))
+      embed=discord.Embed(title='Server Info', color=0x00FFFF)
+      embed.add_field(name='Server Name:', value=f'`{ctx.guild.name}`', inline=False)
+      embed.add_field(name='Server ID:', value=f'`{ctx.guild.id}`', inline=False)
+      embed.add_field(name='Owner:', value=f'`{ctx.guild.owner}`', inline=False)
+      embed.add_field(name='Server Region:', value=f'`{ctx.guild.region}`', inline=False)
+      embed.add_field(name='Server Creation Date:', value=f'`{ctx.guild.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")}`', inline=False)
+      embed.add_field(name='Text Channels:', value=f'`{len(ctx.guild.text_channels)} Text Channels`', inline=False)
+      embed.add_field(name='Voice Channels:', value=f'`{len(ctx.guild.voice_channels)} Voice Channels`', inline=False)
+      embed.add_field(name='Roles:', value=f'`{len(ctx.guild.roles)} Roles`', inline=False)
+      embed.add_field(name='Total Members:', value=f'`{total} Members`', inline=False)
+      embed.add_field(name='Humans:', value=f'`{humans} Humans`', inline=False)
+      embed.add_field(name='Roles:', value=f'`{bots} Bots`', inline=False)
+      embed.add_field(name='Boost Count:', value=f'`{ctx.guild.premium_subscription_count} Boosts`', inline=False)
+      embed.set_author(name=f'{author.name}', icon_url=pfp)
+      embed.set_footer(text=f'{ctx.guild.name}')
+      embed.timestamp = datetime.datetime.utcnow()
+      await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Commands(bot))
