@@ -14,14 +14,24 @@ bot = commands.Bot(command_prefix=(get_prefix), intents=discord.Intents.all(), c
 bot.remove_command("help")
 
 @bot.event
-async def on_guild_join(guild): #when the bot joins the guild
-    with open('prefixes.json', 'r') as f: #read the prefix.json file
-        prefixes = json.load(f) #load the json file
+async def on_guild_join(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
 
-    prefixes[str(guild.id)] = '>'#default prefix
+    prefixes[str(guild.id)] = '>'
 
-    with open('prefixes.json', 'w') as f: #write in the prefix.json "message.guild.id": "bl!"
-        json.dump(prefixes, f, indent=4) #the indent is to make everything look a bit neater
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@bot.event
+async def on_guild_remove(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes.pop(str(guild.id))
+
+    with open('prefixes.json', 'w') as f:
+      json.dump(prefixes, f, indent=4)
 
 @bot.event
 async def on_ready():
