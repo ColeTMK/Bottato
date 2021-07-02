@@ -634,6 +634,7 @@ class Commands(commands.Cog):
       embed.add_field(name="**Website**", value='https://bit.ly/3okQzMh', inline=False)
       embed.add_field(name="**All Commands Page**", value='https://bit.ly/33N0TTY', inline=False)
       embed.add_field(name="**Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
+      embed.add_field(name="**Support Server:**", value='https://discord.gg/arMVCzHfuf', inline=False)
       embed.add_field(name="**Moderator Commands**", value='Clear, Warn, Kick, Ban, Mute, Temp. Mute, Unmute, Unlock/Lock Channel, Give/Remove Role, Setlogchannel, Setwelcomechannel', inline=False)
       embed.add_field(name="**Admin Commands**", value='Dm, Changeprefix, Addcoins', inline=False)
       embed.add_field(name="**Fun Commands**", value='Fact, Quote, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
@@ -651,7 +652,7 @@ class Commands(commands.Cog):
         embed.add_field(name="**Current Welcome Channel:**", value=f"`{get_welcomechannel(self.bot, ctx.message)}`", inline=False)
       else:
         embed.add_field(name="**Current Welcome Channel:**", value="No Welcome Channel Set! To set a welcome channel, type >setwelcomechannel #{channel}")
-      embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers!")
+      embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers! • Support Server : https://discord.gg/arMVCzHfuf")
       embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
       await ctx.send(embed=embed)
 

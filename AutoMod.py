@@ -75,6 +75,7 @@ class AutoMod(commands.Cog):
             embed.add_field(name="**Website**", value='https://bit.ly/3okQzMh', inline=False)
             embed.add_field(name="**All Commands Page**", value='https://bit.ly/33N0TTY', inline=False)
             embed.add_field(name="**Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
+            embed.add_field(name="**Support Server:**", value='https://discord.gg/arMVCzHfuf', inline=False)
             embed.add_field(name="**Moderator Commands**", value='Clear, Warn, Kick, Ban, Mute, Temp. Mute, Unmute, Unlock/Lock Channel, Give/Remove Role, Setlogchannel, Setwelcomechannel', inline=False)
             embed.add_field(name="**Admin Commands**", value='Dm, Changeprefix, Addcoins', inline=False)
             embed.add_field(name="**Fun Commands**", value='Fact, Quote, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
@@ -82,6 +83,7 @@ class AutoMod(commands.Cog):
             embed.add_field(name="**AutoMod**", value='*Members that have admin and/or manage messages perms are bypassed by AutoMod!* Click this link to see what words will get deleted -> https://bit.ly/33N0TTY **IF YOU WANT THE LIST CHANGED FOR YOUR SERVER, JOIN https://discord.gg/arMVCzHfuf**', inline=False)
             embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
             embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` Admins can change the prefix by `>changeprefix {prefix}`', inline=False)
+            embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers! • Support Server : https://discord.gg/arMVCzHfuf")
             embed.timestamp = datetime.datetime.utcnow()
             if message.content == '>help':
                 await message.channel.send(embed=embed)
