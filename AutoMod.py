@@ -41,6 +41,7 @@ class AutoMod(commands.Cog):
             author = message.author
             pfp = author.avatar_url
             embed.set_author(name=f"{author.name}", icon_url=pfp)
+            embed.set_footer(text='Owners, join https://discord.gg/arMVCzHfuf to change the cuss word list or to disable it.')
             await message.channel.send(embed=embed)
             dmembed=discord.Embed(title="AutoMod", description="You were caught saying a bad word! Please refrain from saying this again!", color=0x00FFFF)
             dmembed.add_field(name="**Message:**", value=f"{msg_content}", inline=False)

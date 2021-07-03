@@ -27,6 +27,10 @@ class Warns(commands.Cog):
         await ctx.send(f"{ctx.author.mention}, You can't warn me!")
         return
 
+      if user.author.bot:
+          await ctx.send(f"{ctx.author.mention}, You can't warn a bot!")
+          return
+
       if user:
         await ctx.channel.purge(limit=1)
         embed=discord.Embed(title="Warn", description=f"{user.mention} has been warned!", color=0x00FFFF)

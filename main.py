@@ -23,6 +23,20 @@ async def on_guild_join(guild):
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
 
+    with open('serverlist.json', 'r') as f:
+        serverlist = json.load(f)
+
+    serverlist[str(guild.id)] = str(guild.owner.id)
+
+    with open('serverlist.json', 'w') as f:
+        json.dump(serverlist, f, indent=4)
+
+    guildowner = guild.owner
+    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Ultimate to **{guild.name}**! Please read some info that can be very helpful for you, your mods, and members!', color=0x00FFFF)
+    embed.add_field(name='Prefix Info:', value='The DEFAULT prefix that is set for your server is `>`, owner/admins can change this by a simple command! `>changeprefix {prefix}` If you ever forget the prefix for your server, you can just mention me!', inline=False)
+    embed.add_field(name='Prefix Info:', value=
+    await guildowner.send(embed=embed)
+
 @bot.event
 async def on_guild_remove(guild):
     with open('prefixes.json', 'r') as f:
@@ -32,6 +46,30 @@ async def on_guild_remove(guild):
 
     with open('prefixes.json', 'w') as f:
       json.dump(prefixes, f, indent=4)
+
+    with open('serverlist.json', 'r') as f:
+        serverlist = json.load(f)
+
+    serverlist.pop(str(guild.id))
+
+    with open('serverlist.json', 'w') as f:
+        json.dump(serverlist, f, indent=4)
+
+    with open('logchannel.json', 'r') as f:
+        logchannel = json.load(f)
+
+    logchannel.pop(str(guild.id))
+
+    with open('logchannel.json', 'w') as f:
+        json.dump(logchannel, f, indent=4)
+
+    with open('welcomechannel.json', 'r') as f:
+        welcomechannel = json.load(f)
+
+    welcomechannel.pop(str(guild.id))
+
+    with open('welcomechannel.json', 'w') as f:
+        json.dump(welcomechannel, f, indent=4)
 
 @bot.event
 async def on_ready():
