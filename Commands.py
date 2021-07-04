@@ -235,7 +235,6 @@ class Commands(commands.Cog):
       try:
         if log_channel:
           await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Kick Command Used", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
@@ -421,7 +420,6 @@ class Commands(commands.Cog):
         try:
           if log_channel:
             await ctx.send(embed=embed)
-            await member.send(embed=dmembed)
             log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
             logembed=discord.Embed(title="Bot Log", description="Unmute Command Used", color=0x00FFFF)
             logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
@@ -431,12 +429,12 @@ class Commands(commands.Cog):
             logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
             logembed.timestamp = datetime.datetime.utcnow()
             await log_channel.send(embed=logembed)
-          else:
-            await ctx.send(embed=embed)
-            await member.send(embed=dmembed)
-        except (AttributeError, KeyError):
+        except:
           await ctx.send(embed=embed)
+        try:
           await member.send(embed=dmembed)
+        except:
+            pass
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -485,7 +483,6 @@ class Commands(commands.Cog):
       try:
         if log_channel:
           await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Temp. Mute Command Used", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
@@ -501,14 +498,16 @@ class Commands(commands.Cog):
           await member.remove_roles(role)
         else:
           await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
           await asyncio.sleep(time)
           await member.remove_roles(role)
       except (AttributeError, KeyError):
         await ctx.send(embed=embed)
-        await member.send(embed=dmembed)
         await asyncio.sleep(time)
         await member.remove_roles(role)
+      try:
+      	await member.send(dmembed)
+      except:
+        pass
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)

@@ -53,7 +53,6 @@ class Warns(commands.Cog):
         try:
           if log_channel:
             await ctx.send(embed=embed)
-            await user.send(embed=dmembed)
             log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
             logembed=discord.Embed(title="Bot Log", description="Warn Command Used", color=0x00FFFF)
             logembed.add_field(name="**Member:**", value=f"{user}", inline=False)
@@ -66,7 +65,10 @@ class Warns(commands.Cog):
             await log_channel.send(embed=logembed)
         except (AttributeError, KeyError):
           await ctx.send(embed=embed)
+        try:
           await user.send(embed=dmembed)
+        except:
+          pass
         with open('warns.json', 'r') as f:
             users = json.load(f)
 

@@ -32,9 +32,18 @@ async def on_guild_join(guild):
         json.dump(serverlist, f, indent=4)
 
     guildowner = guild.owner
-    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Ultimate to **{guild.name}**! Please read some info that can be very helpful for you, your mods, and members!', color=0x00FFFF)
+    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Ultimate to Bot {guild.name}! Please read some info that can be very helpful for you, your mods, and members!', color=0x00FFFF)
     embed.add_field(name='Prefix Info:', value='The DEFAULT prefix that is set for your server is `>`, owner/admins can change this by a simple command! `>changeprefix {prefix}` If you ever forget the prefix for your server, you can just mention me!', inline=False)
-    embed.add_field(name='Prefix Info:', value=
+    embed.add_field(name='AutoMod Info:', value='AutoMod (Swear Word Filter) is automatically enabled for your server! If you wish to have this disabled or/ banned words change, join the Ultimate Bot Support Server -> https://discord.gg/arMVCzHfuf. To see what words are in the filter, click here -> https://bit.ly/33N0TTY.', inline=False)
+    embed.add_field(name='Moderator/Admin Commands:', value='Ultimate Bot has useful commands for you, your admins, and your mods. They include...\n`clear` `ban` `kick` `mute` `tempmute` `unmute` `lockchannel` `unlockchannel` `changenickname` `warn` `warns` `removewarns` `giverole` `removerole`', inline=False)
+    embed.add_field(name='Economy:', value='Ultimate Bot has an Economy feature! Commands for this are,\n`work` `beg` `givecoins` `deposit` `withdraw` Admin Only: `addcoins`', inline=False)
+    embed.add_field(name='Miscellaneous Commands:', value='Utimate Bot features some commands that members can use and interact with! Some include,\n`rps` `numbergame` `suggest` `pfp` `quote` `fact` These are NOT all of them!', inline=False)
+    embed.add_field(name='Welcoming/Leaving:', value='Ultimate Bot can welcome new members that join! Also, when a member leaves! To setup this, type `>setwelcomechannel {channel}` OR `{changedprefix}setwelcomechannel {channel}`', inline=False)
+    embed.add_field(name='Logging:', value='Ultimate Bot features logging features! Things that can be logged are `Member Join` `Member Leave` `Message Delete` `Message Edit`', inline=False)
+    embed.add_field(name='All Commands/Features:', value='To see ALL my commands and features, click here -> https://bit.ly/33N0TTY', inline=False)
+    embed.set_footer(text=f'If you experience any issues with me or want to change the curse word list, please join the support server! https://discord.gg/arMVCzHfuf | Thanks for inviting me to {guild.name}!')
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
     await guildowner.send(embed=embed)
 
 @bot.event
@@ -124,10 +133,11 @@ async def on_message(message):
 async def cole(ctx):
   embed=discord.Embed(title='Opening a Ticket for Curse Word List Change', description='If you want to open a ticket to change the Curse Word List for your server, do these steps.', color=0x00FFFF)
   embed.add_field(name='Step-1', value='Run `{ulitimate bot prefix}serverinfo` in your server.', inline=False)
+  embed.add_field(name='Step-2', value='Take a Screenshot that includes the `Guild ID`, `Owner Name`, and the `Owner ID`', inline=False)
   embed.add_field(name='Step-2', value='Click **:envelope_with_arrow: Create ticket** below the Ticket Tool embed.', inline=False)
-  embed.add_field(name='Step-3', value='Say you want to change the curse word list in your server AND send a screenshot of the server info embed. (this is to verify that you are the owner of the server that your trying to change the curse word list in!)', inline=False)
+  embed.add_field(name='Step-3', value='Say you want to change the curse word list in your server AND send the screenshot you took. (this is to verify that you are the owner of the server that your trying to change the curse word list in!)', inline=False)
   embed.add_field(name='Step-4', value='Wait for assistance by an Admin!', inline=False)
-  embed.set_image(url='https://i.stack.imgur.com/9Q7xb.png')
+  embed.set_image(url='https://i.stack.imgur.com/HCGv7.png')
   await ctx.send(embed=embed)
 
 bot.load_extension('AutoMod')
