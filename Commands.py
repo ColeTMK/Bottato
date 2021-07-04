@@ -610,6 +610,8 @@ class Commands(commands.Cog):
     @commands.command()
     async def help(self, ctx):
 
+      dm = ctx.author
+
       def get_prefix(bot, message):
         with open('prefixes.json', 'r') as f:
           prefixes = json.load(f)
@@ -653,7 +655,12 @@ class Commands(commands.Cog):
         embed.add_field(name="**Current Welcome Channel:**", value="No Welcome Channel Set! To set a welcome channel, type >setwelcomechannel #{channel}")
       embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers! • Support Server : https://discord.gg/arMVCzHfuf")
       embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
-      await ctx.send(embed=embed)
+      try:
+        await dm.send(embed=embed)
+        await ctx.message.add_reaction('✅')
+      except:
+        await ctx.message.add_reaction('❌')
+        await ctx.send("**Error:** I could not send you a DM with help! Make sure you are accepting DM's from server members and/or non-friends!")
 
     @commands.command()
     async def invite(self, ctx):
