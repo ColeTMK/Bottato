@@ -66,9 +66,9 @@ class AutoMod(commands.Cog):
                     pfp = author.avatar_url
                     logembed.set_author(name=f"{author}", icon_url=pfp)
                     logembed.timestamp = datetime.datetime.utcnow()
+                    logembed.set_footer(text='Owners, join https://discord.gg/arMVCzHfuf to change the cuss word list or to disable it.')
                     await log_channel.send(embed=logembed)
             except (AttributeError, KeyError):
-                await log_channel.send(embed=logembed)
                 pass
 
         if isinstance(message.channel, discord.DMChannel):
