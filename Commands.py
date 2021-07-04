@@ -182,8 +182,6 @@ class Commands(commands.Cog):
 
       try:
         if log_channel:
-          await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Ban Command Used", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
@@ -195,10 +193,14 @@ class Commands(commands.Cog):
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
       except:
-          await ctx.send(embed=embed)
+          pass
 
       try:
         await member.send(embed=dmembed)
+      except:
+        pass
+      try:
+        await ctx.send(embed=embed)
       except:
         pass
 
@@ -234,7 +236,6 @@ class Commands(commands.Cog):
 
       try:
         if log_channel:
-          await ctx.send(embed=embed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Kick Command Used", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
@@ -246,10 +247,14 @@ class Commands(commands.Cog):
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
       except:
-        await ctx.send(embed=embed)
+        pass
 
       try:
         await member.send(embed=dmembed)
+      except:
+        pass
+      try:
+        await ctx.send(embed=embed)
       except:
         pass
 
