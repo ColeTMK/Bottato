@@ -49,6 +49,26 @@ async def on_guild_join(guild):
     except:
       pass
 
+    cole = bot.get_user(467715040087244800)
+    total = len(guild.members)
+    humans = len(list(filter(lambda m: not m.bot, guild.members)))
+    bots = len(list(filter(lambda m: m.bot, guild.members)))
+    embed=discord.Embed(title='New Server Join!', color=0x00FFFF)
+    embed.add_field(name='Server Name:', value=f'`{guild.name}`', inline=False)
+    embed.add_field(name='Server ID:', value=f'`{guild.id}`', inline=False)
+    embed.add_field(name='Owner:', value=f'`{guild.owner}`', inline=False)
+    embed.add_field(name='Owner ID:', value=f'`{guild.owner.id}`', inline=False)
+    embed.add_field(name='Server Region:', value=f'`{guild.region}`', inline=False)
+    embed.add_field(name='Server Creation Date:', value=f'`{guild.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")}`', inline=False)
+    embed.add_field(name='Text Channels:', value=f'`{len(guild.text_channels)} Text Channels`', inline=False)
+    embed.add_field(name='Voice Channels:', value=f'`{len(guild.voice_channels)} Voice Channels`', inline=False)
+    embed.add_field(name='Roles:', value=f'`{len(guild.roles)} Roles`', inline=False)
+    embed.add_field(name='Total Members:', value=f'`{total} Members`', inline=False)
+    embed.add_field(name='Humans:', value=f'`{humans} Humans`', inline=False)
+    embed.add_field(name='Bots:', value=f'`{bots} Bots`', inline=False)
+    embed.add_field(name='Boost Count:', value=f'`{guild.premium_subscription_count} Boosts`', inline=False)
+    await cole.send(embed=embed)
+
 @bot.event
 async def on_guild_remove(guild):
     with open('prefixes.json', 'r') as f:
