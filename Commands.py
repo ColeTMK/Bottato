@@ -664,7 +664,16 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def invite(self, ctx):
-      embed=discord.Embed(title="Bot Invite", description="If you would like me to be in your server, fill out this link -> https://bit.ly/3v3UIqo", color=0x00FFFF)
+      embed=discord.Embed(title="Bot Invite", description="Click here -> https://top.gg/bot/830599839623675925 **YOU WILL GET 404 ERROR! BOT WAITING FOR APPROVAL**", color=0x00FFFF)
+      author = ctx.message.author
+      pfp = author.avatar_url
+      embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+      embed.timestamp = datetime.datetime.utcnow()
+      await ctx.send(embed=embed)
+
+    @commands.command()
+    async def support(self, ctx):
+      embed=discord.Embed(title="Bot Support", description="Click here -> https://discord.gg/arMVCzHfuf", color=0x00FFFF)
       author = ctx.message.author
       pfp = author.avatar_url
       embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
