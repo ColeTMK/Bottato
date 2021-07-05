@@ -35,11 +35,11 @@ async def on_guild_join(guild):
     embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Ultimate Bot to {guild.name}! Please read some info that can be very helpful for you, your mods, and members!', color=0x00FFFF)
     embed.add_field(name='Prefix Info:', value='The DEFAULT prefix that is set for your server is `>`, owner/admins can change this by a simple command! `>changeprefix {prefix}` If you ever forget the prefix for your server, you can just mention me!', inline=False)
     embed.add_field(name='AutoMod Info:', value='AutoMod (Swear Word Filter) is automatically enabled for your server! If you wish to have this disabled or/ banned words change, join the Ultimate Bot Support Server -> https://discord.gg/arMVCzHfuf. To see what words are in the filter, click here -> https://bit.ly/33N0TTY.', inline=False)
-    embed.add_field(name='Moderator/Admin Commands:', value='Ultimate Bot has useful commands for you, your admins, and your mods. They include...\n`clear` `ban` `kick` `mute` `tempmute` `unmute` `lockchannel` `unlockchannel` `changenickname` `warn` `warns` `removewarns` `giverole` `removerole`', inline=False)
+    embed.add_field(name='Moderator/Admin Commands:', value='Ultimate Bot has useful commands for you, your admins, and your mods. They include...\n`clear` `ban` `kick` `mute` `tempmute` `unmute` `lockchannel` `unlockchannel` `changenickname` `warn` `warns` `removewarns` `slowmode` `giverole` `removerole`', inline=False)
     embed.add_field(name='Economy:', value='Ultimate Bot has an Economy feature! Commands for this are,\n`work` `beg` `bal` `givecoins` `deposit` `withdraw` Admin Only: `addcoins`', inline=False)
     embed.add_field(name='Miscellaneous Commands:', value='Utimate Bot features some commands that members can use and interact with! Some include,\n`rps` `numbergame` `suggest` `pfp` `quote` `fact` These are NOT all of them!', inline=False)
     embed.add_field(name='Welcoming/Leaving:', value='Ultimate Bot can welcome new members that join! Also, when a member leaves! To setup this, type `>setwelcomechannel {channel}` OR `{changedprefix}setwelcomechannel {channel}`', inline=False)
-    embed.add_field(name='Logging:', value='Ultimate Bot features logging features! Things that can be logged are `Member Join` `Member Leave` `Message Delete` `Message Edit`', inline=False)
+    embed.add_field(name='Logging:', value='Ultimate Bot features logging features! Things that can be logged are `Member Join` `Member Leave` `Message Delete` `Message Edit` `Moderator Commands`', inline=False)
     embed.add_field(name='All Commands/Features:', value='To see ALL my commands and features, click here -> https://bit.ly/33N0TTY', inline=False)
     embed.set_footer(text=f'If your experience any issues with me or want to change the curse word list, please join the support server! https://discord.gg/arMVCzHfuf | Thanks for inviting me to {guild.name}!')
     embed.timestamp = datetime.datetime.utcnow()
@@ -113,7 +113,7 @@ async def on_ready():
   embed=discord.Embed(title="Bot Restart", color=0x00FFFF)
   embed.timestamp = datetime.datetime.utcnow()
   await channel.send(embed=embed)
-  statuses = [f'{len(set(bot.get_all_members()))} members and {len(bot.guilds)} servers!', f'>help for help!', 'Ping me for server prefix!', 'Made my ColeTMK#1234']
+  statuses = [f'{len(set(bot.get_all_members()))} members and {len(bot.guilds)} servers!', f'>help for help!', 'Ping me for server prefix!', 'Made by ColeTMK#1234']
 
 
   displaying = cycle(statuses)

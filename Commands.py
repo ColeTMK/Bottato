@@ -128,10 +128,10 @@ class Commands(commands.Cog):
 
       try:
         if log_channel:
+          log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           msg = await ctx.send(embed=embed)
           await asyncio.sleep(3)
           await msg.delete()
-          log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           logembed=discord.Embed(title="Bot Log", description="Clear Command Used", color=0x00FFFF)
           logembed.add_field(name="**Amount:**", value=f"{amount} Messages", inline=False)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
@@ -141,10 +141,6 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
-          msg = await ctx.send(embed=embed)
-          await asyncio.sleep(3)
-          await msg.delete()
       except (AttributeError, KeyError):
         msg = await ctx.send(embed=embed)
         await asyncio.sleep(3)
@@ -271,8 +267,8 @@ class Commands(commands.Cog):
 
       try:
         if log_channel:
-          await ctx.send(embed=embed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Lock Channel Used", color=0x00FFFF)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -281,8 +277,6 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           embed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
-          await ctx.send(embed=embed)
       except (AttributeError, KeyError):
         await ctx.send(embed=embed)
 
@@ -299,8 +293,8 @@ class Commands(commands.Cog):
 
       try:
         if log_channel:
-          await ctx.send(embed=embed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Unlock Channel Used", color=0x00FFFF)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -309,11 +303,42 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
+      except (AttributeError, KeyError):
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def slowmode(self, ctx, seconds:int=None):
+      if seconds == None:
+        await ctx.send(f'{ctx.author.mention}, You need to give a duration to change the slowmode!')
+        return
+      if seconds > 21600:
+        await ctx.send(f'{ctx.author.mention}, The maximum slowmode is 6 hours (21,600 seconds)!')
+      await ctx.channel.edit(slowmode_delay=seconds)
+      embed=discord.Embed(title="Slowmode Changed", description=f'Slowmode is now `{seconds} seconds`.', color=0x00FFFF)
+      author = ctx.message.author
+      pfp = author.avatar_url
+      embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+      embed.timestamp = datetime.datetime.utcnow()
+      with open('logchannel.json', 'r', encoding='utf-8') as fp:
+            log_channel = json.load(fp)
+          
+      try:
+        if log_channel:
+          log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          logembed=discord.Embed(title="Bot Log", description="Slowmode Command Used", color=0x00FFFF)
+          logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
+          logembed.add_field(name="**Slowmode:**", value=f"{seconds} Seconds", inline=False)
+          logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
+          author = ctx.message.author
+          pfp = author.avatar_url
+          logembed.set_author(name=f"{ctx.author}", icon_url=pfp)
+          logembed.timestamp = datetime.datetime.utcnow()
+          await log_channel.send(embed=logembed)
           await ctx.send(embed=embed)
       except (AttributeError, KeyError):
         await ctx.send(embed=embed)
- 
+      
     @commands.command()
     async def ping(self, ctx):
       embed=discord.Embed(title="Pong!", description=f'My ping is {round(self.bot.latency*1000)}ms.', color=0x00FFFF)
@@ -372,9 +397,9 @@ class Commands(commands.Cog):
           
           try:
             if log_channel:
+              log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
               await ctx.send(embed=embed)
               await member.send(embed=dmembed)
-              log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
               logembed=discord.Embed(title="Bot Log", description="Mute Command Used", color=0x00FFFF)
               logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
               logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
@@ -384,12 +409,12 @@ class Commands(commands.Cog):
               logembed.set_author(name=f"{ctx.author}", icon_url=pfp)
               logembed.timestamp = datetime.datetime.utcnow()
               await log_channel.send(embed=logembed)
-            else:
-              await ctx.send(embed=embed)
-              await member.send(embed=dmembed)
           except (AttributeError, KeyError):
             await ctx.send(embed=embed)
+          try:
             await member.send(embed=dmembed)
+          except:
+            pass
  
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -424,8 +449,8 @@ class Commands(commands.Cog):
           
         try:
           if log_channel:
-            await ctx.send(embed=embed)
             log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+            await ctx.send(embed=embed)
             logembed=discord.Embed(title="Bot Log", description="Unmute Command Used", color=0x00FFFF)
             logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
             logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -487,8 +512,8 @@ class Commands(commands.Cog):
           
       try:
         if log_channel:
-          await ctx.send(embed=embed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Temp. Mute Command Used", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
           logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
@@ -499,10 +524,6 @@ class Commands(commands.Cog):
           pfp = author.avatar_url
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           await log_channel.send(embed=logembed)
-          await asyncio.sleep(time)
-          await member.remove_roles(role)
-        else:
-          await ctx.send(embed=embed)
           await asyncio.sleep(time)
           await member.remove_roles(role)
       except (AttributeError, KeyError):
@@ -544,8 +565,8 @@ class Commands(commands.Cog):
         pass #ignore error if DM are closed  
       try:
         if log_channel:
-          await ctx.send(embed=embed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Give Role Command Used", color=0x00FFFF)
           logembed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
           logembed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
@@ -555,12 +576,8 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
-          await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
       except (AttributeError, KeyError):
         await ctx.send(embed=embed)
-        await member.send(embed=dmembed)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -594,8 +611,8 @@ class Commands(commands.Cog):
         pass #ignore error if DM are closed  
       try:
         if log_channel:
-          await ctx.send(embed=embed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Remove Role Command Used", color=0x00FFFF)
           logembed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
           logembed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
@@ -605,12 +622,8 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
-          await ctx.send(embed=embed)
-          await member.send(embed=dmembed)
       except (AttributeError, KeyError):
         await ctx.send(embed=embed)
-        await member.send(embed=dmembed)
     
     @commands.command()
     async def help(self, ctx):
@@ -641,10 +654,10 @@ class Commands(commands.Cog):
       embed.add_field(name="**All Commands Page**", value='https://bit.ly/33N0TTY', inline=False)
       embed.add_field(name="**Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
       embed.add_field(name="**Support Server:**", value='https://discord.gg/arMVCzHfuf', inline=False)
-      embed.add_field(name="**Moderator Commands**", value='Clear, Warn, Kick, Ban, Mute, Temp. Mute, Unmute, Unlock/Lock Channel, Give/Remove Role, Setlogchannel, Setwelcomechannel', inline=False)
-      embed.add_field(name="**Admin Commands**", value='Dm, Changeprefix, Addcoins', inline=False)
-      embed.add_field(name="**Fun Commands**", value='Fact, Quote, Ping, Shelp, Deadchat, Loved, PFP, Numbergame, RPS, Suggest, Userinfo, Membercount, Servercount, Invite', inline=False)
-      embed.add_field(name="**Economy**", value='Balance, Work, Beg, Give, Deposit, Withdraw', inline=False)
+      embed.add_field(name="**Moderator Commands**", value='`clear` `warn` `kick` `ban` `mute` `tempmute` `unmute` `unlock/lockchannel` `give/removerole` `slowmode` `setlogchannel` `setwelcomechannel`', inline=False)
+      embed.add_field(name="**Admin Commands**", value='`dm` `changeprefix` `addcoins`', inline=False)
+      embed.add_field(name="**Fun Commands**", value='`fact` `quote` `ping` `shelp` `deadchat` `loved` `pfp` `numbergame` `rps` `suggest` `userinfo` `serverinfo` `membercount` `servercount` `invite`', inline=False)
+      embed.add_field(name="**Economy**", value='`balance` `work` `beg` `give` `deposit` `withdraw`', inline=False)
       embed.add_field(name="**AutoMod**", value='*Members that have admin and/or manage messages perms are bypassed by AutoMod!* Click this link to see what words will get deleted -> https://bit.ly/33N0TTY **IF YOU WANT THE LIST CHANGED FOR YOUR SERVER, JOIN https://discord.gg/arMVCzHfuf**', inline=False)
       embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
       embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` To change, type `>changeprefix {prefix}`', inline=False)
@@ -653,11 +666,11 @@ class Commands(commands.Cog):
       if get_logchannel != None:
         embed.add_field(name="**Current Log Channel:**", value=f"`{get_logchannel(self.bot, ctx.message)}`", inline=False)
       else:
-        embed.add_field(name="**Current Log Channel:**", value="No Log Channel Set! To set a log channel, type >setlogchannel #{channel}")
+        embed.add_field(name="**Current Log Channel:**", value="No Log Channel Set! To set a log channel, type `>setlogchannel {channel}`")
       if get_welcomechannel != None:
         embed.add_field(name="**Current Welcome Channel:**", value=f"`{get_welcomechannel(self.bot, ctx.message)}`", inline=False)
       else:
-        embed.add_field(name="**Current Welcome Channel:**", value="No Welcome Channel Set! To set a welcome channel, type >setwelcomechannel #{channel}")
+        embed.add_field(name="**Current Welcome Channel:**", value="No Welcome Channel Set! To set a welcome channel, type `>setwelcomechannel {channel}`")
       embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers! • Support Server : https://discord.gg/arMVCzHfuf")
       embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
       try:
@@ -710,8 +723,8 @@ class Commands(commands.Cog):
 
       try:
         if log_channel:
-          await ctx.send(embed=embed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Change Nickname Command Used", color=0x00FFFF)
           logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
           logembed.add_field(name="**New Nickname:**", value=f"{nick}", inline=False)
@@ -721,8 +734,6 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
-          await ctx.send(embed=embed)
       except (AttributeError, KeyError):
         await ctx.send(embed=embed)
 
@@ -752,8 +763,8 @@ class Commands(commands.Cog):
 
       try:
         if log_channel:
-          await ctx.send(embed=embed)
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="DM Command Used", color=0x00FFFF)
           logembed.add_field(name="**Message:**", value=f"{message}", inline=False)
           logembed.add_field(name="**Member(s):**", value=f"{users}", inline=False)
@@ -763,8 +774,6 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
-          await ctx.send(embed=embed)
       except (AttributeError, KeyError):
         await ctx.send(embed=embed)
         
@@ -812,10 +821,10 @@ class Commands(commands.Cog):
           logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
-        else:
-          await ctx.send(embed=embed)
       except (AttributeError, KeyError):
-        await ctx.send(embed=embed)
+        await msg.add_reaction("👍")
+        await msg.add_reaction("👎")
+        await msg.add_reaction("😕")
 
     @commands.command()
     async def servercount(self, ctx):
