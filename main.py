@@ -31,10 +31,17 @@ async def on_guild_join(guild):
     with open('serverlist.json', 'w') as f:
         json.dump(serverlist, f, indent=4)
 
+    with open('automod.json', 'r') as f:
+      automod = json.load(f)
+
+    automod[str(guild.id)] = 'disabled'
+
+    with open('automod.json', 'w') as f:
+        json.dump(automod, f, indent=4)    
+
     guildowner = guild.owner
     embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Ultimate Bot to {guild.name}! Please read some info that can be very helpful for you, your mods, and members!', color=0x00FFFF)
     embed.add_field(name='Prefix Info:', value='The DEFAULT prefix that is set for your server is `>`, owner/admins can change this by a simple command! `>changeprefix {prefix}` If you ever forget the prefix for your server, you can just mention me!', inline=False)
-    embed.add_field(name='AutoMod Info:', value='AutoMod (Swear Word Filter) is automatically enabled for your server! If you wish to have this disabled or/ banned words change, join the Ultimate Bot Support Server -> https://discord.gg/arMVCzHfuf. To see what words are in the filter, click here -> https://bit.ly/33N0TTY.', inline=False)
     embed.add_field(name='Moderator/Admin Commands:', value='Ultimate Bot has useful commands for you, your admins, and your mods. They include...\n`clear` `ban` `kick` `mute` `tempmute` `unmute` `lockchannel` `unlockchannel` `changenickname` `warn` `warns` `removewarns` `slowmode` `giverole` `removerole`', inline=False)
     embed.add_field(name='Economy:', value='Ultimate Bot has an Economy feature! Commands for this are,\n`work` `beg` `bal` `givecoins` `deposit` `withdraw` Admin Only: `addcoins`', inline=False)
     embed.add_field(name='Miscellaneous Commands:', value='Utimate Bot features some commands that members can use and interact with! Some include,\n`rps` `numbergame` `suggest` `pfp` `quote` `fact` These are NOT all of them!', inline=False)
