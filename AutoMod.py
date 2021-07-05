@@ -19,22 +19,21 @@ class AutoMod(commands.Cog):
         curseWord = ['shit', 'asshole', 'fuck', 'bitch', 'cunt', 'nigger', 'faggot', 'fag', 'nigga', 'dick', 'cock', 'pussy', 'hoe']
         msg_content = message.content.lower()  
 
-        if message.guild.id == 859603774669979648: #ghost's server
-            return
-        if message.channel.type == discord.ChannelType.private:
-            return
-        if message.author.id == 330988962162147329: #johnny
-            return
-        if message.author.id == 261578097978114050: #devvy
-            return
-        if message.author.id == 467715040087244800: #me
-            return
-        if message.author.guild_permissions.administrator:
-            return
-        if message.author.guild_permissions.manage_messages:
-            return
-
         if any(word in msg_content for word in curseWord):
+            if message.channel.type == discord.ChannelType.private:
+                return
+            if message.author.id == 330988962162147329: #johnny
+                return
+            if message.author.id == 261578097978114050: #devvy
+                return
+            if message.author.id == 467715040087244800: #me
+                return
+            if message.author.guild_permissions.administrator:
+                return
+            if message.author.guild_permissions.manage_messages:
+                return
+            if message.guild.id == 859603774669979648: #ghost's server
+                return
 
             await message.delete()
             embed=discord.Embed(title="Swear Word", description=f"{message.author.mention}, Hey! Those words arent allowed here! Please refrain from saying this again!", color=0x00FFFF)
