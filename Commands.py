@@ -315,7 +315,7 @@ class Commands(commands.Cog):
       if seconds > 21600:
         await ctx.send(f'{ctx.author.mention}, The maximum slowmode is 6 hours (21,600 seconds)!')
       await ctx.channel.edit(slowmode_delay=seconds)
-      embed=discord.Embed(title="Slowmode Changed", description=f'Slowmode is now `{seconds} seconds`.', color=0x00FFFF)
+      embed=discord.Embed(title="Slowmode Changed", description=f'Slowmode is now `{seconds} seconds`', color=0x00FFFF)
       author = ctx.message.author
       pfp = author.avatar_url
       embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
@@ -656,7 +656,7 @@ class Commands(commands.Cog):
       embed.add_field(name="**Support Server:**", value='https://discord.gg/arMVCzHfuf', inline=False)
       embed.add_field(name="**Moderator Commands**", value='`clear` `warn` `kick` `ban` `mute` `tempmute` `unmute` `unlock/lockchannel` `give/removerole` `slowmode` `setlogchannel` `setwelcomechannel`', inline=False)
       embed.add_field(name="**Admin Commands**", value='`dm` `changeprefix` `addcoins`', inline=False)
-      embed.add_field(name="**Fun Commands**", value='`fact` `quote` `ping` `shelp` `deadchat` `loved` `pfp` `numbergame` `rps` `suggest` `userinfo` `serverinfo` `membercount` `servercount` `invite`', inline=False)
+      embed.add_field(name="**Fun Commands**", value='`fact` `quote` `ping` `deadchat` `loved` `pfp` `numbergame` `rps` `suggest` `userinfo` `serverinfo` `membercount` `servercount` `invite`', inline=False)
       embed.add_field(name="**Economy**", value='`balance` `work` `beg` `give` `deposit` `withdraw`', inline=False)
       embed.add_field(name="**AutoMod**", value='*Members that have admin and/or manage messages perms are bypassed by AutoMod!* Click this link to see what words will get deleted -> https://bit.ly/33N0TTY **IF YOU WANT THE LIST CHANGED FOR YOUR SERVER, JOIN https://discord.gg/arMVCzHfuf**', inline=False)
       embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
@@ -697,14 +697,6 @@ class Commands(commands.Cog):
       embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
- 
-    @commands.command()
-    async def shelp(self, ctx):
-      await ctx.channel.purge(limit=1)
-      dmembed=discord.Embed(title="Suici** Hotlines", description="US - 800-273-8255, Canada - 833-456-4566, Mexico - 55-5259-8121, Ireland - 116 123 OR text HELLO to 50808, Australia - 13 11 14 United Kingdom - 01708 765200. Remember that you are LOVED! You can do this, we believe in you! If you dont see your country above, please open a support ticket and we will find the # for you.", color=0x00FFFF)
-      dmembed.timestamp = datetime.datetime.utcnow()
-      await ctx.author.send(embed=dmembed)
-      await ctx.send(f"{ctx.author.mention}, I sent you a DM with that information!")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
