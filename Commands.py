@@ -7,7 +7,6 @@ import json
 import asyncio
 import datetime
 from discord.ext.commands import Bot, Greedy
-import akinator as ak
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
@@ -133,7 +132,7 @@ class Commands(commands.Cog):
           msg = await ctx.send(embed=embed)
           await asyncio.sleep(3)
           await msg.delete()
-          logembed=discord.Embed(title="Bot Log", description="Clear Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Clear Command Used", color=0xFFA500)
           logembed.add_field(name="**Amount:**", value=f"{amount} Messages", inline=False)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -180,7 +179,7 @@ class Commands(commands.Cog):
       try:
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
-          logembed=discord.Embed(title="Bot Log", description="Ban Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Ban Command Used", color=0xFFA500)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
           logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -234,7 +233,7 @@ class Commands(commands.Cog):
       try:
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
-          logembed=discord.Embed(title="Bot Log", description="Kick Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Kick Command Used", color=0xFFA500)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
           logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -270,7 +269,7 @@ class Commands(commands.Cog):
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           await ctx.send(embed=embed)
-          logembed=discord.Embed(title="Bot Log", description="Lock Channel Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Lock Channel Used", color=0xFFA500)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
           author = ctx.message.author
@@ -296,7 +295,7 @@ class Commands(commands.Cog):
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           await ctx.send(embed=embed)
-          logembed=discord.Embed(title="Bot Log", description="Unlock Channel Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Unlock Channel Used", color=0xFFA500)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
           author = ctx.message.author
@@ -327,7 +326,7 @@ class Commands(commands.Cog):
       try:
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
-          logembed=discord.Embed(title="Bot Log", description="Slowmode Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Slowmode Command Used", color=0xFFA500)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Slowmode:**", value=f"{seconds} Seconds", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -401,7 +400,7 @@ class Commands(commands.Cog):
               log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
               await ctx.send(embed=embed)
               await member.send(embed=dmembed)
-              logembed=discord.Embed(title="Bot Log", description="Mute Command Used", color=0x00FFFF)
+              logembed=discord.Embed(title="Bot Log", description="Mute Command Used", color=0xFFA500)
               logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
               logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
               logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -452,7 +451,7 @@ class Commands(commands.Cog):
           if log_channel:
             log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
             await ctx.send(embed=embed)
-            logembed=discord.Embed(title="Bot Log", description="Unmute Command Used", color=0x00FFFF)
+            logembed=discord.Embed(title="Bot Log", description="Unmute Command Used", color=0xFFA500)
             logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
             logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
             author = ctx.message.author
@@ -515,7 +514,7 @@ class Commands(commands.Cog):
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           await ctx.send(embed=embed)
-          logembed=discord.Embed(title="Bot Log", description="Temp. Mute Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Temp. Mute Command Used", color=0xFFA500)
           logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
           logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
           logembed.add_field(name="**Duration:**", value=f"{time} Seconds", inline=False)
@@ -568,7 +567,7 @@ class Commands(commands.Cog):
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           await ctx.send(embed=embed)
-          logembed=discord.Embed(title="Bot Log", description="Give Role Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Give Role Command Used", color=0xFFA500)
           logembed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
           logembed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
           logembed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
@@ -614,7 +613,7 @@ class Commands(commands.Cog):
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           await ctx.send(embed=embed)
-          logembed=discord.Embed(title="Bot Log", description="Remove Role Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Remove Role Command Used", color=0xFFA500)
           logembed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
           logembed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
           logembed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
@@ -657,7 +656,7 @@ class Commands(commands.Cog):
       embed.add_field(name="**Support Server:**", value='https://discord.gg/arMVCzHfuf', inline=False)
       embed.add_field(name="**Moderator Commands**", value='`clear` `warn` `kick` `ban` `mute` `tempmute` `unmute` `unlock/lockchannel` `give/removerole` `slowmode` `setlogchannel` `setwelcomechannel`', inline=False)
       embed.add_field(name="**Admin Commands**", value='`dm` `changeprefix` `addcoins`', inline=False)
-      embed.add_field(name="**Fun Commands**", value='`fact` `quote` `ping` `deadchat` `loved` `pfp` `numbergame` `rps` `suggest` `userinfo` `serverinfo` `membercount` `servercount` `invite`', inline=False)
+      embed.add_field(name="**Fun Commands**", value='`fact` `quote` `eightball` `ping` `deadchat` `loved` `pfp` `numbergame` `rps` `akinator` `suggest` `userinfo` `serverinfo` `membercount` `servercount` `invite`', inline=False)
       embed.add_field(name="**Economy**", value='`balance` `work` `beg` `give` `deposit` `withdraw`', inline=False)
       embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
       embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` To change, type `>changeprefix {prefix}`', inline=False)
@@ -717,7 +716,7 @@ class Commands(commands.Cog):
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           await ctx.send(embed=embed)
-          logembed=discord.Embed(title="Bot Log", description="Change Nickname Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Change Nickname Command Used", color=0xFFA500)
           logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
           logembed.add_field(name="**New Nickname:**", value=f"{nick}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -757,7 +756,7 @@ class Commands(commands.Cog):
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           await ctx.send(embed=embed)
-          logembed=discord.Embed(title="Bot Log", description="DM Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="DM Command Used", color=0xFFA500)
           logembed.add_field(name="**Message:**", value=f"{message}", inline=False)
           logembed.add_field(name="**Member(s):**", value=f"{users}", inline=False)
           logembed.add_field(name="**Admin:**", value=f"{ctx.author.name}", inline=False)
@@ -805,7 +804,7 @@ class Commands(commands.Cog):
           await msg.add_reaction("👎")
           await msg.add_reaction("😕")
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
-          logembed=discord.Embed(title="Bot Log", description="Suggest Command Used", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Suggest Command Used", color=0xFFA500)
           logembed.add_field(name="**Member:**", value=f"{ctx.author}", inline=False)
           logembed.add_field(name="**Suggestion:**", value=f"{text}", inline=False)
           author = ctx.message.author
@@ -895,72 +894,6 @@ class Commands(commands.Cog):
       embed.set_footer(text=f'{ctx.guild.name}')
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
-
-    @commands.command()
-    async def akinator(self, ctx):
-        intro=discord.Embed(title="Akinator",description="Hello, "+ctx.author.mention+"I am Akinator!!!",color=discord.Colour.blue())
-        intro.set_thumbnail(url="https://en.akinator.com/bundles/elokencesite/images/akinator.png?v93")
-        intro.set_footer(text="Think about a real or fictional character. I will try to guess who it is")
-        bye=discord.Embed(title="Akinator",description="Bye, "+ctx.author.mention,color=discord.Colour.blue())
-        bye.set_footer(text="Akinator left the chat!!")
-        bye.set_thumbnail(url="https://i.pinimg.com/originals/28/fc/0b/28fc0b88d8ded3bb8f89cb23b3e9aa7b.png")
-        await ctx.send(embed=intro)
-        def check(msg):
-            return msg.author == ctx.author and msg.channel == ctx.channel and msg.content.lower() in ["y", "n","p","b","yes","no","probably","idk","back"]
-        try:
-            aki = ak.Akinator()
-            q = aki.start_game()
-            while aki.progression <= 80:
-                question=discord.Embed(title="Question",description=q,color=discord.Colour.blue())
-                ques=["https://i.imgflip.com/uojn8.jpg","https://ih1.redbubble.net/image.297680471.0027/flat,750x1000,075,f.u1.jpg"]
-                question.set_thumbnail(url=ques[random.randint(0,1)])
-                question.set_footer(text="Your answer:(y/n/p/idk/b)")
-                question_sent=await ctx.send(embed=question)
-                try:
-                    msg = await self.bot.wait_for("message", check=check , timeout=30)
-                except asyncio.TimeoutError:
-                    await question_sent.delete()
-                    await ctx.send("Sorry you took too long to respond!(waited for 30sec)")
-                    await ctx.send(embed=bye)
-                    return
-                await question_sent.delete()
-                if msg.content.lower() in ["b","back"]:
-                    try:
-                        q=aki.back()
-                    except ak.CantGoBackAnyFurther:
-                        await ctx.send(e)
-                        continue
-                else:
-                    try:
-                        q = aki.answer(msg.content.lower())
-                    except ak.InvalidAnswerError as e:
-                        await ctx.send(e)
-                        continue
-            aki.win()
-            answer=discord.Embed(title=aki.first_guess['name'],description=aki.first_guess['description'],color=discord.Colour.blue())
-            answer.set_thumbnail(url=aki.first_guess['absolute_picture_path'])
-            answer.set_image(url=aki.first_guess['absolute_picture_path'])
-            answer.set_footer(text="Was I correct?(y/n)")
-            await ctx.send(embed=answer)
-            #await ctx.send(f"It's {aki.first_guess['name']} ({aki.first_guess['description']})! Was I correct?(y/n)\n{aki.first_guess['absolute_picture_path']}\n\t")
-            try:
-                correct = await self.bot.wait_for("message", check=check ,timeout=30)
-            except asyncio.TimeoutError:
-                await ctx.send("Sorry you took too long to respond!(waited for 30sec)")
-                await ctx.send(embed=bye)
-                return
-            if correct.content.lower() == "y":
-                yes=discord.Embed(title="Yeah!!!",color=discord.Colour.blue())
-                yes.set_thumbnail(url="https://i.pinimg.com/originals/ae/aa/d7/aeaad720bd3c42b095c9a6788ac2df9a.png")
-                await ctx.send(embed=yes)
-            else:
-                no=discord.Embed(title="Oh Noooooo!!!",color=discord.Colour.blue())
-                no.set_thumbnail(url="https://i.pinimg.com/originals/0a/8c/12/0a8c1218eeaadf5cfe90140e32558e64.png")
-                await ctx.send(embed=no)
-            await ctx.send(embed=bye)
-        except Exception as e:
-            await ctx.send(e)
-
 
 def setup(bot):
     bot.add_cog(Commands(bot))

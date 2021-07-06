@@ -1,6 +1,9 @@
+import discord
 from discord.ext import commands
 import random
 import asyncio
+import datetime
+import akinator as ak
 
 class Games(commands.Cog):
     def __init__(self, bot):
@@ -88,6 +91,99 @@ class Games(commands.Cog):
             await channel.send(f"{ctx.author.mention}, Your guess was too high!")
         elif guess < number:
             await channel.send(f"{ctx.author.mention}, Your guess was too low!")
+
+    @commands.command()
+    async def akinator(self, ctx):
+        intro=discord.Embed(title="Akinator",description=f"Hello {ctx.author.mention}! Welcome to Akinator!",color=0xFFFF00)
+        intro.set_thumbnail(url="https://en.akinator.com/bundles/elokencesite/images/akinator.png?v93")
+        intro.timestamp = datetime.datetime.utcnow()
+        intro.set_footer(text="Think about a real or fictional character. It can be from a TV show, movie, book, what not! I will try to guess who it is!")
+        bye=discord.Embed(title="Akinator",description="Bye, "+ctx.author.mention,color=0xFFFF00)
+        bye.set_footer(text="Akinator out!")
+        bye.timestamp = datetime.datetime.utcnow()
+        bye.set_thumbnail(url="https://i.pinimg.com/originals/28/fc/0b/28fc0b88d8ded3bb8f89cb23b3e9aa7b.png")
+        await ctx.send(embed=intro)
+        def check(msg):
+            return msg.author == ctx.author and msg.channel == ctx.channel and msg.content.lower() in ["y", "n","p","b","yes","no","probably","idk","back"]
+        try:
+            aki = ak.Akinator()
+            q = aki.start_game()
+            while aki.progression <= 80:
+                question=discord.Embed(title=f"Question for {ctx.author.name}",description=q,color=0xFFFF00)
+                ques=["https://i.imgflip.com/uojn8.jpg","https://ih1.redbubble.net/image.297680471.0027/flat,750x1000,075,f.u1.jpg"]
+                question.set_thumbnail(url=ques[random.randint(0,1)])
+                question.timestamp = datetime.datetime.utcnow()
+                question.set_footer(text="Your answer:(y/n/p/idk/b)")
+                question_sent=await ctx.send(embed=question)
+                try:
+                    msg = await self.bot.wait_for("message", check=check , timeout=30)
+                except asyncio.TimeoutError:
+                    await question_sent.delete()
+                    await ctx.send(f"{ctx.author.mention}, you took too long to respond!")
+                    return
+                await question_sent.delete()
+                if msg.content.lower() in ["b","back"]:
+                    try:
+                        q=aki.back()
+                    except ak.CantGoBackAnyFurther:
+                        await ctx.send(f"{ctx.author.mention}, I can't go back any futhur!")
+                        continue
+                else:
+                    try:
+                        q = aki.answer(msg.content.lower())
+                    except ak.InvalidAnswerError as e:
+                        await ctx.send(e)
+                        continue
+            aki.win()
+            answer=discord.Embed(title=aki.first_guess['name'],description=aki.first_guess['description'],color=0xFFFF00)
+            answer.set_thumbnail(url=aki.first_guess['absolute_picture_path'])
+            answer.set_image(url=aki.first_guess['absolute_picture_path'])
+            answer.set_footer(text="Was I correct? (y/n)")
+            answer.timestamp = datetime.datetime.utcnow()
+            await ctx.send(embed=answer)
+            try:
+                correct = await self.bot.wait_for("message", check=check ,timeout=30)
+            except asyncio.TimeoutError:
+                await ctx.send(f"{ctx.author.mention}, you took too long to respond!")
+                return
+            if correct.content.lower() == ["y", "yeah", "yes"]:
+                yes=discord.Embed(title="Yeah!",description='Epik poggers moment', color=0xFFFF00)
+                yes.timestamp = datetime.datetime.utcnow()
+                yes.set_thumbnail(url="https://i.pinimg.com/originals/ae/aa/d7/aeaad720bd3c42b095c9a6788ac2df9a.png")
+                await ctx.send(embed=yes)
+            else:
+                no=discord.Embed(title="Oh Noo!", description='I tried to think as hard as I could :sob:', color=0xFFFF00)
+                no.set_thumbnail(url="https://i.pinimg.com/originals/0a/8c/12/0a8c1218eeaadf5cfe90140e32558e64.png")
+                await ctx.send(embed=no)
+        except Exception as e:
+            await ctx.send(e)
+
+    @commands.command()
+    async def eightball(self, ctx, *, question):
+      responses = [
+        'Certainly!',
+        'Not likely.',
+        '100%!',
+        'Thats too personal.'
+        'Very positive.'
+        'Impossible!',
+        '50/50 chance.'
+        'Ask you mom.',
+        'I dont really know.',
+        'Maybe.',
+        'Yes',
+        'No',
+        'Im sure!',
+        'Im really not sure.']
+      answer = random.choice(responses)
+      embed=discord.Embed(title='8Ball', color=0x00FFFF)
+      embed.add_field(name='Question:', value=question, inline=False)
+      embed.add_field(name='Answer:', value=answer, inline=False)
+      author = ctx.author
+      pfp = author.avatar_url
+      embed.set_author(name=f'{author.name}', icon_url=pfp)
+      embed.timestamp = datetime.datetime.utcnow()
+      await ctx.send(embed=embed)
 
 def setup(bot):
   bot.add_cog(Games(bot))

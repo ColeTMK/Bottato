@@ -17,7 +17,7 @@ class MsgEditDelete(commands.Cog):
         try:
           if log_channel:
             log_channel = before.guild.get_channel(log_channel[str(before.guild.id)])
-            logembed=discord.Embed(title="Message Edited", color=0x00FFFF)
+            logembed=discord.Embed(title="Message Edited", color=0xFFA500)
             logembed.set_footer(text=f"Member : {before.author.name} • Message ID : {before.id}")
             logembed.timestamp = datetime.datetime.utcnow()
             logembed.add_field(name='Before:', value=before.content + "\u200b", inline=False)
@@ -41,7 +41,7 @@ class MsgEditDelete(commands.Cog):
         try:
           if log_channel:
             log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
-            logembed=discord.Embed(title="Message Deleted", color=0x00FFFF)
+            logembed=discord.Embed(title="Message Deleted", color=0xFFA500)
             logembed.set_footer(text=f"Member : {message.author.name} • Message ID : {message.id}")
             logembed.timestamp = datetime.datetime.utcnow()
             logembed.add_field(name='Message:', value=message.content + "\u200b", inline=False)

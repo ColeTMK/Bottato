@@ -59,7 +59,7 @@ class Welcome(commands.Cog):
               joined = member.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
               created = member.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
               log_channel = member.guild.get_channel(log_channel[str(member.guild.id)])
-              logembed=discord.Embed(title="Bot Log", description="New Member Joined", color=0x00FFFF)
+              logembed=discord.Embed(title="Bot Log", description="New Member Joined", color=0xFFA500)
               logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
               logembed.add_field(name="**Join Date:**", value=f"{joined}", inline=False)
               logembed.add_field(name="**Account Creation Date:**", value=f"{created}", inline=False)
@@ -95,7 +95,7 @@ class Welcome(commands.Cog):
         if log_channel:
           joined = member.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")
           log_channel = member.guild.get_channel(log_channel[str(member.guild.id)])
-          logembed=discord.Embed(title="Bot Log", description="Member Left", color=0x00FFFF)
+          logembed=discord.Embed(title="Bot Log", description="Member Left", color=0xFFA500)
           logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
           logembed.add_field(name="**Join Date:**", value=f"{joined}", inline=False)
           pfp = member.avatar_url

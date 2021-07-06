@@ -29,13 +29,13 @@ class AutoMod(commands.Cog):
                 return
             if message.guild.id in guilds:
                 await message.delete()
-                embed=discord.Embed(title="Swear Word", description=f"{message.author.mention}, Hey! Those words arent allowed here! Please refrain from saying this again!", color=0x00FFFF)
+                embed=discord.Embed(title="Swear Word", description=f"{message.author.mention}, Hey! Those words arent allowed here! Please refrain from saying this again!", color=0xFF0000)
                 embed.timestamp = datetime.datetime.utcnow()
                 author = message.author
                 pfp = author.avatar_url
                 embed.set_author(name=f"{author.name}", icon_url=pfp)
                 await message.channel.send(embed=embed)
-                dmembed=discord.Embed(title="AutoMod", description="You were caught saying a bad word! Please refrain from saying this again!", color=0x00FFFF)
+                dmembed=discord.Embed(title="AutoMod", description="You were caught saying a bad word! Please refrain from saying this again!", color=0xFF0000)
                 dmembed.add_field(name="**Message:**", value=f"{msg_content}", inline=False)
                 pfp = author.avatar_url
                 dmembed.add_field(name="**Server:**", value=f"{message.guild.name}", inline=False)
@@ -52,7 +52,7 @@ class AutoMod(commands.Cog):
                 try:
                     if log_channel:
                         log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
-                        logembed=discord.Embed(title="Bot Log", description="Bad Word Said", color=0x00FFFF)
+                        logembed=discord.Embed(title="Bot Log", description="Bad Word Said", color=0xFFA500)
                         logembed.add_field(name="**Message:**", value=f"{msg_content}", inline=False)
                         logembed.add_field(name="**Member:**", value=f"{message.author.name}", inline=False)
                         author = message.author

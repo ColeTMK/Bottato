@@ -33,7 +33,7 @@ class Warns(commands.Cog):
 
       if user:
         await ctx.channel.purge(limit=1)
-        embed=discord.Embed(title="Warn", description=f"{user.mention} has been warned!", color=0x00FFFF)
+        embed=discord.Embed(title="Warn", description=f"{user.mention} has been warned!", color=0xFF0000)
         embed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
         pfp = user.avatar_url
         embed.set_thumbnail(url=pfp)
@@ -52,7 +52,7 @@ class Warns(commands.Cog):
           if log_channel:
             await ctx.send(embed=embed)
             log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
-            logembed=discord.Embed(title="Bot Log", description="Warn Command Used", color=0x00FFFF)
+            logembed=discord.Embed(title="Bot Log", description="Warn Command Used", color=0xFFA500)
             logembed.add_field(name="**Member:**", value=f"{user}", inline=False)
             logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
             logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
@@ -95,7 +95,7 @@ class Warns(commands.Cog):
             del users[f'{user.id}']['warns']
             del users[f'{user.id}']
             f.write(json.dumps(users, indent=4))
-            embed=discord.Embed(description=f'{ctx.author.mention} has removed `{amount}` warns from {user.mention}!', color=0x00FFFF)
+            embed=discord.Embed(description=f'{ctx.author.mention} has removed `{amount}` warns from {user.mention}!', color=0xFF0000)
             embed.set_thumbnail(url=user.avatar_url)
             embed.timestamp = datetime.datetime.utcnow()
             await ctx.send(embed=embed)
@@ -105,7 +105,7 @@ class Warns(commands.Cog):
           with open('warns.json', 'w') as f:
             json.dump(users, f, sort_keys=True, ensure_ascii=False, indent=4)
 
-          embed=discord.Embed(description=f'{ctx.author.mention} has removed `{amount}` warns from {user.mention}!', color=0x00FFFF)
+          embed=discord.Embed(description=f'{ctx.author.mention} has removed `{amount}` warns from {user.mention}!', color=0xFF0000)
           embed.set_thumbnail(url=user.avatar_url)
           embed.timestamp = datetime.datetime.utcnow()
           await ctx.send(embed=embed)
