@@ -35,7 +35,6 @@ class Warns(commands.Cog):
         await ctx.channel.purge(limit=1)
         embed=discord.Embed(title="Warn", description=f"{user.mention} has been warned!", color=0x00FFFF)
         embed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
-        embed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
         pfp = user.avatar_url
         embed.set_thumbnail(url=pfp)
         embed.timestamp = datetime.datetime.utcnow()
@@ -44,7 +43,6 @@ class Warns(commands.Cog):
         dmembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
         pfp = user.avatar_url
         dmembed.add_field(name="**Server:**", value=f"{ctx.guild.name}", inline=False)
-        dmembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
         dmembed.timestamp = datetime.datetime.utcnow()
         dmembed.set_author(name=f"{user.name}", icon_url=pfp)
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
