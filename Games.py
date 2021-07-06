@@ -164,8 +164,8 @@ class Games(commands.Cog):
         'Certainly!',
         'Not likely.',
         '100%!',
-        'Thats too personal.'
-        'Very positive.'
+        'Thats too personal.',
+        'Very positive.',
         'Impossible!',
         '50/50 chance.'
         'Ask you mom.',

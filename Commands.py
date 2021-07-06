@@ -650,34 +650,17 @@ class Commands(commands.Cog):
             return "No welcome channel is set! To set one, type >setwelcomechannel #{channel}"
 
       embed=discord.Embed(title="Ultimate Bot Help", description="Hello! Here, you can get help from lots of useful links and info!", color=0x00FFFF)
-      embed.add_field(name="**Website**", value='https://bit.ly/3okQzMh', inline=False)
-      embed.add_field(name="**All Commands Page**", value='https://bit.ly/33N0TTY', inline=False)
-      embed.add_field(name="**Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
-      embed.add_field(name="**Support Server:**", value='https://discord.gg/arMVCzHfuf', inline=False)
-      embed.add_field(name="**Moderator Commands**", value='`clear` `warn` `kick` `ban` `mute` `tempmute` `unmute` `unlock/lockchannel` `give/removerole` `slowmode` `setlogchannel` `setwelcomechannel`', inline=False)
-      embed.add_field(name="**Admin Commands**", value='`dm` `changeprefix` `addcoins`', inline=False)
-      embed.add_field(name="**Fun Commands**", value='`fact` `quote` `eightball` `ping` `deadchat` `loved` `pfp` `numbergame` `rps` `akinator` `suggest` `userinfo` `serverinfo` `membercount` `servercount` `invite`', inline=False)
-      embed.add_field(name="**Economy**", value='`balance` `work` `beg` `give` `deposit` `withdraw`', inline=False)
-      embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
-      embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` To change, type `>changeprefix {prefix}`', inline=False)
+      embed.add_field(name=':information_source: | **Bot Info:**', value=f'`{get_prefix(self.bot, ctx.message)}help info`', inline=True)
+      embed.add_field(name='⚔️ | ** Moderator/Admin Commands:**', value=f'`{get_prefix(self.bot, ctx.message)}help moderation`', inline=True)
+      embed.add_field(name='🎧 | **Fun Commands:**', value=f'`{get_prefix(self.bot, ctx.message)}help fun`', inline=True)
+      embed.add_field(name='💰 | **Economy Commands:**', value=f'`{get_prefix(self.bot, ctx.message)}help economy`', inline=True)
+      embed.add_field(name='🎲 | **Minigame Commands:**', value=f'`{get_prefix(self.bot, ctx.message)}help minigames`', inline=True)
+      embed.add_field(name='⚙️ | **Bot/Server Config:**', value=f'`{get_prefix(self.bot, ctx.message)}help config`', inline=True)
       embed.add_field(name="**Current Prefix**", value=f'The **CURRENT** prefix for this server is `{get_prefix(self.bot, ctx.message)}`', inline=False)
       embed.timestamp = datetime.datetime.utcnow()
-      if get_logchannel != None:
-        embed.add_field(name="**Current Log Channel:**", value=f"`{get_logchannel(self.bot, ctx.message)}`", inline=False)
-      else:
-        embed.add_field(name="**Current Log Channel:**", value="No Log Channel Set! To set a log channel, type `>setlogchannel {channel}`")
-      if get_welcomechannel != None:
-        embed.add_field(name="**Current Welcome Channel:**", value=f"`{get_welcomechannel(self.bot, ctx.message)}`", inline=False)
-      else:
-        embed.add_field(name="**Current Welcome Channel:**", value="No Welcome Channel Set! To set a welcome channel, type `>setwelcomechannel {channel}`")
-      embed.set_footer(text="I'm strongly recommened for FAMILY FRIENDLY servers! • Support Server : https://discord.gg/arMVCzHfuf")
+      embed.set_footer(text=f"To change bot prefix, type >changeprefix (prefix) • Support Server : https://discord.gg/arMVCzHfuf")
       embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
-      try:
-        await dm.send(embed=embed)
-        await ctx.message.add_reaction('✅')
-      except:
-        await ctx.message.add_reaction('❌')
-        await ctx.send("**Error:** I could not send you a DM with help! Make sure you are accepting DM's from server members and/or non-friends!")
+      await ctx.send(embed=embed)
 
     @commands.command()
     async def invite(self, ctx):
