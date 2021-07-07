@@ -31,16 +31,8 @@ async def on_guild_join(guild):
     with open('serverlist.json', 'w') as f:
         json.dump(serverlist, f, indent=4)
 
-    with open('automod.json', 'r') as f:
-      automod = json.load(f)
-
-    automod[str(guild.id)] = 'disabled'
-
-    with open('automod.json', 'w') as f:
-        json.dump(automod, f, indent=4)    
-
     guildowner = guild.owner
-    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Ultimate Bot to {guild.name}! Please read some info that can be very helpful for you, your mods, and members!', color=0x00FFFF)
+    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Bottato to {guild.name}! Please read some info that can be very helpful for you, your mods, and members!', color=0x00FFFF)
     embed.add_field(name='Prefix Info:', value='The DEFAULT prefix that is set for your server is `>`, owner/admins can change this by a simple command! `>changeprefix {prefix}` If you ever forget the prefix for your server, you can just mention me!', inline=False)
     embed.add_field(name='Moderator/Admin Commands:', value='Ultimate Bot has useful commands for you, your admins, and your mods. They include...\n`clear` `ban` `kick` `mute` `tempmute` `unmute` `lockchannel` `unlockchannel` `changenickname` `warn` `warns` `removewarns` `slowmode` `giverole` `removerole`', inline=False)
     embed.add_field(name='Economy:', value='Ultimate Bot has an Economy feature! Commands for this are,\n`work` `beg` `bal` `givecoins` `deposit` `withdraw` Admin Only: `addcoins`', inline=False)
@@ -50,7 +42,7 @@ async def on_guild_join(guild):
     embed.add_field(name='All Commands/Features:', value='To see ALL my commands and features, click here -> https://bit.ly/33N0TTY', inline=False)
     embed.set_footer(text=f'If your experience any issues with me or want to change the curse word list, please join the support server! https://discord.gg/arMVCzHfuf | Thanks for inviting me to {guild.name}!')
     embed.timestamp = datetime.datetime.utcnow()
-    embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
     try:
       await guildowner.send(embed=embed)
     except:
@@ -178,6 +170,7 @@ bot.load_extension('ErrorHandlers')
 bot.load_extension('MsgEditDelete')
 bot.load_extension('Warns')
 bot.load_extension('Welcome')
+bot.load_extension('Help')
 #bot.load_extension('Music')
 
 bot.run('ODMwNTk5ODM5NjIzNjc1OTI1.YHJCYQ.kzMTlKbjNzSmw2cXtc96JVmEiTc')

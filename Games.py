@@ -94,7 +94,7 @@ class Games(commands.Cog):
 
     @commands.command()
     async def akinator(self, ctx):
-        intro=discord.Embed(title="Akinator",description=f"Hello {ctx.author.mention}! Welcome to Akinator!",color=0xFFFF00)
+        intro=discord.Embed(title="Akinator",description=f"Hello {ctx.author.mention}! Welcome to Akinator!\nPlease wait... game starting...",color=0xFFFF00)
         intro.set_thumbnail(url="https://en.akinator.com/bundles/elokencesite/images/akinator.png?v93")
         intro.timestamp = datetime.datetime.utcnow()
         intro.set_footer(text="Think about a real or fictional character. It can be from a TV show, movie, book, what not! I will try to guess who it is!")
@@ -102,9 +102,9 @@ class Games(commands.Cog):
         bye.set_footer(text="Akinator out!")
         bye.timestamp = datetime.datetime.utcnow()
         bye.set_thumbnail(url="https://i.pinimg.com/originals/28/fc/0b/28fc0b88d8ded3bb8f89cb23b3e9aa7b.png")
-        await ctx.send(embed=intro)
+        intromsg = await ctx.send(embed=intro)
         def check(msg):
-            return msg.author == ctx.author and msg.channel == ctx.channel and msg.content.lower() in ["y", "n","p","b","yes","no","probably","idk","back"]
+            return msg.author == ctx.author and msg.channel == ctx.channel and msg.content.lower() in ["y","n","p","b","yes","no","probably","idk","back"]
         try:
             aki = ak.Akinator()
             q = aki.start_game()
@@ -113,7 +113,7 @@ class Games(commands.Cog):
                 ques=["https://i.imgflip.com/uojn8.jpg","https://ih1.redbubble.net/image.297680471.0027/flat,750x1000,075,f.u1.jpg"]
                 question.set_thumbnail(url=ques[random.randint(0,1)])
                 question.timestamp = datetime.datetime.utcnow()
-                question.set_footer(text="Your answer:(y/n/p/idk/b)")
+                question.set_footer(text="Your answer: (y/n/p/idk/b)")
                 question_sent=await ctx.send(embed=question)
                 try:
                     msg = await self.bot.wait_for("message", check=check , timeout=30)
@@ -135,7 +135,7 @@ class Games(commands.Cog):
                         await ctx.send(e)
                         continue
             aki.win()
-            answer=discord.Embed(title=aki.first_guess['name'],description=aki.first_guess['description'],color=0xFFFF00)
+            answer=discord.Embed(title=aki.first_guess['name'], description=aki.first_guess['description'],color=0xFFFF00)
             answer.set_thumbnail(url=aki.first_guess['absolute_picture_path'])
             answer.set_image(url=aki.first_guess['absolute_picture_path'])
             answer.set_footer(text="Was I correct? (y/n)")
@@ -146,15 +146,20 @@ class Games(commands.Cog):
             except asyncio.TimeoutError:
                 await ctx.send(f"{ctx.author.mention}, you took too long to respond!")
                 return
-            if correct.content.lower() == ["y", "yeah", "yes"]:
-                yes=discord.Embed(title="Yeah!",description='Epik poggers moment', color=0xFFFF00)
-                yes.timestamp = datetime.datetime.utcnow()
+            if correct.content.lower() == "y":
+                yes=discord.Embed(title="YAYYY!",description='Epik poggers moment XD', color=0xFFFF00)
                 yes.set_thumbnail(url="https://i.pinimg.com/originals/ae/aa/d7/aeaad720bd3c42b095c9a6788ac2df9a.png")
+                yes.set_footer(text=f'Thanks for playing {ctx.author.name}!')
+                yes.timestamp = datetime.datetime.utcnow()
                 await ctx.send(embed=yes)
+                await intromsg.delete()
             else:
                 no=discord.Embed(title="Oh Noo!", description='I tried to think as hard as I could :sob:', color=0xFFFF00)
                 no.set_thumbnail(url="https://i.pinimg.com/originals/0a/8c/12/0a8c1218eeaadf5cfe90140e32558e64.png")
+                no.set_footer(text=f'Thanks for playing {ctx.author.name}!')
+                no.timestamp = datetime.datetime.utcnow()
                 await ctx.send(embed=no)
+                await intromsg.delete()
         except Exception as e:
             await ctx.send(e)
 
@@ -163,20 +168,20 @@ class Games(commands.Cog):
       responses = [
         'Certainly!',
         'Not likely.',
-        '100%!',
+        '100%',
         'Thats too personal.',
         'Very positive.',
         'Impossible!',
-        '50/50 chance.'
+        '50/50 chance.',
         'Ask you mom.',
         'I dont really know.',
         'Maybe.',
-        'Yes',
-        'No',
+        'Yes.',
+        'No.',
         'Im sure!',
         'Im really not sure.']
       answer = random.choice(responses)
-      embed=discord.Embed(title='8Ball', color=0x00FFFF)
+      embed=discord.Embed(title='8Ball', color=0xFFFF00)
       embed.add_field(name='Question:', value=question, inline=False)
       embed.add_field(name='Answer:', value=answer, inline=False)
       author = ctx.author

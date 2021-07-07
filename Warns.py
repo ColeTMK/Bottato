@@ -27,7 +27,7 @@ class Warns(commands.Cog):
         await ctx.send(f"{ctx.author.mention}, You can't warn me!")
         return
 
-      if user.author.bot:
+      if user.bot:
           await ctx.send(f"{ctx.author.mention}, You can't warn a bot!")
           return
 
@@ -50,8 +50,8 @@ class Warns(commands.Cog):
 
         try:
           if log_channel:
-            await ctx.send(embed=embed)
             log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
+            await ctx.send(embed=embed)
             logembed=discord.Embed(title="Bot Log", description="Warn Command Used", color=0xFFA500)
             logembed.add_field(name="**Member:**", value=f"{user}", inline=False)
             logembed.add_field(name="**Reason:**", value=f"{reason}", inline=False)

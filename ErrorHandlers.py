@@ -22,10 +22,9 @@ class ErrorHandlers(commands.Cog):
       if isinstance(error, commands.MemberNotFound):
         await ctx.send(f'{ctx.author.mention}, I could not find that member. Please try again by giving the right member name, or mention the member.')
       if isinstance(error, commands.BotMissingPermissions):
-        await ctx.channel.send(f'ERROR: I dont have permission to do this! Make sure my Ultimate Bot is high as it can be in the role list, then try again.')
-      else:
-        print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+        await ctx.send(f'ERROR: I dont have permission to do this! Make sure my `Ultimate Bot role` is high as it can be in the role list, then try again.')
+      if isinstance(error, commands.MissingRole):
+        await ctx.send(f'{ctx.author.mention}, you need a role called `Giveaways` or have `Administrator` perms order to run this command!')
 
 def setup(bot):
     bot.add_cog(ErrorHandlers(bot))

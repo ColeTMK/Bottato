@@ -624,43 +624,6 @@ class Commands(commands.Cog):
           await log_channel.send(embed=logembed)
       except (AttributeError, KeyError):
         await ctx.send(embed=embed)
-    
-    @commands.command()
-    async def help(self, ctx):
-
-      dm = ctx.author
-
-      def get_prefix(bot, message):
-        with open('prefixes.json', 'r') as f:
-          prefixes = json.load(f)
-          return prefixes[str(message.guild.id)]
-      def get_logchannel(bot, message):
-        with open('logchannel.json', 'r') as fp:
-          log_channel = json.load(fp)
-          try:
-            return log_channel[str(message.guild.id)]
-          except KeyError:
-            return "No log channel is set! To set one, type `>setlogchannel #{channel}`"
-      def get_welcomechannel(bot, message):
-        with open('welcomechannel.json', 'r') as fp:
-          welcomechannel = json.load(fp)
-          try:
-            return welcomechannel[str(message.guild.id)]
-          except KeyError:
-            return "No welcome channel is set! To set one, type >setwelcomechannel #{channel}"
-
-      embed=discord.Embed(title="Ultimate Bot Help", description="Hello! Here, you can get help from lots of useful links and info!", color=0x00FFFF)
-      embed.add_field(name=':information_source: | **Bot Info:**', value=f'`{get_prefix(self.bot, ctx.message)}help info`', inline=True)
-      embed.add_field(name='⚔️ | ** Moderator/Admin Commands:**', value=f'`{get_prefix(self.bot, ctx.message)}help moderation`', inline=True)
-      embed.add_field(name='🎧 | **Fun Commands:**', value=f'`{get_prefix(self.bot, ctx.message)}help fun`', inline=True)
-      embed.add_field(name='💰 | **Economy Commands:**', value=f'`{get_prefix(self.bot, ctx.message)}help economy`', inline=True)
-      embed.add_field(name='🎲 | **Minigame Commands:**', value=f'`{get_prefix(self.bot, ctx.message)}help minigames`', inline=True)
-      embed.add_field(name='⚙️ | **Bot/Server Config:**', value=f'`{get_prefix(self.bot, ctx.message)}help config`', inline=True)
-      embed.add_field(name="**Current Prefix**", value=f'The **CURRENT** prefix for this server is `{get_prefix(self.bot, ctx.message)}`', inline=False)
-      embed.timestamp = datetime.datetime.utcnow()
-      embed.set_footer(text=f"To change bot prefix, type >changeprefix (prefix) • Support Server : https://discord.gg/arMVCzHfuf")
-      embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/-geI64yQFa9oSJQIQrMIsdcvU5F0R53h1L85MUhtjLc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/830599839623675925/e3628ef58491a80705d745caec06d47d.webp?width=788&height=788")
-      await ctx.send(embed=embed)
 
     @commands.command()
     async def invite(self, ctx):
@@ -753,7 +716,7 @@ class Commands(commands.Cog):
         
 
     @commands.command()
-    async def pfp(self, ctx, *, user:discord.Member=None):
+    async def avatar(self, ctx, *, user:discord.Member=None):
       author = ctx.message.author
       if user is None:
         pfp = author.avatar_url
@@ -877,6 +840,38 @@ class Commands(commands.Cog):
       embed.set_footer(text=f'{ctx.guild.name}')
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.has_role('Giveaways')
+    async def gcreate(self, ctx, time=None, *, prize=None):
+        if time == None:
+          await ctx.send(f'{ctx.author.mention}, you need to give the duration! `Example: 1m, 1h, 7d`')
+          return
+        if prize == None:
+          await ctx.send(f'{ctx.author.mention}, you need to give the prize!')
+          return
+        embed=discord.Embed(title='New Giveaway Started!', color=0x1CDEA3)
+        embed.add_field(name='Prize:', value=f'{prize}', inline=False)
+        time_convert = {"s":1, "m":60, "h":3600, "d":86400}
+        gawtime = int(time[0]) * time_convert[time[-1]]
+        embed.add_field(name='Duration:', value=f'{time}', inline=False)
+        embed.add_field(name='From:', value=f'{ctx.author.mention}', inline=False)
+
+        gaw_msg = await ctx.send(embed=embed)
+        await gaw_msg.add_reaction("🎉")
+        await asyncio.sleep(gawtime)
+
+        new_msg = await ctx.channel.fetch_message(gaw_msg.id)
+
+        users = await new_msg.reactions[0].users().flatten()
+
+        users.pop(users.index(self.bot.user))
+
+        winner = random.choice(users)
+
+        winnerembed=discord.Embed(title='YAYYYY!!!', description=f'**{winner}** won the giveaway for *{prize}*!', color=0x1CDEA3)
+        await ctx.send(embed=winnerembed)
+        await ctx.send(winner.mention)
 
 def setup(bot):
     bot.add_cog(Commands(bot))

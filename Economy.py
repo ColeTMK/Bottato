@@ -52,8 +52,8 @@ class Economy(commands.Cog):
       bank_amount = users[str(user.id)]["bank"]
 
       embed = discord.Embed(title=f"{member.name}'s Balance", color=0x00FFFF)
-      embed.add_field(name="**Wallet:**", value=f"{wallet_amount} Ulti Coins", inline=False)
-      embed.add_field(name="**Bank:**", value=f"{bank_amount} Ulti Coins", inline=False)
+      embed.add_field(name="**Wallet:**", value=f"{wallet_amount} Tato Coins", inline=False)
+      embed.add_field(name="**Bank:**", value=f"{bank_amount} Tato Coins", inline=False)
       embed.set_thumbnail(url=user.avatar_url)
       embed.set_footer(
       text="Your total amount is saved across all servers that I'm in!")
@@ -77,12 +77,12 @@ class Economy(commands.Cog):
       with open("bank.json", "w") as f:
         json.dump(users, f, indent=4)
 
-      embed = discord.Embed(title="Work (Earn 10-50 Ulti Coins)",
+      embed = discord.Embed(title="Work (Earn 10-50 Tato Coins)",
 	                      description=f"{ctx.author.name} went to work!",
 	                      color=0x00FFFF)
       embed.add_field(name="**Your Job:**", value=f"{job}", inline=False)
       embed.add_field(name="**You Earned:**",
-	                value=f"{money} Ulti Coins",
+	                value=f"{money} Tato Coins",
 	                inline=False)
       embed.set_thumbnail(url=user.avatar_url)
       embed.set_footer(text="Your total amount is saved across all servers that I'm in!")
@@ -106,12 +106,12 @@ class Economy(commands.Cog):
         await ctx.send(f"{ctx.author.mention}, Your withdraw amount needs to be larger than 0!")
         return
       elif amount > bal:
-        await ctx.send(f"{ctx.author.mention}, You do not have enough Ulti Coins in your bank to do this!")
+        await ctx.send(f"{ctx.author.mention}, You do not have enough Tato Coins in your bank to do this!")
         return
       elif amount <= bal:
         await update_bank(ctx.author, amount, "wallet")
         await update_bank(ctx.author,-1*amount, "bank")
-        await ctx.send(f"{ctx.author.mention}, You just withdrew `{amount}` Ulti Coins from your bank and into your wallet!")
+        await ctx.send(f"{ctx.author.mention}, You just withdrew `{amount}` Tato Coins from your bank and into your wallet!")
 
     @commands.command()
     async def deposit(self, ctx, amount=None):
@@ -136,7 +136,7 @@ class Economy(commands.Cog):
       await update_bank(ctx.author,-1*amount,"wallet")
       await update_bank(ctx.author,amount,"bank")
 
-      await ctx.send(f"{ctx.author.mention}, You just deposited `{amount}` Ulti Coins into your bank!")
+      await ctx.send(f"{ctx.author.mention}, You just deposited `{amount}` Tato Coins into your bank!")
 
     @commands.command()
     async def give(self, ctx, member : discord.Member, amount=None):
@@ -161,7 +161,7 @@ class Economy(commands.Cog):
       elif amount <= bal:
         await update_bank(ctx.author,-1*amount, "wallet")
         await update_bank(member, amount, "wallet")
-        await ctx.send(f"{ctx.author.mention}, You just gave `{amount}` Ulti Coins to {member.name}!")
+        await ctx.send(f"{ctx.author.mention}, You just gave `{amount}` Tato Coins to {member.name}!")
 
     @commands.cooldown(1, 3600, commands.BucketType.user)
     @commands.command()
@@ -177,8 +177,8 @@ class Economy(commands.Cog):
       with open("bank.json", "w") as f:
         json.dump(users, f, indent=4)
 
-      embed = discord.Embed(title="Beg (Earn 0-25 Ulti Coins)", description=f"{ctx.author.name} wants to beg! :sob:", color=0x00FFFF)
-      embed.add_field(name="**You Earned:**", value=f"{money} Ulti Coins", inline=False)
+      embed = discord.Embed(title="Beg (Earn 0-25 Tato Coins)", description=f"{ctx.author.name} wants to beg! :sob:", color=0x00FFFF)
+      embed.add_field(name="**You Earned:**", value=f"{money} Tato Coins", inline=False)
       embed.set_thumbnail(url=user.avatar_url)
       embed.set_footer(text="Your total amount is saved across all servers that I'm in!")
       embed.timestamp = datetime.datetime.utcnow()
@@ -199,7 +199,7 @@ class Economy(commands.Cog):
         await ctx.send(f"{ctx.author.mention}, Your amount needs to be larger than 0!")
         return
       await update_bank(member, amount, "wallet")
-      await ctx.send(f"{ctx.author.mention}, You just added `{amount}` Ulti Coins to {member.name}'s account!")
+      await ctx.send(f"{ctx.author.mention}, You just added `{amount}` Tato Coins to {member.name}'s account!")
 
 def setup(bot):
     bot.add_cog(Economy(bot))
