@@ -63,24 +63,6 @@ class AutoMod(commands.Cog):
                 except (AttributeError, KeyError):
                     pass
 
-        if isinstance(message.channel, discord.DMChannel):
-            if message.content == '>help':
-                embed=discord.Embed(title="Ultimate Bot Help", description="Hello! Here, you can get help from lots of useful links and info!", color=0x00FFFF)
-                embed.add_field(name="**Website**", value='https://bit.ly/3okQzMh', inline=False)
-                embed.add_field(name="**All Commands Page**", value='https://bit.ly/33N0TTY', inline=False)
-                embed.add_field(name="**Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
-                embed.add_field(name="**Support Server:**", value='https://discord.gg/arMVCzHfuf', inline=False)
-                embed.add_field(name="**Moderator Commands**", value='`clear` `warn` `kick` `ban` `mute` `tempmute` `unmute` `unlock/lockchannel` `give/removerole` `slowmode` `setlogchannel` `setwelcomechannel`', inline=False)
-                embed.add_field(name="**Admin Commands**", value='`dm` `changeprefix` `addcoins`', inline=False)
-                embed.add_field(name="**Fun Commands**", value='`fact` `quote` `ping` `deadchat` `loved` `pfp` `numbergame` `rps` `suggest` `userinfo` `serverinfo` `membercount` `servercount` `invite`', inline=False)
-                embed.add_field(name="**Economy**", value='`balance` `work` `beg` `give` `deposit` `withdraw`', inline=False)
-                embed.add_field(name="**AutoMod**", value='*Members that have admin and/or manage messages perms are bypassed by AutoMod!* Click this link to see what words will get deleted -> https://bit.ly/33N0TTY **IF YOU WANT THE LIST CHANGED FOR YOUR SERVER, JOIN https://discord.gg/arMVCzHfuf**', inline=False)
-                embed.add_field(name="**Message Edit/Delete Events**", value='If a message gets Deleted or Edited, the bot will log it in the log channel that is set.', inline=False)
-                embed.add_field(name="**Prefix Info**", value='My **DEFAULT** prefix is `>` To change, type `>changeprefix {prefix}`', inline=False)
-                embed.add_field(name="**Current Prefix**", value=f'The **CURRENT** prefix for this server is `{get_prefix(self.bot, message)}`', inline=False)
-                embed.timestamp = datetime.datetime.utcnow()
-                await message.channel.send(embed=embed)
-
 
 def setup(bot):
     bot.add_cog(AutoMod(bot))

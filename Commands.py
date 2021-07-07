@@ -692,7 +692,7 @@ class Commands(commands.Cog):
         await user.send(message)
         embed=discord.Embed(title="INDIVIDUAL/BULK DM'S", description="Message Delivered!", color=0x00FFFF)
         embed.add_field(name="**Message:**", value=f'{message}', inline=True)
-        embed.add_field(name="**User(s):**", value=f'{users}', inline=True)
+        embed.add_field(name="**User(s):**", value=f'{users.name}', inline=True)
         embed.add_field(name="**Admin:**", value=f'{ctx.author}', inline=True)
         embed.timestamp = datetime.datetime.utcnow()
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
@@ -856,22 +856,60 @@ class Commands(commands.Cog):
         gawtime = int(time[0]) * time_convert[time[-1]]
         embed.add_field(name='Duration:', value=f'{time}', inline=False)
         embed.add_field(name='From:', value=f'{ctx.author.mention}', inline=False)
+        embed.set_footer(text=f'{ctx.guild.name}')
+        embed.set_thumbnail(url=ctx.author.avatar_url)
+        embed.timestamp = datetime.datetime.utcnow()
 
         gaw_msg = await ctx.send(embed=embed)
         await gaw_msg.add_reaction("🎉")
         await asyncio.sleep(gawtime)
-
         new_msg = await ctx.channel.fetch_message(gaw_msg.id)
 
-        users = await new_msg.reactions[0].users().flatten()
+        user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.bot.user]
 
-        users.pop(users.index(self.bot.user))
+        # After we have the list, we can check if any users reacted
+        if len(user_list) == 0:
+          await ctx.send("No one reacted.")
+        else:
+          winner = random.choice(user_list)
 
-        winner = random.choice(users)
-
-        winnerembed=discord.Embed(title='YAYYYY!!!', description=f'**{winner}** won the giveaway for *{prize}*!', color=0x1CDEA3)
+        winnerembed=discord.Embed(title='Giveaway Ended', description=f'**{winner}** won the giveaway for\n***{prize}*** !', color=0x1CDEA3)
+        winnerembed.set_footer(text=f'{ctx.guild.name}')
+        winnerembed.timestamp = datetime.datetime.utcnow()
+        winnerembed.set_thumbnail(url=winner.avatar_url)
         await ctx.send(embed=winnerembed)
         await ctx.send(winner.mention)
+
+    @commands.command()
+    @commands.has_role('Giveaways')
+    async def reroll(self, ctx, channel: discord.TextChannel, messageid: int):
+        try:
+            new_msg = await channel.fetch_message(messageid)
+        except:
+            await ctx.send(f"{ctx.author.mention}, I could not find that ID! Make sure you gave the right channel and right message, then try again.")
+            return
+        user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.bot.user]
+
+        # After we have the list, we can check if any users reacted
+        if len(user_list) == 0:
+          await ctx.send("No one reacted.")
+        else:
+          winner = random.choice(user_list)
+
+        await channel.send(f"Congrats! The new winner is: {winner.mention}!")
+
+    @commands.command()
+    @commands.has_role('Giveaways')
+    async def deletegiveaway(self, ctx, channel: discord.TextChannel, messageid: int):
+        try:
+            new_msg = await channel.fetch_message(messageid)
+        except:
+            await ctx.send(f"{ctx.author.mention}, I could not find that ID! Make sure you gave the right channel and right message, then try again.")
+            return
+        
+        await new_msg.delete()
+
+        await channel.send(f"{ctx.author.mention}, that giveaway was deleted! Message ID: {messageid}")
 
 def setup(bot):
     bot.add_cog(Commands(bot))

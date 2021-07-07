@@ -112,7 +112,7 @@ async def on_ready():
   embed=discord.Embed(title="Bot Restart", color=0x00FFFF)
   embed.timestamp = datetime.datetime.utcnow()
   await channel.send(embed=embed)
-  statuses = [f'{len(set(bot.get_all_members()))} members and {len(bot.guilds)} servers!', f'>help for help!', 'Ping me for server prefix!', 'Made by ColeTMK#1234']
+  statuses = [f'{len(set(bot.get_all_members()))} Members & {len(bot.guilds)} Servers!', 'Ping Me For Server Prefix!', 'Made by ColeTMK#1234']
 
 
   displaying = cycle(statuses)

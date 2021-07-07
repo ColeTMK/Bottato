@@ -117,12 +117,14 @@ class Help(commands.Cog):
 
         giveawaysembed=discord.Embed(title='Giveaways Help', description='Here, you can get help for giveaway commands!', color=0x00FFFF)
         giveawaysembed.add_field(name='Create Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}gcreate [duration, example: 1m, 6h, 7d] [prize]`', inline=True)
+        giveawaysembed.add_field(name='Reroll Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}reroll [channel] [message id]`', inline=True)
+        giveawaysembed.add_field(name='Delete Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}deletegiveaway [channel] [message id]`', inline=True)
         giveawaysembed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
         giveawaysembed.timestamp = datetime.datetime.utcnow()
 
         linksembed=discord.Embed(title='Links Help', description='Here, you can access import links to websites and more!', color=0x00FFFF)
-        linksembed.add_field(name="Website", value='https://bit.ly/3okQzMh', inline=False)
-        linksembed.add_field(name="All Commands Page", value='https://bit.ly/33N0TTY', inline=False)
+        linksembed.add_field(name="Website:", value='https://bit.ly/3okQzMh', inline=False)
+        linksembed.add_field(name="All Commands Page:", value='https://bit.ly/33N0TTY', inline=False)
         linksembed.add_field(name="Terms & Conditions:", value='https://bit.ly/3yEYs48', inline=False)
         linksembed.add_field(name="Support Server:", value='https://discord.gg/arMVCzHfuf', inline=False)
         linksembed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
@@ -144,6 +146,9 @@ class Help(commands.Cog):
             await ctx.send(embed=giveawaysembed)
         if input == 'links':
             await ctx.send(embed=linksembed)
+        else:
+            await ctx.send(f'{ctx.author.mention}, there is no such thing as **{input}** in the help directory!')
+            return
 
 def setup(bot):
     bot.add_cog(Help(bot))
