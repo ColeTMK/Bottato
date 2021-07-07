@@ -6,7 +6,7 @@ import requests
 import json
 import asyncio
 import datetime
-from discord.ext.commands import Bot, Greedy
+from discord.ext.commands import Greedy
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
