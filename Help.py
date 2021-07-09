@@ -116,9 +116,9 @@ class Help(commands.Cog):
         minigamesembed.timestamp = datetime.datetime.utcnow()
 
         giveawaysembed=discord.Embed(title='Giveaways Help', description='Here, you can get help for giveaway commands!', color=0x00FFFF)
-        giveawaysembed.add_field(name='Create Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}gcreate [duration, example: 1m, 6h, 7d] [prize]`', inline=True)
-        giveawaysembed.add_field(name='Reroll Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}reroll [channel] [message id]`', inline=True)
-        giveawaysembed.add_field(name='Delete Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}deletegiveaway [channel] [message id]`', inline=True)
+        giveawaysembed.add_field(name='Create Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}gcreate [duration] [prize]`\n\nAn example of a correct command is..\n\n`{get_prefix(self.bot, ctx.message)}gcreate 7d Discord Nitro Classic for 1 Month`', inline=False)
+        giveawaysembed.add_field(name='Reroll Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}reroll [channel] [message id]`', inline=False)
+        giveawaysembed.add_field(name='Delete Giveaway:', value=f'`{get_prefix(self.bot, ctx.message)}deletegiveaway [channel] [message id]`', inline=False)
         giveawaysembed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
         giveawaysembed.timestamp = datetime.datetime.utcnow()
 
@@ -146,9 +146,6 @@ class Help(commands.Cog):
             await ctx.send(embed=giveawaysembed)
         if input == 'links':
             await ctx.send(embed=linksembed)
-        else:
-            await ctx.send(f'{ctx.author.mention}, there is no such thing as **{input}** in the help directory!')
-            return
 
 def setup(bot):
     bot.add_cog(Help(bot))

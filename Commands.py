@@ -14,6 +14,11 @@ def get_quote():
   quote = json_data[0]['q'] + " - " + json_data[0]['a']
   return(quote)
 
+def get_prefix(bot, message):
+  with open('prefixes.json', 'r') as f:
+    prefixes = json.load(f)
+  return prefixes[str(message.guild.id)]
+
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -844,72 +849,75 @@ class Commands(commands.Cog):
     @commands.command()
     @commands.has_role('Giveaways')
     async def gcreate(self, ctx, time=None, *, prize=None):
-        if time == None:
-          await ctx.send(f'{ctx.author.mention}, you need to give the duration! `Example: 1m, 1h, 7d`')
-          return
-        if prize == None:
-          await ctx.send(f'{ctx.author.mention}, you need to give the prize!')
-          return
-        embed=discord.Embed(title='New Giveaway Started!', color=0x1CDEA3)
-        embed.add_field(name='Prize:', value=f'{prize}', inline=False)
+      if time == None:
+        await ctx.send(f'{ctx.author.mention}, you need to give the duration! An example of a successful command is\n`{get_prefix(self.bot, ctx.message)}gcreate <duration> <prize>`\n\nThe duration can be in (s|m|h|d).')
+        return
+      if prize == None:
+        await ctx.send(f'{ctx.author.mention}, you need to give the prize! An example of a successful command is\n`{get_prefix(self.bot, ctx.message)}gcreate <duration> <prize>`')
+        return
+      embed=discord.Embed(title='New Giveaway Started!', color=0x1CDEA3)
+      embed.add_field(name='Prize:', value=f'{prize}', inline=False)
+      try:
         time_convert = {"s":1, "m":60, "h":3600, "d":86400}
-        gawtime = int(time[0]) * time_convert[time[-1]]
-        embed.add_field(name='Duration:', value=f'{time}', inline=False)
-        embed.add_field(name='From:', value=f'{ctx.author.mention}', inline=False)
-        embed.set_footer(text=f'{ctx.guild.name}')
-        embed.set_thumbnail(url=ctx.author.avatar_url)
-        embed.timestamp = datetime.datetime.utcnow()
+        gawtime = int(time[:-1]) * time_convert[time[-1]]
+      except:
+        await ctx.send(f'{ctx.author.mention}, there was an error converting your duration! Please try again in the right format, (s|m|h|d)')
+        return
+      embed.add_field(name='Duration:', value=f'{time}', inline=False)
+      embed.add_field(name='From:', value=f'{ctx.author.mention}', inline=False)
+      embed.set_footer(text=f'{ctx.guild.name}')
+      embed.set_thumbnail(url=ctx.author.avatar_url)
+      embed.timestamp = datetime.datetime.utcnow()
 
-        gaw_msg = await ctx.send(embed=embed)
-        await gaw_msg.add_reaction("🎉")
-        await asyncio.sleep(gawtime)
-        new_msg = await ctx.channel.fetch_message(gaw_msg.id)
+      gaw_msg = await ctx.send(embed=embed)
+      await gaw_msg.add_reaction("🎉")
+      await asyncio.sleep(gawtime)
+      new_msg = await ctx.channel.fetch_message(gaw_msg.id)
 
-        user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.bot.user]
+      user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.bot.user]
 
-        # After we have the list, we can check if any users reacted
-        if len(user_list) == 0:
-          await ctx.send("No one reacted.")
-        else:
-          winner = random.choice(user_list)
+      if len(user_list) == 0:
+        await ctx.send("No one reacted.")
+      else:
+        winner = random.choice(user_list)
 
-        winnerembed=discord.Embed(title='Giveaway Ended', description=f'**{winner}** won the giveaway for\n***{prize}*** !', color=0x1CDEA3)
-        winnerembed.set_footer(text=f'{ctx.guild.name}')
-        winnerembed.timestamp = datetime.datetime.utcnow()
-        winnerembed.set_thumbnail(url=winner.avatar_url)
-        await ctx.send(embed=winnerembed)
-        await ctx.send(winner.mention)
+      winnerembed=discord.Embed(title='Giveaway Ended', description=f'**{winner}** won the giveaway for\n***{prize}*** !', color=0x1CDEA3)
+      winnerembed.set_footer(text=f'{ctx.guild.name}')
+      winnerembed.timestamp = datetime.datetime.utcnow()
+      winnerembed.set_thumbnail(url=winner.avatar_url)
+      await ctx.send(embed=winnerembed)
+      await ctx.send(winner.mention)
+
 
     @commands.command()
     @commands.has_role('Giveaways')
     async def reroll(self, ctx, channel: discord.TextChannel, messageid: int):
-        try:
-            new_msg = await channel.fetch_message(messageid)
-        except:
-            await ctx.send(f"{ctx.author.mention}, I could not find that ID! Make sure you gave the right channel and right message, then try again.")
-            return
-        user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.bot.user]
+      try:
+        new_msg = await channel.fetch_message(messageid)
+      except:
+        await ctx.send(f"{ctx.author.mention}, I could not find that ID! Make sure you gave the right channel and right message, then try again.")
+        return
+      user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.bot.user]
 
-        # After we have the list, we can check if any users reacted
-        if len(user_list) == 0:
-          await ctx.send("No one reacted.")
-        else:
-          winner = random.choice(user_list)
+      if len(user_list) == 0:
+        await ctx.send("No one reacted.")
+      else:
+        winner = random.choice(user_list)
 
-        await channel.send(f"Congrats! The new winner is: {winner.mention}!")
+      await channel.send(f"Congrats! The new winner is: {winner.mention}!")
 
     @commands.command()
     @commands.has_role('Giveaways')
     async def deletegiveaway(self, ctx, channel: discord.TextChannel, messageid: int):
-        try:
-            new_msg = await channel.fetch_message(messageid)
-        except:
-            await ctx.send(f"{ctx.author.mention}, I could not find that ID! Make sure you gave the right channel and right message, then try again.")
-            return
-        
-        await new_msg.delete()
+      try:
+        new_msg = await channel.fetch_message(messageid)
+      except:
+        await ctx.send(f"{ctx.author.mention}, I could not find that ID! Make sure you gave the right channel and right message, then try again.")
+        return
+            
+      await new_msg.delete()
 
-        await channel.send(f"{ctx.author.mention}, that giveaway was deleted! Message ID: {messageid}")
+      await channel.send(f"{ctx.author.mention}, that giveaway was deleted! Message ID: {messageid}")
 
 def setup(bot):
     bot.add_cog(Commands(bot))

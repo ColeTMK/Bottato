@@ -54,7 +54,7 @@ class AutoMod(commands.Cog):
                         log_channel = message.guild.get_channel(log_channel[str(message.guild.id)])
                         logembed=discord.Embed(title="Bot Log", description="Bad Word Said", color=0xFFA500)
                         logembed.add_field(name="**Message:**", value=f"{msg_content}", inline=False)
-                        logembed.add_field(name="**Member:**", value=f"{message.author.name}", inline=False)
+                        logembed.add_field(name="**Member:**", value=f"{message.author}", inline=False)
                         author = message.author
                         pfp = author.avatar_url
                         logembed.set_author(name=f"{author}", icon_url=pfp)
