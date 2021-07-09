@@ -850,22 +850,19 @@ class Commands(commands.Cog):
     @commands.has_role('Giveaways')
     async def gcreate(self, ctx, time=None, *, prize=None):
       if time == None:
-        await ctx.send(f'{ctx.author.mention}, you need to give the duration! An example of a successful command is\n`{get_prefix(self.bot, ctx.message)}gcreate <duration> <prize>`\n\nThe duration can be in (s|m|h|d).')
+        await ctx.send(f'{ctx.author.mention}, you need to give the **duration**! An example of a successful command is\n`{get_prefix(self.bot, ctx.message)}gcreate <duration> <prize>`\n\nThe duration can be in (s|m|h|d).')
         return
       if prize == None:
-        await ctx.send(f'{ctx.author.mention}, you need to give the prize! An example of a successful command is\n`{get_prefix(self.bot, ctx.message)}gcreate <duration> <prize>`')
+        await ctx.send(f'{ctx.author.mention}, you need to give the **prize**! An example of a successful command is\n`{get_prefix(self.bot, ctx.message)}gcreate <duration> <prize>`')
         return
-      embed=discord.Embed(title='New Giveaway Started!', color=0x1CDEA3)
-      embed.add_field(name='Prize:', value=f'{prize}', inline=False)
       try:
         time_convert = {"s":1, "m":60, "h":3600, "d":86400}
         gawtime = int(time[:-1]) * time_convert[time[-1]]
       except:
         await ctx.send(f'{ctx.author.mention}, there was an error converting your duration! Please try again in the right format, (s|m|h|d)')
         return
-      embed.add_field(name='Duration:', value=f'{time}', inline=False)
-      embed.add_field(name='From:', value=f'{ctx.author.mention}', inline=False)
-      embed.set_footer(text=f'{ctx.guild.name}')
+      embed=discord.Embed(title='🎁 New Giveaway Started! 🎁', description=f"**Prize:** {prize}\n\n**Ends in**: {time}\n\n**From:** {ctx.author.mention}", color=0x1CDEA3)
+      embed.set_footer(text=f'React to 🎉 to enter the giveaway!')
       embed.set_thumbnail(url=ctx.author.avatar_url)
       embed.timestamp = datetime.datetime.utcnow()
 
@@ -877,16 +874,16 @@ class Commands(commands.Cog):
       user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.bot.user]
 
       if len(user_list) == 0:
-        await ctx.send("No one reacted.")
+        await ctx.send(f"{ctx.author.mention}, no one reacted for the giveaway")
       else:
         winner = random.choice(user_list)
 
-      winnerembed=discord.Embed(title='Giveaway Ended', description=f'**{winner}** won the giveaway for\n***{prize}*** !', color=0x1CDEA3)
-      winnerembed.set_footer(text=f'{ctx.guild.name}')
+      winnerembed=discord.Embed(title='🎁 Giveaway Ended! 🎁', description=f'**{winner}** won the giveaway for\n**{prize}**!', color=0x1CDEA3)
+      winnerembed.set_footer(text=f'Thanks for participating!')
       winnerembed.timestamp = datetime.datetime.utcnow()
       winnerembed.set_thumbnail(url=winner.avatar_url)
       await ctx.send(embed=winnerembed)
-      await ctx.send(winner.mention)
+      await ctx.send(f'Congrats! {winner.mention}')
 
 
     @commands.command()
