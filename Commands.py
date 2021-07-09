@@ -78,10 +78,10 @@ class Commands(commands.Cog):
 
       embed=discord.Embed(title="Log Channel Set", color=0x00FFFF)
       embed.add_field(name="**Channel Name:**", value=f"{channel}")
-      embed.add_field(name="**Moderator:**", value=f"{ctx.author.name}")
+      embed.add_field(name="**Moderator:**", value=f"{ctx.author}")
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
-      await ctx.author.send(f"You just set the log channel for {ctx.guild.name} to {channel} !")
+      await ctx.author.send(f"You just set the log channel for **{ctx.guild.name}** to **{channel}**!")
 
       with open('logchannel.json', 'w', encoding='utf-8') as fpp:
         json.dump(log_channel, fpp, indent=2)
@@ -140,7 +140,7 @@ class Commands(commands.Cog):
           logembed=discord.Embed(title="Bot Log", description="Clear Command Used", color=0xFFA500)
           logembed.add_field(name="**Amount:**", value=f"{amount} Messages", inline=False)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
-          logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
+          logembed.add_field(name="**Moderator:**", value=f"{ctx.author}", inline=False)
           author = ctx.message.author
           pfp = author.avatar_url
           logembed.set_author(name=f"{ctx.author}", icon_url=pfp)
@@ -263,7 +263,7 @@ class Commands(commands.Cog):
     @commands.has_permissions(manage_channels = True)
     async def lockchannel(self, ctx):
       await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
-      embed=discord.Embed(title="Channel Lockdown", description="Channel lockdown in progress!")
+      embed=discord.Embed(title="Channel Lockdown", description="Channel lockdown in progress!", color=0xFF0000)
       embed.add_field(name="**Channel Name:**", value=f"{ctx.channel.name}", inline=True)
       embed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=True)
       embed.timestamp = datetime.datetime.utcnow()
@@ -289,7 +289,7 @@ class Commands(commands.Cog):
     @commands.has_permissions(manage_channels=True)
     async def unlockchannel(self, ctx):
       await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
-      embed=discord.Embed(title="**Channel Unlock**", description="Channel unlocking in progress!")
+      embed=discord.Embed(title="**Channel Unlock**", description="Channel unlocking in progress!", color=0xFF0000)
       embed.add_field(name="**Channel Name:**", value=f"{ctx.channel.name}", inline=True)
       embed.timestamp = datetime.datetime.utcnow()
       embed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=True)
@@ -359,7 +359,7 @@ class Commands(commands.Cog):
       embed=discord.Embed(description="AYOOO CHAT IS DEAD! SPEAK HUMANS SPEAKKK YOU MUST!", color=0x00FFFF)
       author = ctx.message.author
       pfp = author.avatar_url
-      embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+      embed.set_author(name=f"{ctx.author}", icon_url=pfp)
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
@@ -378,7 +378,7 @@ class Commands(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name='muted')
 
         if role == None:
-          await ctx.send(f"{ctx.author.mention}, Please make sure your muted role is called `muted` all in lowercase then try again!")
+          await ctx.send(f"{ctx.author.mention}, Please make sure your muted role is called `muted` all in lowercase! Then try again.")
           return
  
         if role in ctx.guild.roles:
@@ -549,8 +549,8 @@ class Commands(commands.Cog):
       await member.add_roles(role)
       embed=discord.Embed(title="Role Gived", color=0x0FFFF)
       embed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
-      embed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
-      embed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
+      embed.add_field(name='**Member:**', value=f'{member}', inline=False)
+      embed.add_field(name='**Moderator:**', value=f'{ctx.author}', inline=False)
       memberpfp = member.avatar_url
       embed.set_thumbnail(url=memberpfp)
       embed.timestamp = datetime.datetime.utcnow()
@@ -559,7 +559,7 @@ class Commands(commands.Cog):
       dmembed.add_field(name="**Role:**", value=f"{role}", inline=False)
       dmembed.timestamp = datetime.datetime.utcnow()
       memberpfp = member.avatar_url
-      dmembed.set_author(name=f"{member.name}", icon_url=memberpfp)
+      dmembed.set_author(name=f"{member}", icon_url=memberpfp)
       dmembed.timestamp = datetime.datetime.utcnow()
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
         log_channel = json.load(fp)
@@ -574,11 +574,11 @@ class Commands(commands.Cog):
           await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Give Role Command Used", color=0xFFA500)
           logembed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
-          logembed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
-          logembed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
+          logembed.add_field(name='**Member:**', value=f'{member}', inline=False)
+          logembed.add_field(name='**Moderator:**', value=f'{ctx.author}', inline=False)
           author = ctx.author
           pfp = author.avatar_url
-          logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+          logembed.set_author(name=f"{ctx.author}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
       except (AttributeError, KeyError):
@@ -595,7 +595,7 @@ class Commands(commands.Cog):
       await member.remove_roles(role)
       embed=discord.Embed(title="Role Removed", color=0x0FFFF)
       embed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
-      embed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
+      embed.add_field(name='**Member:**', value=f'{member}', inline=False)
       embed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
       memberpfp = member.avatar_url
       embed.set_thumbnail(url=memberpfp)
@@ -605,7 +605,7 @@ class Commands(commands.Cog):
       dmembed.add_field(name="**Role:**", value=f"{role}", inline=False)
       dmembed.timestamp = datetime.datetime.utcnow()
       memberpfp = member.avatar_url
-      dmembed.set_author(name=f"{member.name}", icon_url=memberpfp)
+      dmembed.set_author(name=f"{member}", icon_url=memberpfp)
       dmembed.timestamp = datetime.datetime.utcnow()
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
@@ -620,7 +620,7 @@ class Commands(commands.Cog):
           await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Remove Role Command Used", color=0xFFA500)
           logembed.add_field(name='**Role Name:**', value=f'{role}', inline=False)
-          logembed.add_field(name='**Member:**', value=f'{member.name}', inline=False)
+          logembed.add_field(name='**Member:**', value=f'{member}', inline=False)
           logembed.add_field(name='**Moderator:**', value=f'{ctx.author.name}', inline=False)
           author = ctx.author
           pfp = author.avatar_url
@@ -653,7 +653,7 @@ class Commands(commands.Cog):
     async def changenickname(self, ctx, member:discord.Member, *, nick):
       await member.edit(nick=nick)
       embed=discord.Embed(title="Nickname Change", color=0x00FFFF)
-      embed.add_field(name='**Member Name:**', value=f'{member.name}', inline=False)
+      embed.add_field(name='**Member Name:**', value=f'{member}', inline=False)
       embed.add_field(name='**New Nickname:**', value=f'{nick}', inline=False)
       author = ctx.message.author
       pfp = author.avatar_url
@@ -668,7 +668,7 @@ class Commands(commands.Cog):
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
           await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Change Nickname Command Used", color=0xFFA500)
-          logembed.add_field(name="**Member:**", value=f"{member.name}", inline=False)
+          logembed.add_field(name="**Member:**", value=f"{member}", inline=False)
           logembed.add_field(name="**New Nickname:**", value=f"{nick}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author.name}", inline=False)
           author = ctx.message.author
@@ -760,7 +760,7 @@ class Commands(commands.Cog):
           logembed.add_field(name="**Suggestion:**", value=f"{text}", inline=False)
           author = ctx.message.author
           pfp = author.avatar_url
-          logembed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
+          logembed.set_author(name=f"{ctx.author}", icon_url=pfp)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
       except (AttributeError, KeyError):
