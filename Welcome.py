@@ -73,7 +73,6 @@ class Welcome(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-      print(member)
       embed=discord.Embed(description=f'**{member.name} Left!**', color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       pfp = member.avatar_url
