@@ -1,6 +1,10 @@
 from discord.ext import commands
-import traceback
-import sys
+import json
+
+def get_prefix(bot, message):
+  with open('prefixes.json', 'r') as f:
+    prefixes = json.load(f)
+  return prefixes[str(message.guild.id)]
 
 class ErrorHandlers(commands.Cog):
     def __init__(self, bot):
@@ -13,7 +17,7 @@ class ErrorHandlers(commands.Cog):
       if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"{ctx.author.mention}, you forgot to type an important argument! `Missing Argument: {error.param.name}`")
       if isinstance(error, commands.CommandNotFound):
-        await ctx.send(f"{ctx.author.mention}, that is not a valid command! Click on this to see all of my commands, https://bit.ly/33N0TTY")
+        await ctx.send(f"{ctx.author.mention}, that is not a valid command! Type `{get_prefix(self.bot, ctx.message)}help` for Help!")
       if isinstance(error, commands.CommandOnCooldown):
         m, s = divmod(error.retry_after, 60)
         fmt = "{} minutes and {} seconds" \
