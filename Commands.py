@@ -833,6 +833,7 @@ class Commands(commands.Cog):
         embed = discord.Embed(title="I found a doggo!", color=0x00FFFF)
         embed.set_image(url=dogjson['link'])
         embed.set_footer(text=factjson['fact'])
+        embed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -842,6 +843,7 @@ class Commands(commands.Cog):
       embed = discord.Embed(title = 'I found a cat!', color=0x00FFFF)
       embed.set_image(url=catjson['file'])            
       embed.set_footer(text="Meow!")
+      embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
     @commands.command()
