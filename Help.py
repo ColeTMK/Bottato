@@ -100,7 +100,6 @@ class Help(commands.Cog):
         economyembed.add_field(name='**Work:**', value=f'`{get_prefix(self.bot, ctx.message)}work`', inline=False)
         economyembed.add_field(name='**Beg:**', value=f'`{get_prefix(self.bot, ctx.message)}beg`', inline=False)
         economyembed.add_field(name='**Balance:**', value=f'`{get_prefix(self.bot, ctx.message)}bal [member]`', inline=False)
-        economyembed.add_field(name='**Work:**', value=f'`{get_prefix(self.bot, ctx.message)}work`', inline=False)
         economyembed.add_field(name='**Give:**', value=f'`{get_prefix(self.bot, ctx.message)}give [member] [amount]`', inline=False)
         economyembed.add_field(name='**Deposit:**', value=f'`{get_prefix(self.bot, ctx.message)}deposit [amount]`', inline=False)
         economyembed.add_field(name='**Withdraw:**', value=f'`{get_prefix(self.bot, ctx.message)}withdraw`', inline=False)

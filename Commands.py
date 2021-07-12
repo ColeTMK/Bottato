@@ -22,7 +22,7 @@ def get_prefix(bot, message):
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        
+
     @commands.command()
     async def leaveserver(self, ctx, guild:discord.Guild):
       if ctx.author.id == 467715040087244800:
@@ -821,6 +821,27 @@ class Commands(commands.Cog):
       embed.set_author(name=f'{author.name}', icon_url=pfp)
       embed.set_footer(text=f'{ctx.guild.name}')
       embed.timestamp = datetime.datetime.utcnow()
+      await ctx.send(embed=embed)
+
+    @commands.command()
+    async def dog(self, ctx):
+        dogpic = requests.get('https://some-random-api.ml/img/dog')
+        dogjson = dogpic.json()
+        dogfact = requests.get('https://some-random-api.ml/facts/dog')
+        factjson = dogfact.json()
+
+        embed = discord.Embed(title="I found a doggo!", color=0x00FFFF)
+        embed.set_image(url=dogjson['link'])
+        embed.set_footer(text=factjson['fact'])
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    async def cat(self, ctx):
+      catpic = requests.get('https://aws.random.cat/meow')
+      catjson = catpic.json()
+      embed = discord.Embed(title = 'I found a cat!', color=0x00FFFF)
+      embed.set_image(url=catjson['file'])            
+      embed.set_footer(text="Meow!")
       await ctx.send(embed=embed)
 
     @commands.command()
