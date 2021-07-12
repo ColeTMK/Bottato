@@ -17,7 +17,7 @@ class ErrorHandlers(commands.Cog):
       if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"{ctx.author.mention}, you forgot to type an important argument! `Missing Argument: {error.param.name}`")
       if isinstance(error, commands.CommandNotFound):
-        await ctx.send(f"{ctx.author.mention}, that is not a valid command! Type `{get_prefix(self.bot, ctx.message)}help` for Help!")
+        await ctx.send(f"{ctx.author.mention}, that is not a valid command! Type `{get_prefix(self.bot, ctx.message)}help` for help!")
       if isinstance(error, commands.CommandOnCooldown):
         m, s = divmod(error.retry_after, 60)
         fmt = "{} minutes and {} seconds" \
