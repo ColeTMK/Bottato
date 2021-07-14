@@ -25,8 +25,6 @@ class MsgEditDelete(commands.Cog):
             logembed.add_field(name="Channel:", value=before.channel.name + "\u200b", inline=False)
             logembed.set_thumbnail(url=before.author.avatar_url)
             await log_channel.send(embed=logembed)
-          else:
-            pass
         except (AttributeError, KeyError):
           pass
 
@@ -48,8 +46,6 @@ class MsgEditDelete(commands.Cog):
             logembed.add_field(name="Channel:", value=message.channel.name + "\u200b", inline=False)
             logembed.set_thumbnail(url=message.author.avatar_url)
             await log_channel.send(embed=logembed)
-          else:
-            pass
         except (AttributeError, KeyError):
           pass
 

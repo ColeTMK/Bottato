@@ -4,6 +4,7 @@ from discord.ext import commands
 import json
 import datetime
 import asyncio
+import time
 
 def get_prefix(bot, message):
 	with open('prefixes.json', 'r') as f:
@@ -104,6 +105,8 @@ async def on_guild_remove(guild):
 
 @bot.event
 async def on_ready():
+  global startTime
+  startTime = time.time()
   channel = bot.get_channel(848722304069926993)
   print('The bot is online!')
   print('Bot is connected to:')
@@ -123,6 +126,13 @@ async def on_ready():
     current_status = next(displaying)
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(name=current_status ,type=3))
     await asyncio.sleep(45)
+
+@bot.command()
+async def uptime(ctx):
+  uptime = str(datetime.timedelta(seconds=int(round(time.time()-startTime))))
+  embed=discord.Embed(title='Bottato Uptime', description=f'Uptime: {uptime}', color=0x00FFFF)
+  embed.timestamp = datetime.datetime.utcnow()
+  await ctx.send(embed=embed)
 
 @bot.command()
 async def toggle(ctx, *, command):

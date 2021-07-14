@@ -181,13 +181,11 @@ class Games(commands.Cog):
         'Im sure!',
         'Im really not sure.']
       answer = random.choice(responses)
-      embed=discord.Embed(title='8Ball', color=0xFFFF00)
+      embed=discord.Embed(title='8-Ball', color=0xFFFF00)
       embed.add_field(name='Question:', value=question, inline=False)
       embed.add_field(name='Answer:', value=answer, inline=False)
-      author = ctx.author
-      pfp = author.avatar_url
-      embed.set_author(name=f'{author.name}', icon_url=pfp)
       embed.timestamp = datetime.datetime.utcnow()
+      embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
       await ctx.send(embed=embed)
 
 def setup(bot):
