@@ -31,7 +31,7 @@ class Welcome(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-      embed=discord.Embed(description=f'**Welcome {member.name}!**<a:verifycyan:859611788865830922>\nMake sure to read our rules and verify if needed. Have a great time :D', color=0x00FFFF)
+      embed=discord.Embed(description=f'**Welcome {member.name}!** <a:welcome:865234443999903744>\nMake sure to read our rules and verify if needed. Have a great time :D', color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       pfp = member.avatar_url
       embed.set_author(name=f'{member} joined!', icon_url=pfp)
@@ -73,7 +73,7 @@ class Welcome(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-      embed=discord.Embed(description=f'{member.name} Left! <:PES_Exit:669833789748281344>', color=0x00FFFF)
+      embed=discord.Embed(description=f'{member.name} Left! <:exit:865234686904107029>', color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       pfp = member.avatar_url
       embed.set_author(name=f'{member}', icon_url=pfp)

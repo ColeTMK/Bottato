@@ -93,9 +93,6 @@ class Commands(commands.Cog):
 
       fact = random.choice(fun_facts)
       embed=discord.Embed(title="<a:verifycyan:859611788865830922> Random Fact <a:verifycyan:859611788865830922>", description=(fact), color=0x00FFFF)
-      author = ctx.message.author
-      pfp = author.avatar_url
-      
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
@@ -161,10 +158,7 @@ class Commands(commands.Cog):
        return
 
       await member.ban(reason=reason)
-      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Ban <a:verifycyan:859611788865830922>", color=0x00FFFF)
-      embed.add_field(name="**Member:**", value=f"{member}", inline=False)
-      embed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
-      embed.add_field(name="**Moderator:**", value=f"{ctx.author}", inline=False)
+      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Ban <a:verifycyan:859611788865830922>", description=f'{member.mention} successfully banned for **{reason}**!', color=0x00FFFF)
       embed.set_thumbnail(url=member.avatar_url)
       embed.timestamp = datetime.datetime.utcnow()
       
@@ -212,10 +206,7 @@ class Commands(commands.Cog):
        return
 
       await member.kick(reason=reason)
-      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Kick <a:verifycyan:859611788865830922>", color=0x00FFFF)
-      embed.add_field(name="**Member:**", value=f"{member}", inline=False)
-      embed.add_field(name="**Reason:**", value=f"{reason}", inline=False)
-      embed.add_field(name="**Moderator:**", value=f"{ctx.author}", inline=False)
+      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Kick <a:verifycyan:859611788865830922>", description=f'{member.mention} successfully kicked for **{reason}**', color=0x00FFFF)
       embed.set_thumbnail(url=member.avatar_url)
       embed.timestamp = datetime.datetime.utcnow()
       dmembed=discord.Embed(title="Kick", description="Uou have been kicked!", color=0x00FFFF)
@@ -253,33 +244,33 @@ class Commands(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_channels = True)
     async def lockchannel(self, ctx):
-      await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
       embed=discord.Embed(title="<a:verifycyan:859611788865830922> Channel Lockdown <a:verifycyan:859611788865830922>", description="Channel lockdown in progress!", color=0xFF0000)
-      embed.add_field(name="**Channel Name:**", value=f"{ctx.channel.name}", inline=True)
-      embed.add_field(name="**Moderator:**", value=f"{ctx.author}", inline=True)
       embed.timestamp = datetime.datetime.utcnow()
+      await ctx.send(embed=embed)
+      await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
+      await ctx.send('**Lockdown Successful!**')
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
         log_channel = json.load(fp)
 
       try:
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
-          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Lock Channel Used", color=0xFFA500)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author}", inline=False)
           embed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
       except (AttributeError, KeyError):
-        await ctx.send(embed=embed)
+        pass
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def unlockchannel(self, ctx):
-      await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
-      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Channel Unlock <a:verifycyan:859611788865830922>", description="Channel unlocking in progress!", color=0xFF0000)
-      embed.add_field(name="**Channel Name:**", value=f"{ctx.channel.name}", inline=True)
+      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Channel Unlock <a:verifycyan:859611788865830922>", description="Channel Unlock in progress!", color=0xFF0000)
       embed.timestamp = datetime.datetime.utcnow()
+      await ctx.send(embed=embed)
+      await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
+      await ctx.send('**Unlocking Successful!**')
       embed.add_field(name="**Moderator:**", value=f"{ctx.author}", inline=True)
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
         log_channel = json.load(fp)
@@ -287,14 +278,13 @@ class Commands(commands.Cog):
       try:
         if log_channel:
           log_channel = ctx.guild.get_channel(log_channel[str(ctx.guild.id)])
-          await ctx.send(embed=embed)
           logembed=discord.Embed(title="Bot Log", description="Unlock Channel Used", color=0xFFA500)
           logembed.add_field(name="**Channel:**", value=f"{ctx.channel.name}", inline=False)
           logembed.add_field(name="**Moderator:**", value=f"{ctx.author}", inline=False)
           logembed.timestamp = datetime.datetime.utcnow()
           await log_channel.send(embed=logembed)
       except (AttributeError, KeyError):
-        await ctx.send(embed=embed)
+        pass
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -305,7 +295,7 @@ class Commands(commands.Cog):
       if seconds > 21600:
         await ctx.send(f'{ctx.author.mention}, The maximum slowmode is 6 hours (21,600 seconds)!')
       await ctx.channel.edit(slowmode_delay=seconds)
-      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Slowmode Changed <a:verifycyan:859611788865830922>", description=f'Slowmode is now `{seconds} seconds`', color=0x00FFFF)
+      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Slowmode Changed <a:verifycyan:859611788865830922>", description=f'Slowmode is now `{seconds} seconds`!', color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
             log_channel = json.load(fp)
@@ -325,20 +315,14 @@ class Commands(commands.Cog):
       
     @commands.command()
     async def ping(self, ctx):
-      embed=discord.Embed(title="Pong!", description=f'My ping is {round(self.bot.latency*1000)}ms.', color=0x00FFFF)
-      author = ctx.message.author
-      pfp = author.avatar_url
-      
+      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Pong! <a:verifycyan:859611788865830922>", description=f'My ping is {round(self.bot.latency*1000)}ms.', color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
  
     @commands.command()
     async def deadchat(self, ctx):
       await ctx.channel.purge(limit=1)
-      embed=discord.Embed(description="AYOOO CHAT IS DEAD! SPEAK HUMANS SPEAKKK you MUST!", color=0x00FFFF)
-      author = ctx.message.author
-      pfp = author.avatar_url
-      
+      embed=discord.Embed(description="AYOOO CHAT IS DEAD! SPEAK HUMANS SPEAKKK YOU MUST!", color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
@@ -350,21 +334,34 @@ class Commands(commands.Cog):
         reason = 'No reason given'
 
       if member.id == ctx.message.author.id:
-       await ctx.send(f"{ctx.author.mention}, you can't mute yourself!")
-       return
+        error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'You cannot mute yourself!', color=0xFF0000)
+        error.timestamp = datetime.datetime.utcnow()
+        await ctx.send(embed=error)
+        return
 
       if member:
         role = discord.utils.get(ctx.guild.roles, name='muted')
 
         if role == None:
-          await ctx.send(f"{ctx.author.mention}, Please make sure your muted role is called `muted` all in lowercase! Then try again.")
-          return
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'Mute role not found! Make sure you have a role called `muted` in all lowercase then try again.', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
  
+        if role in member.roles:
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'{member.mention} is already muted!', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
+          return
+
         if role in ctx.guild.roles:
-          await member.add_roles(role)
-          embed=discord.Embed(title="<a:verifycyan:859611788865830922> Muted <a:verifycyan:859611788865830922>", description=f"Member: {member.mention}", color=0x00FFFF)
-          embed.add_field(name="**Reason:**", value=f'{reason}', inline=False)
-          embed.add_field(name="**Moderator:**", value=f'{ctx.author}', inline=False)
+          try:
+            await member.add_roles(role)
+          except:
+            error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'I do not have permission to give the `muted` role!', color=0xFF0000)
+            error.timestamp = datetime.datetime.utcnow()
+            await ctx.send(embed=error)
+          embed=discord.Embed(title=":mute: Mute :mute:", description=f"{member.mention} muted until furthur notice!", color=0x00FFFF)
+          embed.add_field(name='Reason:', value=reason)
           embed.set_thumbnail(url=member.avatar_url)
           embed.timestamp = datetime.datetime.utcnow()
           dmembed=discord.Embed(title="Mute", description="you have been muted!", color=0x00FFFF)
@@ -407,12 +404,24 @@ class Commands(commands.Cog):
       if member:
         role = discord.utils.get(ctx.guild.roles, name='muted')
 
-        if role == None:
-          await ctx.send(f"{ctx.author.mention}, Please make sure your muted role is called `muted` all in lowercase then try again!")
+        if role not in member.roles:
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'{member.mention} is not muted!', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
           return
-        await member.remove_roles(role)
-        embed=discord.Embed(title="<a:verifycyan:859611788865830922> Unmute <a:verifycyan:859611788865830922>", description=f"Member: {member.mention}", color=0x00FFFF)
-        embed.add_field(name="**Moderator:**", value=f'{ctx.author}', inline=True)
+
+        if role == None:
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'Mute role not found! Make sure you have a role called `muted` in all lowercase then try again.', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
+
+        try:
+          await member.remove_roles(role)
+        except:
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'I do not have permission to take away the `muted` role!', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
+        embed=discord.Embed(title="<a:verifycyan:859611788865830922> Unmute <a:verifycyan:859611788865830922>", description=f"{member.mention} successfully unmuted!", color=0x00FFFF)
         embed.set_thumbnail(url=member.avatar_url)
         dmembed=discord.Embed(title="Unmute", description="you have been unmuted!", color=0x00FFFF)
         memberpfp = member.avatar_url
@@ -464,15 +473,25 @@ class Commands(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name="muted")
 
         if role == None:
-          await ctx.send(f"{ctx.author.mention}, Please make sure your muted role is called `muted` all in lowercase then try again!")
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'Mute role not found! Make sure you have a role called `muted` in all lowercase then try again.', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
+
+        if role in member.roles:
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'{member.mention} is already muted!', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
           return
 
         if role in ctx.guild.roles:
-          await member.add_roles(role)
-          embed=discord.Embed(title="<a:verifycyan:859611788865830922> Temp. Mute <a:verifycyan:859611788865830922>", description=f"Member: {member.mention}", color=0x00FFFF)
-          embed.add_field(name="**Duration:**", value=f'{time} seconds', inline=True)
-          embed.add_field(name="**Reason:**", value=f'{reason}', inline=True)
-          embed.add_field(name="**Moderator:**", value=f'{ctx.author}', inline=True)
+          try:
+            await member.add_roles(role)
+          except:
+            error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'I do not have permission to give the `muted` role!', color=0xFF0000)
+            error.timestamp = datetime.datetime.utcnow()
+            await ctx.send(embed=error)
+          embed=discord.Embed(title=":mute: Temp. Mute :mute:", description=f"{member.mention} successfully temp. muted for `{time}` seconds!", color=0x00FFFF)
+          embed.add_field(name='Reason:', value=reason)
           embed.timestamp = datetime.datetime.utcnow()
           embed.set_thumbnail(url=member.avatar_url)
           dmembed=discord.Embed(title="Temp. Mute", description="you have been temp. muted!", color=0x00FFFF)
@@ -512,13 +531,25 @@ class Commands(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def role(self, ctx, member:discord.Member, *, role:discord.Role):
-      if role in ctx.author.roles:
-        await member.remove_roles(role)
+      if role in member.roles:
+        try:
+          await member.remove_roles(role)
+        except:
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'I do not have permission to give the role!', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
         removeembed=discord.Embed(title='<a:verifycyan:859611788865830922> Role Removed <a:verifycyan:859611788865830922>', description=f'{role.mention} was removed from {member.mention}', color=0x00FFFF)
+        removeembed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=removeembed)
       else:
-        await member.add_roles(role)
+        try:
+          await member.add_roles(role)
+        except:
+          error=discord.Embed(title='<a:xmark:865222057414230056> Error', description=f'I do not have permission to give the role!', color=0xFF0000)
+          error.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=error)
         giveembed=discord.Embed(title='<a:verifycyan:859611788865830922> Role Given <a:verifycyan:859611788865830922>', description=f'{role.mention} was given to {member.mention}', color=0x00FFFF)
+        giveembed.timestamp = datetime.datetime.utcnow()
         await ctx.send(embed=giveembed)
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)
@@ -537,19 +568,13 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def invite(self, ctx):
-      embed=discord.Embed(title="Bot Invite", description="Click here -> https://top.gg/bot/830599839623675925 **you WILL GET 404 ERROR! BOT WAITING FOR APPROVAL**", color=0x00FFFF)
-      author = ctx.message.author
-      pfp = author.avatar_url
-      
+      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Bot Invite <a:verifycyan:859611788865830922>", description="Click here -> https://top.gg/bot/830599839623675925 **you WILL GET 404 ERROR! BOT WAITING FOR APPROVAL**", color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
     @commands.command()
     async def support(self, ctx):
-      embed=discord.Embed(title="Bot Support", description="Click here -> https://discord.gg/arMVCzHfuf", color=0x00FFFF)
-      author = ctx.message.author
-      pfp = author.avatar_url
-      
+      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Bot Support <a:verifycyan:859611788865830922>", description="Click here -> https://discord.gg/arMVCzHfuf", color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
@@ -557,9 +582,7 @@ class Commands(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def changenickname(self, ctx, member:discord.Member, *, nick):
       await member.edit(nick=nick)
-      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Nickname Changed <a:verifycyan:859611788865830922>", color=0x00FFFF)
-      embed.add_field(name='**Member Name:**', value=f'{member}', inline=False)
-      embed.add_field(name='**New Nickname:**', value=f'{nick}', inline=False)
+      embed=discord.Embed(title=":new: Nickname Changed :new:", description=f"{member.mention}'s new nickname is **{nick}**", color=0x00FFFF)
       embed.set_thumbnail(url=member.avatar_url)
       embed.timestamp = datetime.datetime.utcnow()
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
@@ -595,7 +618,6 @@ class Commands(commands.Cog):
         embed=discord.Embed(title="<a:verifycyan:859611788865830922> INDIVIDUAL/BULK DM'S <a:verifycyan:859611788865830922>", description="Message Delivered!", color=0x00FFFF)
         embed.add_field(name="**Message:**", value=f'{message}', inline=True)
         embed.add_field(name="**User(s):**", value=f'{users.name}', inline=True)
-        embed.add_field(name="**Admin:**", value=f'{ctx.author}', inline=True)
         embed.timestamp = datetime.datetime.utcnow()
         with open('logchannel.json', 'r', encoding='utf-8') as fp:
           log_channel = json.load(fp)

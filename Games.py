@@ -94,7 +94,7 @@ class Games(commands.Cog):
 
     @commands.command()
     async def akinator(self, ctx):
-        intro=discord.Embed(title="Akinator",description=f"Hello {ctx.author.mention}! Welcome to Akinator!\nPlease wait... game starting...",color=0xFFFF00)
+        intro=discord.Embed(title="Akinator",description=f"Hello {ctx.author.mention}! Welcome to Akinator!\n\n**Game starting! Please wait...**",color=0xFFFF00)
         intro.set_thumbnail(url="https://en.akinator.com/bundles/elokencesite/images/akinator.png?v93")
         intro.timestamp = datetime.datetime.utcnow()
         intro.set_footer(text="Think about a real or fictional character. It can be from a TV show, movie, book, what not! I will try to guess who it is!")

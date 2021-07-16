@@ -33,15 +33,9 @@ async def on_guild_join(guild):
         json.dump(serverlist, f, indent=4)
 
     guildowner = guild.owner
-    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Bottato to {guild.name}! Please read some info that can be very helpful for you, your mods, and members!', color=0x00FFFF)
-    embed.add_field(name='Prefix Info:', value='The DEFAULT prefix that is set for your server is `>`, owner/admins can change this by a simple command! `>changeprefix {prefix}` If you ever forget the prefix for your server, you can just mention me!', inline=False)
-    embed.add_field(name='Moderator/Admin Commands:', value='Ultimate Bot has useful commands for you, your admins, and your mods. They include...\n`clear` `ban` `kick` `mute` `tempmute` `unmute` `lockchannel` `unlockchannel` `changenickname` `warn` `warns` `removewarns` `slowmode` `giverole` `removerole`', inline=False)
-    embed.add_field(name='Economy:', value='Ultimate Bot has an Economy feature! Commands for this are,\n`work` `beg` `bal` `givecoins` `deposit` `withdraw` Admin Only: `addcoins`', inline=False)
-    embed.add_field(name='Miscellaneous Commands:', value='Utimate Bot features some commands that members can use and interact with! Some include,\n`rps` `eightball` `numbergame` `akinator` `suggest` `pfp` `quote` `fact` These are NOT all of them!', inline=False)
-    embed.add_field(name='Welcoming/Leaving:', value='Ultimate Bot can welcome new members that join! Also, when a member leaves! To setup this, type `>setwelcomechannel {channel}` OR `{changedprefix}setwelcomechannel {channel}`', inline=False)
-    embed.add_field(name='Logging:', value='Ultimate Bot features logging features! Things that can be logged are `Member Join` `Member Leave` `Message Delete` `Message Edit` `Moderator Commands`', inline=False)
-    embed.add_field(name='All Commands/Features:', value='To see ALL my commands and features, click here -> https://bit.ly/33N0TTY', inline=False)
-    embed.set_footer(text=f'If your experience any issues with me or want to change the curse word list, please join the support server! https://discord.gg/arMVCzHfuf | Thanks for inviting me to {guild.name}!')
+    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Bottato to **{guild.name}**! Please read some info that can be very helpful for you, your mods, and members!\n\nThe DEFAULT prefix for your server is `>` This can be changed by the command `>changeprefix [prefix`', color=0x00FFFF)
+    
+    embed.set_footer(text=f'If your experience any issues with me, please join the support server! https://discord.gg/arMVCzHfuf | Thanks for inviting me to **{guild.name}**!')
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
     try:
@@ -161,17 +155,6 @@ async def on_message(message):
   
   await bot.process_commands(message)
 
-@bot.command()
-async def cole(ctx):
-  embed=discord.Embed(title='Opening a Ticket for Curse Word List Change', description='If you want to open a ticket to change the Curse Word List for your server, do these steps.', color=0x00FFFF)
-  embed.add_field(name='Step-1', value='Run `{ulitimate bot prefix}serverinfo` in your server.', inline=False)
-  embed.add_field(name='Step-2', value='Take a Screenshot that includes the `Guild ID`, `Owner Name`, and the `Owner ID`', inline=False)
-  embed.add_field(name='Step-2', value='Click **:envelope_with_arrow: Create ticket** below the Ticket Tool embed.', inline=False)
-  embed.add_field(name='Step-3', value='Say you want to change the curse word list in your server AND send the screenshot you took. (this is to verify that you are the owner of the server that your trying to change the curse word list in!)', inline=False)
-  embed.add_field(name='Step-4', value='Wait for assistance by an Admin!', inline=False)
-  embed.set_image(url='https://i.stack.imgur.com/HCGv7.png')
-  await ctx.send(embed=embed)
-
 bot.load_extension('AutoMod')
 bot.load_extension('Commands')
 bot.load_extension('Games')
@@ -183,4 +166,4 @@ bot.load_extension('Welcome')
 bot.load_extension('Help')
 #bot.load_extension('Music')
 
-bot.run('ODMwNTk5ODM5NjIzNjc1OTI1.YHJCYQ.kzMTlKbjNzSmw2cXtc96JVmEiTc')
+bot.run('ODMwNTk5ODM5NjIzNjc1OTI1.YHJCYQ.6AKH-DuIrLs-AL07LZPY9vqTeoI')
