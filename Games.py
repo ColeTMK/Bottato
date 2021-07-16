@@ -109,7 +109,7 @@ class Games(commands.Cog):
             aki = ak.Akinator()
             q = aki.start_game()
             while aki.progression <= 80:
-                question=discord.Embed(title=f"Question for {ctx.author.name}",description=q,color=0xFFFF00)
+                question=discord.Embed(title=f"Question for {ctx.author}",description=q,color=0xFFFF00)
                 ques=["https://i.imgflip.com/uojn8.jpg","https://ih1.redbubble.net/image.297680471.0027/flat,750x1000,075,f.u1.jpg"]
                 question.set_thumbnail(url=ques[random.randint(0,1)])
                 question.timestamp = datetime.datetime.utcnow()
@@ -122,6 +122,7 @@ class Games(commands.Cog):
                     await ctx.send(f"{ctx.author.mention}, you took too long to respond!")
                     return
                 await question_sent.delete()
+                await msg.delete()
                 if msg.content.lower() in ["b","back"]:
                     try:
                         q=aki.back()

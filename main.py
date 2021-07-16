@@ -33,9 +33,8 @@ async def on_guild_join(guild):
         json.dump(serverlist, f, indent=4)
 
     guildowner = guild.owner
-    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Bottato to **{guild.name}**! Please read some info that can be very helpful for you, your mods, and members!\n\nThe DEFAULT prefix for your server is `>` This can be changed by the command `>changeprefix [prefix`', color=0x00FFFF)
-    
-    embed.set_footer(text=f'If your experience any issues with me, please join the support server! https://discord.gg/arMVCzHfuf | Thanks for inviting me to **{guild.name}**!')
+    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Bottato to **{guild.name}**! Please read some info that can be very helpful for you, your mods, and members!\n\nThe DEFAULT prefix for your server is `>` This can be changed by the command `>changeprefix [prefix]`\n\nBottato features moderation commands, fun commands, economy, logging, welcoming, and more!\n\nTo **setup** logging, `>setlogchannel [channel]`\n\nTo **setup** welcome messages, `>setwelcomechannel [channel]`\n\nTo find all commands and info, type `>help`', color=0x00FFFF)
+    embed.set_footer(text=f'If you are experience any issues with me, please join the support server! https://discord.gg/arMVCzHfuf | Thanks for inviting me to {guild.name}!')
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
     try:
@@ -45,23 +44,7 @@ async def on_guild_join(guild):
 
     cole = bot.get_user(467715040087244800)
     total = len(guild.members)
-    humans = len(list(filter(lambda m: not m.bot, guild.members)))
-    bots = len(list(filter(lambda m: m.bot, guild.members)))
-    embed=discord.Embed(title='New Server Join!', color=0x00FFFF)
-    embed.add_field(name='Server Name:', value=f'`{guild.name}`', inline=False)
-    embed.add_field(name='Server ID:', value=f'`{guild.id}`', inline=False)
-    embed.add_field(name='Owner:', value=f'`{guild.owner}`', inline=False)
-    embed.add_field(name='Owner ID:', value=f'`{guild.owner.id}`', inline=False)
-    embed.add_field(name='Server Region:', value=f'`{guild.region}`', inline=False)
-    embed.add_field(name='Server Creation Date:', value=f'`{guild.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p")}`', inline=False)
-    embed.add_field(name='Text Channels:', value=f'`{len(guild.text_channels)} Text Channels`', inline=False)
-    embed.add_field(name='Voice Channels:', value=f'`{len(guild.voice_channels)} Voice Channels`', inline=False)
-    embed.add_field(name='Roles:', value=f'`{len(guild.roles)} Roles`', inline=False)
-    embed.add_field(name='Total Members:', value=f'`{total} Members`', inline=False)
-    embed.add_field(name='Humans:', value=f'`{humans} Humans`', inline=False)
-    embed.add_field(name='Bots:', value=f'`{bots} Bots`', inline=False)
-    embed.add_field(name='Boost Count:', value=f'`{guild.premium_subscription_count} Boosts`', inline=False)
-    await cole.send(embed=embed)
+    await cole.send(f'New Server Join! | **{guild.name}** with **{total} Members**')
 
 @bot.event
 async def on_guild_remove(guild):

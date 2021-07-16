@@ -87,6 +87,7 @@ class Help(commands.Cog):
         funembed.add_field(name='👑 | **Random Fact:**', value=f'`{get_prefix(self.bot, ctx.message)}fact`', inline=False)
         funembed.add_field(name='👑 | **Random Dog Pic:**', value=f'`{get_prefix(self.bot, ctx.message)}dog`', inline=False)
         funembed.add_field(name='👑 | **Random Cat Pic:**', value=f'`{get_prefix(self.bot, ctx.message)}cat`', inline=False)
+        funembed.add_field(name='👑 | **Random Meme:**', value=f'`{get_prefix(self.bot, ctx.message)}meme`', inline=False)
         funembed.add_field(name='👑 | **Dead Chat:**', value=f'`{get_prefix(self.bot, ctx.message)}deadchat`', inline=False)
         funembed.add_field(name='👑 | **Love Message:**', value=f'`{get_prefix(self.bot, ctx.message)}loved`', inline=False)
         funembed.add_field(name='👑 | **Avatar:**', value=f'`{get_prefix(self.bot, ctx.message)}avatar [member]`', inline=False)

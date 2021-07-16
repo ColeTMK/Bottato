@@ -6,7 +6,7 @@ import requests
 import json
 import asyncio
 import datetime
-import time
+import aiohttp
 from discord.ext.commands import Greedy
 
 def get_quote():
@@ -721,7 +721,6 @@ class Commands(commands.Cog):
       embed.add_field(name='**Creation Date:**', value=f'`{created}`', inline=False)
       embed.add_field(name='**Roles [{}]:**'.format(len(user.roles)-1), value=role_string, inline=False)
       embed.add_field(name='**Highest Role:**', value=top_role.mention, inline=False)
-      embed.set_author(name=f'{author.name}', icon_url=pfp)
       embed.set_thumbnail(url=user.avatar_url)
       embed.set_footer(text=f'{ctx.guild.name}')
       embed.timestamp = datetime.datetime.utcnow()
@@ -729,8 +728,6 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def serverinfo(self, ctx):
-      author = ctx.author
-      pfp = author.avatar_url
       total = len(ctx.guild.members)
       humans = len(list(filter(lambda m: not m.bot, ctx.guild.members)))
       bots = len(list(filter(lambda m: m.bot, ctx.guild.members)))
@@ -748,8 +745,8 @@ class Commands(commands.Cog):
       embed.add_field(name='Humans:', value=f'`{humans} Humans`', inline=False)
       embed.add_field(name='Bots:', value=f'`{bots} Bots`', inline=False)
       embed.add_field(name='Boost Count:', value=f'`{ctx.guild.premium_subscription_count} Boosts`', inline=False)
-      embed.set_author(name=f'{author.name}', icon_url=pfp)
       embed.set_footer(text=f'{ctx.guild.name}')
+      embed.set_thumbnail(url=ctx.guild.icon_url)
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
@@ -775,6 +772,17 @@ class Commands(commands.Cog):
       embed.set_footer(text="Meow!")
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
+
+    @commands.command()
+    async def meme(self, ctx):
+      embed = discord.Embed(title="Meme", description="", color=0x00FFFF)
+
+      async with aiohttp.ClientSession() as cs:
+        async with cs.get('https://www.reddit.com/r/dankmemes/new.json?sort=hot') as r:
+          res = await r.json()
+          embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
+          embed.timestamp = datetime.datetime.utcnow()
+          await ctx.send(embed=embed)
 
     @commands.command()
     @commands.has_role('Giveaways')
