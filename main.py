@@ -44,7 +44,7 @@ async def on_guild_join(guild):
 
     cole = bot.get_user(467715040087244800)
     total = len(guild.members)
-    await cole.send(f'New Server Join! | **{guild.name}** with **{total} Members**')
+    await cole.send(f'New Server Join! | **{guild.name}** with **{total} Members** | Owner: {guildowner}')
 
 @bot.event
 async def on_guild_remove(guild):
@@ -67,18 +67,27 @@ async def on_guild_remove(guild):
     with open('logchannel.json', 'r') as f:
         logchannel = json.load(f)
 
-    logchannel.pop(str(guild.id))
+    try:
+      logchannel.pop(str(guild.id))
 
-    with open('logchannel.json', 'w') as f:
+      with open('logchannel.json', 'w') as f:
         json.dump(logchannel, f, indent=4)
+    except:
+      pass
 
     with open('welcomechannel.json', 'r') as f:
         welcomechannel = json.load(f)
 
-    welcomechannel.pop(str(guild.id))
+    try:
+      welcomechannel.pop(str(guild.id))
 
-    with open('welcomechannel.json', 'w') as f:
+      with open('welcomechannel.json', 'w') as f:
         json.dump(welcomechannel, f, indent=4)
+    except:
+      pass
+
+    cole = bot.get_user(467715040087244800)
+    await cole.send(f'Bot Left Server! | **{guild.name}**')
 
 @bot.event
 async def on_ready():
