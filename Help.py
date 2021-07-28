@@ -135,6 +135,7 @@ class Help(commands.Cog):
         linksembed.add_field(name="👑 | **All Commands Page:**", value='https://bit.ly/33N0TTY', inline=False)
         linksembed.add_field(name="👑 | **Terms & Conditions:**", value='https://bit.ly/3yEYs48', inline=False)
         linksembed.add_field(name="👑 | **Support Server:**", value='https://discord.gg/arMVCzHfuf', inline=False)
+        linksembed.add_field(name="👑 | **Bot Invite:**", value="https://top.gg/bot/830599839623675925")
         linksembed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
         linksembed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
         linksembed.timestamp = datetime.datetime.utcnow()

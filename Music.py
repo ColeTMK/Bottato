@@ -1,14 +1,9 @@
 import discord
 import datetime
 import DiscordUtils
-import asyncio
 from discord.ext import commands
 
 music = DiscordUtils.Music()
-
-async def send_message_function(ctx):
-        queue.pop(0)
-        await ctx.send(embed=discord.Embed(title=f"Now Playing: {queue[0]}"))
 
 class Music(commands.Cog):
     def __init__(self, bot):
@@ -48,7 +43,7 @@ class Music(commands.Cog):
                     player =  music.create_player(ctx, ffmpeg_error_betterfix=True)
                 if not ctx.voice_client.is_playing():
                     await player.queue(url, search=True)
-                    song = await player.play(after=send_message_function)
+                    song = await player.play()
                     await ctx.send(f'Now Playing: `{song.name}`')
             
             if botinvc:
@@ -57,7 +52,7 @@ class Music(commands.Cog):
                     player =  music.create_player(ctx, ffmpeg_error_betterfix=True)
                 if not ctx.voice_client.is_playing():
                     await player.queue(url, search=True)
-                    song = await player.play(after=send_message_function)
+                    song = await player.play()
                     await ctx.send(f'Now Playing: `{song.name}`')
                 else:
                     song = await player.queue(url, search=True)

@@ -602,7 +602,7 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def invite(self, ctx):
-      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Bot Invite <a:verifycyan:859611788865830922>", description="Discord Bot List -> https://discord.ly/bottato\n\nTop.gg -> *Coming Soon*", color=0x00FFFF)
+      embed=discord.Embed(title="<a:verifycyan:859611788865830922> Bot Invite <a:verifycyan:859611788865830922>", description="Discord Bot List -> https://discord.ly/bottato\n\nTop.gg -> https://top.gg/bot/830599839623675925", color=0x00FFFF)
       embed.timestamp = datetime.datetime.utcnow()
       await ctx.send(embed=embed)
 
