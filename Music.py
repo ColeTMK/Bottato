@@ -1,6 +1,7 @@
 import discord
 import datetime
 import DiscordUtils
+import asyncio
 from discord.ext import commands
 
 music = DiscordUtils.Music()
@@ -21,12 +22,7 @@ class Music(commands.Cog):
             return
         else:
             await ctx.guild.voice_client.disconnect() 
-            embed=discord.Embed(description='Left VC!', color=0x00FFFF)
-            author = ctx.author
-            pfp = author.avatar_url
-            embed.timestamp = datetime.datetime.utcnow()
-            embed.set_author(name=f"{ctx.author}", icon_url=pfp)
-            await ctx.send(embed=embed)
+            await ctx.send("Left the VC!")
 
     @commands.command()
     async def play(self, ctx, *, url):
@@ -57,12 +53,15 @@ class Music(commands.Cog):
                 else:
                     song = await player.queue(url, search=True)
                     embed=discord.Embed(title='Song Added to Queue!', description=f'**{song.name}** added!', color=0x00FFFF)
-                    author = ctx.message.author
-                    pfp = author.avatar_url
-                    embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
                     embed.timestamp = datetime.datetime.utcnow()
                     embed.set_footer(text=f'Added by {ctx.author}')
                     await ctx.send(embed=embed)
+        await asyncio.sleep(180)
+        if not ctx.voice_client.is_playing():
+            await ctx.guild.voice_client.disconnect() 
+            await ctx.send("Left the VC due to inactivity!")
+        else:
+            pass
 
     @commands.command()
     async def pause(self, ctx):
@@ -76,13 +75,13 @@ class Music(commands.Cog):
             return
         player = music.get_player(guild_id=ctx.guild.id)
         song = await player.pause()
-        embed=discord.Embed(description='Music Paused!', color=0x00FFFF)
-        author = ctx.author
-        pfp = author.avatar_url
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
-        embed.set_footer(text=f'Paused by {ctx.author}')
-        await ctx.send(embed=embed)
+        await ctx.send(f"Paused `{song.name}`!")
+        await asyncio.sleep(180)
+        if not ctx.voice_client.is_playing():
+            await ctx.guild.voice_client.disconnect() 
+            await ctx.send("Left the VC due to inactivity!")
+        else:
+            pass
 
     @commands.command()
     async def resume(self, ctx):
@@ -96,13 +95,13 @@ class Music(commands.Cog):
             return
         player = music.get_player(guild_id=ctx.guild.id)
         song = await player.resume()
-        embed=discord.Embed(description='Music Resumed!', color=0x00FFFF)
-        author = ctx.author
-        pfp = author.avatar_url
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
-        embed.set_footer(text=f'Resumed by {ctx.author}')
-        await ctx.send(embed=embed)
+        await ctx.send(f"Resumed `{song.name}`!")
+        await asyncio.sleep(180)
+        if not ctx.voice_client.is_playing():
+            await ctx.guild.voice_client.disconnect() 
+            await ctx.send("Left the VC due to inactivity!")
+        else:
+            pass
 
     @commands.command()
     async def skip(self, ctx):
@@ -115,7 +114,20 @@ class Music(commands.Cog):
             await ctx.send(f'{ctx.author.mention}, You are not in a VC!')
             return
         player = music.get_player(guild_id=ctx.guild.id)
-        song = await player.skip()
+        try:
+            await player.skip()
+            await asyncio.sleep(1)
+            song = player.now_playing()
+            await ctx.send(f"Skipped! Now Playing `{song.name}`!")
+        except:
+            await ctx.send(f"There is nothing in the queue!")
+            return
+        await asyncio.sleep(180)
+        if not ctx.voice_client.is_playing():
+            await ctx.guild.voice_client.disconnect() 
+            await ctx.send("Left the VC due to inactivity!")
+        else:
+            pass
 
     @commands.command()
     async def stop(self, ctx):
@@ -128,28 +140,53 @@ class Music(commands.Cog):
             await ctx.send(f'{ctx.author.mention}, You are not in a VC!')
             return
         player = music.get_player(guild_id=ctx.guild.id)
-        song = await player.stop()
-        embed=discord.Embed(title='Music Stopped!', description=f'`>leave to make bot leave VC`', color=0x00FFFF)
-        author = ctx.author
-        pfp = author.avatar_url
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_author(name=f"{ctx.author.name}", icon_url=pfp)
-        embed.set_footer(text=f'Stopped by {ctx.author}')
-        await ctx.send(embed=embed)
+        await player.stop()
+        await ctx.send("Music Stopped!")
+        await asyncio.sleep(180)
+        if not ctx.voice_client.is_playing():
+            await ctx.guild.voice_client.disconnect() 
+            await ctx.send("Left the VC due to inactivity!")
+        else:
+            pass
 
     @commands.command()
-    async def playing(self, ctx):
+    async def loop(self, ctx):
         invc = ctx.author.voice
         botinvc = ctx.guild.me.voice
         player = music.get_player(guild_id=ctx.guild.id)
-        currentsong = player.now_playing()
         if not botinvc:
             await ctx.send(f"{ctx.author.mention}, I'm not in a VC!")
             return
         if not invc:
             await ctx.send(f'{ctx.author.mention}, You are not in a VC!')
             return
-        await ctx.send(f'Currently playing: `{currentsong}`')
+        player = music.get_player(guild_id=ctx.guild.id)
+        song = await player.toggle_song_loop()
+        if song.is_looping:
+            await ctx.send(f"`{song.name}` is now looping!")
+        else:
+            await ctx.send(f"`{song.name}` is not looping anymore!")
+        await asyncio.sleep(180)
+        if not ctx.voice_client.is_playing():
+            await ctx.guild.voice_client.disconnect() 
+            await ctx.send("Left the VC due to inactivity!")
+        else:
+            pass
+
+    @commands.command()
+    async def playing(self, ctx):
+        invc = ctx.author.voice
+        botinvc = ctx.guild.me.voice
+        player = music.get_player(guild_id=ctx.guild.id)
+        song = player.now_playing()
+        if not botinvc:
+            await ctx.send(f"{ctx.author.mention}, I'm not in a VC!")
+            return
+        if not invc:
+            await ctx.send(f'{ctx.author.mention}, You are not in a VC!')
+            return
+        await ctx.send(f'Currently playing: `{song.name}`')
+        
 
     @commands.command()
     async def queue(self, ctx):

@@ -1,12 +1,7 @@
 import discord
-from discord import User
 from discord.ext import commands
-import random
-import requests
 import json
-import asyncio
 import datetime
-from discord.ext.commands import Bot, Greedy
 
 def get_logchannel(bot, message):
     with open('logchannel.json', 'r') as fp:
@@ -42,6 +37,7 @@ class Help(commands.Cog):
         mainembed.add_field(name='💰 | **Economy:**', value=f'`{get_prefix(self.bot, ctx.message)}help economy`', inline=True)
         mainembed.add_field(name='🎲 | **Minigames:**', value=f'`{get_prefix(self.bot, ctx.message)}help minigames`', inline=True)
         mainembed.add_field(name='🎉 | **Giveaways:**', value=f'`{get_prefix(self.bot, ctx.message)}help giveaways`', inline=True)
+        mainembed.add_field(name='🎵 | **Music:**', value=f'`{get_prefix(self.bot, ctx.message)}help music`', inline=True)
         mainembed.add_field(name='🔗 | **Links:**', value=f'`{get_prefix(self.bot, ctx.message)}help links`', inline=True)
         mainembed.add_field(name='ℹ️ | **Bot Info:**', value=f'`{get_prefix(self.bot, ctx.message)}help info`', inline=True)
         mainembed.add_field(name="**Current Prefix**", value=f'The **CURRENT** prefix for this server is `{get_prefix(self.bot, ctx.message)}`', inline=False)
@@ -150,6 +146,20 @@ class Help(commands.Cog):
         infoembed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
         infoembed.timestamp = datetime.datetime.utcnow()
 
+        musicembed=discord.Embed(title='<a:verifycyan:859611788865830922> Music Help <a:verifycyan:859611788865830922>', description='Here, you can get help for music commands!', color=0x00FFFF)
+        musicembed.add_field(name='👑 | **Play/Join:**', value=f'`{get_prefix(self.bot, ctx.message)}play [song (name or yt url)]`', inline=False)
+        musicembed.add_field(name='👑 | **Pause Song:**', value=f'`{get_prefix(self.bot, ctx.message)}pause`', inline=False)
+        musicembed.add_field(name='👑 | **Resume Song:**', value=f'`{get_prefix(self.bot, ctx.message)}resume`', inline=False)
+        musicembed.add_field(name='👑 | **Skip Song:**', value=f'`{get_prefix(self.bot, ctx.message)}skip`', inline=False)
+        musicembed.add_field(name='👑 | **Loop Song:**', value=f'`{get_prefix(self.bot, ctx.message)}loop`', inline=False)
+        musicembed.add_field(name='👑 | **Currently Playing:**', value=f'`{get_prefix(self.bot, ctx.message)}playing`', inline=False)
+        musicembed.add_field(name='👑 | **Queue:**', value=f'`{get_prefix(self.bot, ctx.message)}queue`', inline=False)
+        musicembed.add_field(name='👑 | **Stop Song:**', value=f'`{get_prefix(self.bot, ctx.message)}stop`', inline=False)
+        musicembed.add_field(name='👑 | **Leave:**', value=f'`{get_prefix(self.bot, ctx.message)}leave`', inline=False)
+        musicembed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
+        musicembed.set_footer(text=f'Requested by {ctx.author} | You must be in a VC in order to execute any of these commands!', icon_url=ctx.author.avatar_url)
+        musicembed.timestamp = datetime.datetime.utcnow()
+
         if input == None:
             await ctx.send(embed=mainembed)
         if input == 'config':
@@ -168,6 +178,8 @@ class Help(commands.Cog):
             await ctx.send(embed=linksembed)
         if input == 'info':
             await ctx.send(embed=infoembed)
+        if input == 'music':
+            await ctx.send(embed=musicembed)
 
 def setup(bot):
     bot.add_cog(Help(bot))

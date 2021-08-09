@@ -33,7 +33,7 @@ async def on_guild_join(guild):
         json.dump(serverlist, f, indent=4)
 
     guildowner = guild.owner
-    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Bottato to **{guild.name}**! Please read some info that can be very helpful for you, your mods, and members!\n\nThe DEFAULT prefix for your server is `>` This can be changed by the command `>changeprefix [prefix]`\n\nBottato features moderation commands, fun commands, economy, logging, welcoming, and more!\n\nTo **setup** logging, `>setlogchannel [channel]`\n\nTo **setup** welcome messages, `>setwelcomechannel [channel]`\n\nTo find all commands and info, type `>help`', color=0x00FFFF)
+    embed=discord.Embed(title='Thanks for inviting me! Please read below for important info.', description=f'ColeTMK#1234 is really appreciated by you that you invited Bottato to **{guild.name}**! Please read some info that can be very helpful for you, your mods, and members!\n\nThe DEFAULT prefix for your server is `>` This can be changed by the command `>changeprefix [prefix]`\n\nBottato features moderation commands, fun commands, economy, music, logging, welcoming, and more!\n\nTo **setup** logging, `>setlogchannel [channel]`\n\nTo **setup** welcome messages, `>setwelcomechannel [channel]`\n\nTo find all commands and info, type `>help`', color=0x00FFFF)
     embed.set_footer(text=f'If you are experience any issues with me, please join the support server! https://discord.gg/arMVCzHfuf | Thanks for inviting me to {guild.name}!')
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/830599839623675925/7e5e5152a2490e6d3e89dd09f2f33a99.webp?size=1024")
@@ -156,6 +156,6 @@ bot.load_extension('MsgEditDelete')
 bot.load_extension('Warns')
 bot.load_extension('Welcome')
 bot.load_extension('Help')
-#bot.load_extension('Music')
+bot.load_extension('Music')
 
 bot.run('ODMwNTk5ODM5NjIzNjc1OTI1.YHJCYQ.6AKH-DuIrLs-AL07LZPY9vqTeoI')
