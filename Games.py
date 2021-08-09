@@ -92,7 +92,7 @@ class Games(commands.Cog):
         elif guess < number:
             await channel.send(f"{ctx.author.mention}, Your guess was too low!")
 
-    @commands.command()
+    @commands.command(aliases=['aki'])
     async def akinator(self, ctx):
         intro=discord.Embed(title="Akinator",description=f"Hello {ctx.author.mention}! Welcome to Akinator!\n\n**Game starting! Please wait...**",color=0xFFFF00)
         intro.set_thumbnail(url="https://en.akinator.com/bundles/elokencesite/images/akinator.png?v93")
@@ -172,7 +172,7 @@ class Games(commands.Cog):
         except Exception as e:
             await ctx.send(e)
 
-    @commands.command()
+    @commands.command(aliases=['8ball'])
     async def eightball(self, ctx, *, question):
       responses = [
         'Certainly!',

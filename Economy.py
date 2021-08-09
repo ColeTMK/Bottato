@@ -78,7 +78,7 @@ class Economy(commands.Cog):
         json.dump(users, f, indent=4)
 
       embed = discord.Embed(title="Work (Earn 10-50 Tato Coins)",
-	                      description=f"{ctx.author} went to work!",
+	                      description=f"{ctx.author.name} went to work!",
 	                      color=0x00FFFF)
       embed.add_field(name="**Your Job:**", value=f"{job}", inline=False)
       embed.add_field(name="**You Earned:**",
@@ -177,7 +177,7 @@ class Economy(commands.Cog):
       with open("bank.json", "w") as f:
         json.dump(users, f, indent=4)
 
-      embed = discord.Embed(title="Beg (Earn 0-25 Tato Coins)", description=f"{ctx.author} wants to beg! :sob:", color=0x00FFFF)
+      embed = discord.Embed(title="Beg (Earn 0-25 Tato Coins)", description=f"{ctx.author.name} wants to beg! :sob:", color=0x00FFFF)
       embed.add_field(name="**You Earned:**", value=f"{money} Tato Coins", inline=False)
       embed.set_thumbnail(url=user.avatar_url)
       embed.set_footer(text="Your total amount is saved across all servers that I'm in!")
