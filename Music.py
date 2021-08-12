@@ -174,6 +174,18 @@ class Music(commands.Cog):
             pass
 
     @commands.command()
+    async def remove(self, ctx, song):
+        player = music.get_player(guild_id=ctx.guild.id)
+        song = await player.remove_from_queue(int(song))
+        await ctx.send(f"Removed `{song.name}`` from the queue.")
+        await asyncio.sleep(180)
+        if not ctx.voice_client.is_playing():
+            await ctx.guild.voice_client.disconnect() 
+            await ctx.send("Left the VC due to inactivity!")
+        else:
+            pass
+
+    @commands.command()
     async def playing(self, ctx):
         invc = ctx.author.voice
         botinvc = ctx.guild.me.voice
@@ -192,6 +204,7 @@ class Music(commands.Cog):
     async def queue(self, ctx):
         invc = ctx.author.voice
         botinvc = ctx.guild.me.voice
+        player = music.get_player(guild_id=ctx.guild.id)
         if not botinvc:
             await ctx.send(f"{ctx.author.mention}, I'm not in a VC!")
             return
@@ -200,7 +213,16 @@ class Music(commands.Cog):
             return
         nextline = " \n"
         player = music.get_player(guild_id=ctx.guild.id)
-        await ctx.send(f"{nextline.join([song.name for song in player.current_queue()])}")
+        queue = {nextline.join([song.name for song in player.current_queue()])}
+        embed=discord.Embed(title=f'Current Queue for {ctx.guild.name}', description=f'{queue}', color=0x00FFFF)
+        embed.timestamp = datetime.datetime.utcnow()
+        await ctx.send(embed=embed)
+        await asyncio.sleep(180)
+        if not ctx.voice_client.is_playing():
+            await ctx.guild.voice_client.disconnect() 
+            await ctx.send("Left the VC due to inactivity!")
+        else:
+            pass
 
 def setup(bot):
   bot.add_cog(Music(bot))
