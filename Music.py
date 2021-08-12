@@ -56,7 +56,7 @@ class Music(commands.Cog):
                     embed.timestamp = datetime.datetime.utcnow()
                     embed.set_footer(text=f'Added by {ctx.author}')
                     await ctx.send(embed=embed)
-        await asyncio.sleep(180)
+        await asyncio.sleep(300)
         if not ctx.voice_client.is_playing():
             await ctx.guild.voice_client.disconnect() 
             await ctx.send("Left the VC due to inactivity!")
@@ -76,7 +76,7 @@ class Music(commands.Cog):
         player = music.get_player(guild_id=ctx.guild.id)
         song = await player.pause()
         await ctx.send(f"Paused `{song.name}`!")
-        await asyncio.sleep(180)
+        await asyncio.sleep(300)
         if not ctx.voice_client.is_playing():
             await ctx.guild.voice_client.disconnect() 
             await ctx.send("Left the VC due to inactivity!")
@@ -96,7 +96,7 @@ class Music(commands.Cog):
         player = music.get_player(guild_id=ctx.guild.id)
         song = await player.resume()
         await ctx.send(f"Resumed `{song.name}`!")
-        await asyncio.sleep(180)
+        await asyncio.sleep(300)
         if not ctx.voice_client.is_playing():
             await ctx.guild.voice_client.disconnect() 
             await ctx.send("Left the VC due to inactivity!")
@@ -122,7 +122,7 @@ class Music(commands.Cog):
         except:
             await ctx.send(f"There is nothing in the queue!")
             return
-        await asyncio.sleep(180)
+        await asyncio.sleep(300)
         if not ctx.voice_client.is_playing():
             await ctx.guild.voice_client.disconnect() 
             await ctx.send("Left the VC due to inactivity!")
@@ -142,7 +142,7 @@ class Music(commands.Cog):
         player = music.get_player(guild_id=ctx.guild.id)
         await player.stop()
         await ctx.send("Music Stopped!")
-        await asyncio.sleep(180)
+        await asyncio.sleep(300)
         if not ctx.voice_client.is_playing():
             await ctx.guild.voice_client.disconnect() 
             await ctx.send("Left the VC due to inactivity!")
@@ -166,7 +166,7 @@ class Music(commands.Cog):
             await ctx.send(f"`{song.name}` is now looping!")
         else:
             await ctx.send(f"`{song.name}` is not looping anymore!")
-        await asyncio.sleep(180)
+        await asyncio.sleep(300)
         if not ctx.voice_client.is_playing():
             await ctx.guild.voice_client.disconnect() 
             await ctx.send("Left the VC due to inactivity!")

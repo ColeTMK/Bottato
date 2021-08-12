@@ -48,7 +48,8 @@ class Welcome(commands.Cog):
           pass
 
         try:
-          await member.send(f'Thanks for joining **{member.guild.name}**! Make sure to read our rules and verify if needed.')
+          if member.guild.get_channel(get_channel[str(member.guild.id)]):
+            await member.send(f'Thanks for joining **{member.guild.name}**! Make sure to read our rules and verify if needed.')
         except:
           pass
       with open('logchannel.json', 'r', encoding='utf-8') as fp:
