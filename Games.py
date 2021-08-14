@@ -141,7 +141,7 @@ class Games(commands.Cog):
             answerr.set_image(url=aki.first_guess['absolute_picture_path'])
             answerr.set_footer(text="Was I correct? (y/n)")
             answerr.timestamp = datetime.datetime.utcnow()
-            await ctx.send(embed=answerr)
+            answerrr = await ctx.send(embed=answerr)
             try:
                 correct = await self.bot.wait_for("message", check=check ,timeout=30)
             except asyncio.TimeoutError:
@@ -157,7 +157,7 @@ class Games(commands.Cog):
                 await correct.delete()
                 await asyncio.sleep(10)
                 await answer.delete()
-                await answerr.delete()
+                await answerrr.delete()
             else:
                 no=discord.Embed(title="Oh Noo!", description='I tried to think as hard as I could :sob:', color=0xFFFF00)
                 no.set_thumbnail(url="https://i.pinimg.com/originals/0a/8c/12/0a8c1218eeaadf5cfe90140e32558e64.png")
