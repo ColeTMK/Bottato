@@ -158,4 +158,4 @@ bot.load_extension('Welcome')
 bot.load_extension('Help')
 bot.load_extension('Music')
 
-bot.run('ODMwNTk5ODM5NjIzNjc1OTI1.YHJCYQ.6AKH-DuIrLs-AL07LZPY9vqTeoI')
+bot.run('TOKEN')
